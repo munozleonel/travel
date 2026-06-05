@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US & Canada Trip Planner 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #1a2d4a;
+    --navy-light: #243850;
+    --gold: #d4a843;
+    --gold-light: #f0c96a;
+    --gold-pale: #fdf4e3;
+    --teal: #1a7a6e;
+    --teal-light: #22a898;
+    --teal-pale: #e0f5f3;
+    --coral: #c85c3a;
+    --coral-pale: #faeee9;
+    --text: #1a2030;
+    --text-mid: #4a5568;
+    --text-light: #718096;
+    --border: #e2e8f0;
+    --border-mid: #cbd5e0;
+    --surface: #ffffff;
+    --surface-2: #f8f9fc;
+    --surface-3: #f1f4f9;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --r-xl: 20px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface-3);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* === HEADER === */
+  header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--gold);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-icon {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .brand-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+  .brand-sub {
+    font-size: 11px;
+    color: var(--gold-light);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .header-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--r-sm);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-ghost {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .btn-gold:hover { background: var(--gold-light); }
+  .btn-primary {
+    background: var(--teal);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--teal-light); }
+  .btn-danger {
+    background: var(--coral);
+    color: #fff;
+  }
+  .btn-danger:hover { background: #d96a49; }
+  .btn-sm { padding: 5px 10px; font-size: 12px; }
+  .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* === NAV TABS === */
+  .nav-tabs {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    padding: 0 2rem;
+  }
+  .nav-tab {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-light);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--text); border-bottom-color: var(--border-mid); }
+  .nav-tab.active { color: var(--navy); border-bottom-color: var(--navy); font-weight: 600; }
+  .nav-tab svg { width: 16px; height: 16px; }
+
+  /* === MAIN === */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* === SECTION HEADER === */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--navy);
+    font-weight: 400;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  /* === CALENDAR === */
+  .cal-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .cal-month-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 6px 12px;
+  }
+  .cal-month-label {
+    font-weight: 600;
+    font-size: 15px;
+    min-width: 130px;
+    text-align: center;
+    color: var(--navy);
+  }
+  .cal-nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--r-sm);
+    color: var(--text-mid);
+    font-size: 16px;
+    transition: background 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .cal-nav-btn:hover { background: var(--surface-3); }
+
+  .calendar-grid {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .cal-header-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: var(--navy);
+  }
+  .cal-day-header {
+    padding: 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .cal-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .cal-cell {
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    min-height: 140px;
+    padding: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.12s;
+    vertical-align: top;
+  }
+  .cal-cell:nth-child(7n) { border-right: none; }
+  .cal-cell:hover { background: var(--surface-2); }
+  .cal-cell.empty { background: var(--surface-3); cursor: default; }
+  .cal-cell.today { background: #fffbf0; }
+  .cal-cell.has-event { background: #f0f8ff; }
+  .cal-date {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .cal-date-num {
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .cal-cell.today .cal-date-num {
+    background: var(--navy);
+    color: #fff;
+  }
+  .cal-event-pill {
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 20px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    line-height: 1.3;
+    cursor: pointer;
+    word-break: break-word;
+  }
+  .cal-event-pill.type-flight { background: #e8f4fd; color: #1a5276; border-left: 3px solid #2980b9; }
+  .cal-event-pill.type-hotel { background: #e9f7ef; color: #145a32; border-left: 3px solid #27ae60; }
+  .cal-event-pill.type-activity { background: #fef9e7; color: #7d6608; border-left: 3px solid #f1c40f; }
+  .cal-event-pill.type-note { background: #f5eef8; color: #6c3483; border-left: 3px solid #9b59b6; }
+  .cal-add-btn {
+    position: absolute;
+    bottom: 6px; right: 6px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--border-mid);
+    background: var(--surface);
+    color: var(--text-light);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .cal-cell:hover .cal-add-btn { opacity: 1; }
+
+  /* location badge in calendar */
+  .loc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 20px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .loc-la { background: #fde8e8; color: #c0392b; }
+  .loc-calgary { background: #e8f4fd; color: #1a5276; }
+  .loc-banff { background: #e9f7ef; color: #1e8449; }
+  .loc-vancouver { background: #eaf4fb; color: #1a6e8b; }
+  .loc-fiji { background: #fdf2e9; color: #935116; }
+  .loc-transit { background: #f4f6f7; color: #717d7e; }
+
+  /* === MODAL === */
+  .modal-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10,22,40,0.6);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: var(--r-xl);
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-md);
+  }
+  .modal-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--navy);
+    font-weight: 400;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--text-light);
+    padding: 4px 8px;
+    border-radius: var(--r-sm);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .modal-close:hover { background: var(--surface-3); color: var(--text); }
+  .modal-body { padding: 20px 24px; }
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  /* === FORM ELEMENTS === */
+  .form-group { margin-bottom: 14px; }
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-mid);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-mid);
+    border-radius: var(--r-sm);
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--teal-light);
+    box-shadow: 0 0 0 3px rgba(26,122,110,0.1);
+  }
+  .form-textarea { resize: vertical; min-height: 80px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* === ACCOMMODATION === */
+  .accom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+  .accom-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+  .accom-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .accom-card-header {
+    padding: 14px 16px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .accom-city {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold-light);
+    margin-bottom: 3px;
+  }
+  .accom-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .accom-status-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status-booked { background: rgba(26,122,110,0.25); color: #6dffed; }
+  .status-pending { background: rgba(212,168,67,0.25); color: var(--gold-light); }
+  .status-cancelled { background: rgba(200,92,58,0.25); color: #ffaa8a; }
+  .accom-body { padding: 14px 16px; }
+  .accom-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 9px;
+    font-size: 13px;
+  }
+  .accom-row-icon { color: var(--text-light); flex-shrink: 0; margin-top: 1px; font-size: 14px; }
+  .accom-row-label { color: var(--text-light); min-width: 80px; flex-shrink: 0; }
+  .accom-row-val { color: var(--text); font-weight: 500; }
+  .accom-dates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    background: var(--surface-2);
+    border-radius: var(--r-md);
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .accom-date-item { font-size: 12px; }
+  .accom-date-label { color: var(--text-light); margin-bottom: 2px; }
+  .accom-date-val { font-weight: 600; color: var(--text); font-size: 13px; }
+  .accom-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .accom-cost {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--navy);
+  }
+  .accom-cost-sub { font-size: 11px; color: var(--text-light); }
+  .rating-stars { display: flex; gap: 2px; font-size: 11px; color: var(--gold); }
+  .accom-actions { display: flex; gap: 6px; }
+
+  /* === FLIGHTS === */
+  .flights-container { display: flex; flex-direction: column; gap: 12px; }
+  .flight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .flight-card-inner {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .flight-endpoint { }
+  .flight-endpoint.right { text-align: right; }
+  .flight-time {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--navy);
+    line-height: 1;
+    font-weight: 400;
+  }
+  .flight-airport {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+    margin-top: 3px;
+  }
+  .flight-date { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+  .flight-middle { text-align: center; }
+  .flight-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .flight-line-bar {
+    flex: 1;
+    height: 1px;
+    background: var(--border-mid);
+    position: relative;
+  }
+  .flight-line-bar::before {
+    content: '';
+    position: absolute;
+    left: 0; top: -3px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+  .flight-line-bar::after {
+    content: '';
+    position: absolute;
+    right: 0; top: -3px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--navy);
+  }
+  .flight-plane-icon { font-size: 16px; color: var(--text-light); }
+  .flight-duration { font-size: 12px; font-weight: 600; color: var(--text-mid); margin-bottom: 3px; }
+  .flight-stops { font-size: 11px; color: var(--text-light); }
+  .flight-meta {
+    padding: 10px 20px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .flight-meta-item { font-size: 12px; }
+  .flight-meta-label { color: var(--text-light); margin-bottom: 1px; }
+  .flight-meta-val { font-weight: 600; color: var(--text); }
+  .flight-footer {
+    padding: 10px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .flight-cost { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--navy); }
+  .flight-airline-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-mid);
+  }
+
+  /* === ADD BUTTONS === */
+  .add-card-btn {
+    border: 2px dashed var(--border-mid);
+    border-radius: var(--r-lg);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--text-light);
+    font-size: 14px;
+    cursor: pointer;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    width: 100%;
+    transition: all 0.15s;
+  }
+  .add-card-btn:hover { border-color: var(--teal-light); color: var(--teal); background: var(--teal-pale); }
+
+  /* === SUMMARY BAR === */
+  .summary-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    box-shadow: var(--shadow-sm);
+  }
+  .summary-label { font-size: 11px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .summary-value { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--navy); font-weight: 400; }
+  .summary-sub { font-size: 12px; color: var(--text-light); }
+
+  /* === UTILITIES === */
+  .tag {
+    display: inline-flex; align-items: center;
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--text-mid);
+    font-weight: 500;
+    gap: 4px;
+  }
+  .tag.green { background: var(--teal-pale); border-color: #b2ddd9; color: var(--teal); }
+  .tag.amber { background: var(--gold-pale); border-color: #f0d89a; color: #8a6a00; }
+  .tag.red { background: var(--coral-pale); border-color: #f5c4b3; color: var(--coral); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .text-muted { color: var(--text-light); }
+  .text-sm { font-size: 12px; }
+  .fw-600 { font-weight: 600; }
+  .mt-1 { margin-top: 8px; }
+  .mt-2 { margin-top: 16px; }
+
+  /* == TOAST == */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--navy);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: var(--r-md);
+    font-size: 14px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 0.3s;
+    pointer-events: none;
+    border-left: 4px solid var(--gold);
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* === TO-DO === */
+  .todo-filter-btn {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-mid);
+    background: var(--surface);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .todo-filter-btn:hover { background: var(--surface-2); border-color: var(--border-mid); }
+  .todo-filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  .todo-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .todo-table thead tr {
+    background: var(--navy);
+  }
+  .todo-table thead th {
+    padding: 11px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .todo-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+  }
+  .todo-table tbody tr:last-child { border-bottom: none; }
+  .todo-table tbody tr:hover { background: var(--surface-2); }
+  .todo-table tbody tr.todo-done { opacity: 0.55; }
+  .todo-table tbody tr.todo-done .todo-task-text { text-decoration: line-through; color: var(--text-light); }
+  .todo-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+    vertical-align: middle;
+  }
+  .todo-task-text { font-weight: 500; color: var(--text); }
+  .todo-notes-text { font-size: 12px; color: var(--text-light); margin-top: 3px; }
+
+  .days-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .days-overdue { background: var(--coral-pale); color: var(--coral); }
+  .days-urgent  { background: #fff3cd; color: #856404; }
+  .days-soon    { background: var(--gold-pale); color: #7d5c00; }
+  .days-ok      { background: var(--teal-pale); color: var(--teal); }
+  .days-done    { background: var(--surface-3); color: var(--text-light); }
+  .days-nodate  { background: var(--surface-3); color: var(--text-light); }
+
+  .person-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .person-dad   { background: #e8f4fd; color: #1a5276; }
+  .person-mum   { background: #fdeef4; color: #8e2355; }
+  .person-isla  { background: #e9f7ef; color: #1e5c38; }
+  .person-maisy { background: #fdf4e3; color: #7d5c00; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+  }
+  .status-notstarted { background: var(--surface-3); color: var(--text-mid); border: 1px solid var(--border-mid); }
+  .status-inprogress { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+  .status-done       { background: var(--teal-pale); color: var(--teal); border: 1px solid #b2ddd9; }
+
+  .todo-edit-btn {
+    background: none;
+    border: 1px solid var(--border-mid);
+    border-radius: var(--r-sm);
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    display: inline-flex; align-items: center; gap: 5px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .todo-edit-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  .todo-empty {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-light);
+    font-size: 14px;
+  }
+  .todo-empty-icon { font-size: 36px; margin-bottom: 12px; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 4px; }
+
+  @media (max-width: 768px) {
+    .main { padding: 1rem; }
+    .header-inner { padding: 0 1rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .flight-card-inner { grid-template-columns: 1fr; text-align: center; }
+    .flight-endpoint.right { text-align: center; }
+    .todo-table td:nth-child(5),
+    .todo-table th:nth-child(5) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="brand-icon">✈</div>
+      <div>
+        <div class="brand-title">Trip Planner</div>
+        <div class="brand-sub">US &amp; Canada · Sep–Oct 2026</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ghost" onclick="exportJSON()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Export JSON
+      </button>
+      <label class="btn btn-ghost" style="cursor:pointer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        Import JSON
+        <input type="file" accept=".json" id="importFile" style="display:none" onchange="importJSON(event)">
+      </label>
+    </div>
+  </div>
+</header>
+
+<div style="background:var(--surface); border-bottom: 1px solid var(--border);">
+  <div class="nav-tabs" style="max-width:1400px; margin:0 auto; padding:0 2rem;">
+    <div class="nav-tab active" onclick="showSection('calendar',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Trip Calendar
+    </div>
+    <div class="nav-tab" onclick="showSection('accommodation',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Accommodation
+    </div>
+    <div class="nav-tab" onclick="showSection('flights',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 21 4s-2 0-3.5 1.5L14 9 5.8 7.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 3.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+      Flights
+    </div>
+    <div class="nav-tab" onclick="showSection('todos',this)" id="todoNavTab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      To-Do
+      <span id="todoCountBadge" style="display:none; background:var(--coral); color:#fff; font-size:10px; font-weight:700; padding:1px 6px; border-radius:20px; margin-left:2px;"></span>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- ==================== CALENDAR SECTION ==================== -->
+  <section id="section-calendar" class="section active">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Trip Calendar</h1>
+        <div class="section-sub">Click any day to add events · Click events to edit</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <span class="cal-event-pill type-flight" style="margin:0">✈ Flight</span>
+        <span class="cal-event-pill type-hotel" style="margin:0">🏨 Hotel</span>
+        <span class="cal-event-pill type-activity" style="margin:0">🎡 Activity</span>
+        <span class="cal-event-pill type-note" style="margin:0">📝 Note</span>
+      </div>
+    </div>
+
+    <div class="cal-controls">
+      <div class="cal-month-nav">
+        <button class="cal-nav-btn" onclick="changeMonth(-1)">◀</button>
+        <div class="cal-month-label" id="calMonthLabel"></div>
+        <button class="cal-nav-btn" onclick="changeMonth(1)">▶</button>
+      </div>
+      <button class="btn btn-ghost" onclick="goToToday()">Today</button>
+      <button class="btn btn-primary" onclick="openCalModal()">+ Add Event</button>
+    </div>
+
+    <div class="calendar-grid">
+      <div class="cal-header-row">
+        <div class="cal-day-header">Sun</div>
+        <div class="cal-day-header">Mon</div>
+        <div class="cal-day-header">Tue</div>
+        <div class="cal-day-header">Wed</div>
+        <div class="cal-day-header">Thu</div>
+        <div class="cal-day-header">Fri</div>
+        <div class="cal-day-header">Sat</div>
+      </div>
+      <div class="cal-body" id="calBody"></div>
+    </div>
+  </section>
+
+  <!-- ==================== ACCOMMODATION SECTION ==================== -->
+  <section id="section-accommodation" class="section">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Accommodation</h1>
+        <div class="section-sub">All stays across the trip</div>
+      </div>
+      <button class="btn btn-primary" onclick="openAccomModal()">+ Add Accommodation</button>
+    </div>
+
+    <div class="summary-bar" id="accomSummary"></div>
+    <div class="accom-grid" id="accomGrid"></div>
+  </section>
+
+  <!-- ==================== FLIGHTS SECTION ==================== -->
+  <section id="section-flights" class="section">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Flights</h1>
+        <div class="section-sub">All legs of the journey</div>
+      </div>
+      <button class="btn btn-primary" onclick="openFlightModal()">+ Add Flight</button>
+    </div>
+
+    <div class="summary-bar" id="flightSummary"></div>
+    <div class="flights-container" id="flightsContainer"></div>
+  </section>
+
+  <!-- ==================== TO-DO SECTION ==================== -->
+  <section id="section-todos" class="section">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">To-Do List</h1>
+        <div class="section-sub">Track tasks before and during the trip</div>
+      </div>
+      <button class="btn btn-primary" onclick="openTodoModal()">+ Add Task</button>
+    </div>
+
+    <div class="summary-bar" id="todoSummary"></div>
+
+    <!-- Filter bar -->
+    <div style="display:flex; gap:8px; margin-bottom:1.5rem; flex-wrap:wrap; align-items:center;">
+      <span style="font-size:12px; font-weight:600; color:var(--text-light); text-transform:uppercase; letter-spacing:.05em;">Filter:</span>
+      <button class="todo-filter-btn active" data-filter="all" onclick="setTodoFilter('all',this)">All</button>
+      <button class="todo-filter-btn" data-filter="Not Started" onclick="setTodoFilter('Not Started',this)">Not Started</button>
+      <button class="todo-filter-btn" data-filter="In Progress" onclick="setTodoFilter('In Progress',this)">In Progress</button>
+      <button class="todo-filter-btn" data-filter="Done" onclick="setTodoFilter('Done',this)">Done</button>
+      <div style="margin-left:auto; display:flex; gap:8px;">
+        <select class="form-select" id="todoFilterPerson" onchange="renderTodos()" style="width:auto; padding:6px 10px; font-size:13px;">
+          <option value="all">All People</option>
+          <option value="Dad">Dad</option>
+          <option value="Mum">Mum</option>
+          <option value="Isla">Isla</option>
+          <option value="Maisy">Maisy</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="todoTableWrap"></div>
+  </section>
+
+</main>
+
+<!-- ==================== CALENDAR EVENT MODAL ==================== -->
+<div class="modal-backdrop" id="calModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="calModalTitle">Add Event</div>
+      <button class="modal-close" onclick="closeModal('calModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="calEditId">
+      <div class="form-group">
+        <label class="form-label">Event Date</label>
+        <input type="date" class="form-input" id="calDate">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Event Type</label>
+        <select class="form-select" id="calType">
+          <option value="flight">✈ Flight</option>
+          <option value="hotel">🏨 Hotel Check-in/out</option>
+          <option value="activity">🎡 Activity</option>
+          <option value="note">📝 Note</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Title / Description</label>
+        <input type="text" class="form-input" id="calTitle" placeholder="e.g. Fly SYD → LAX via Fiji">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Time (optional)</label>
+          <input type="time" class="form-input" id="calTime">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-input" id="calLocation" placeholder="e.g. Los Angeles">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="calNotes" placeholder="Any extra details..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="calDeleteBtn" style="margin-right:auto; display:none" onclick="deleteCalEvent()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('calModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCalEvent()">Save Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ACCOMMODATION MODAL ==================== -->
+<div class="modal-backdrop" id="accomModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="accomModalTitle">Add Accommodation</div>
+      <button class="modal-close" onclick="closeModal('accomModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="accomEditId">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <input type="text" class="form-input" id="accomCity" placeholder="e.g. Los Angeles">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="accomStatus">
+            <option value="booked">Booked ✓</option>
+            <option value="pending">Pending</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Hotel Name</label>
+        <input type="text" class="form-input" id="accomName" placeholder="e.g. Sheraton Park Hotel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <input type="text" class="form-input" id="accomAddress" placeholder="Full address">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Check-in Date</label>
+          <input type="date" class="form-input" id="accomCheckin">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Check-in Time</label>
+          <input type="time" class="form-input" id="accomCheckinTime" value="15:00">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Check-out Date</label>
+          <input type="date" class="form-input" id="accomCheckout">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Check-out Time</label>
+          <input type="time" class="form-input" id="accomCheckoutTime" value="12:00">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Room Type</label>
+          <input type="text" class="form-input" id="accomRoom" placeholder="e.g. 2 Queen Beds">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Breakfast</label>
+          <select class="form-select" id="accomBreakfast">
+            <option value="Yes">Yes (included)</option>
+            <option value="No">No</option>
+            <option value="TBC">TBC</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Total Cost (AUD)</label>
+          <input type="number" class="form-input" id="accomCost" placeholder="0.00" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Amount Paid (AUD)</label>
+          <input type="number" class="form-input" id="accomPaid" placeholder="0.00" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Booking Ref</label>
+          <input type="text" class="form-input" id="accomRef" placeholder="e.g. 93217281">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Booked Through</label>
+          <input type="text" class="form-input" id="accomPlatform" placeholder="e.g. Booking.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Free Cancel By</label>
+          <input type="date" class="form-input" id="accomCancelBy">
+        </div>
+        <div class="form-group">
+          <label class="form-label">TripAdvisor Rating</label>
+          <input type="text" class="form-input" id="accomRating" placeholder="e.g. 4.4 (646)">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contact / Phone</label>
+        <input type="text" class="form-input" id="accomContact" placeholder="e.g. +1 714-750-1811">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="accomNotes" placeholder="Any extra info..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="accomDeleteBtn" style="margin-right:auto; display:none" onclick="deleteAccom()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('accomModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAccom()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FLIGHT MODAL ==================== -->
+<div class="modal-backdrop" id="flightModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="flightModalTitle">Add Flight</div>
+      <button class="modal-close" onclick="closeModal('flightModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="flightEditId">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">From (City / Airport)</label>
+          <input type="text" class="form-input" id="flightFrom" placeholder="e.g. Sydney SYD">
+        </div>
+        <div class="form-group">
+          <label class="form-label">To (City / Airport)</label>
+          <input type="text" class="form-input" id="flightTo" placeholder="e.g. Los Angeles LAX">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Departure Date</label>
+          <input type="date" class="form-input" id="flightDepDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Departure Time</label>
+          <input type="time" class="form-input" id="flightDepTime">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Arrival Date</label>
+          <input type="date" class="form-input" id="flightArrDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Arrival Time</label>
+          <input type="time" class="form-input" id="flightArrTime">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Airline</label>
+          <input type="text" class="form-input" id="flightAirline" placeholder="e.g. Fiji Airways">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Flight Number</label>
+          <input type="text" class="form-input" id="flightNumber" placeholder="e.g. FJ 910">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Duration</label>
+          <input type="text" class="form-input" id="flightDuration" placeholder="e.g. 14h 25m">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Stops</label>
+          <input type="text" class="form-input" id="flightStops" placeholder="e.g. Direct / 1 stop via Fiji">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Seats</label>
+          <input type="text" class="form-input" id="flightSeats" placeholder="e.g. 11A, 11B, 11C, 11D">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Baggage</label>
+          <input type="text" class="form-input" id="flightBaggage" placeholder="e.g. 30kg + 7kg each">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Booking Reference</label>
+          <input type="text" class="form-input" id="flightRef" placeholder="e.g. EC8HO6">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Terminal</label>
+          <input type="text" class="form-input" id="flightTerminal" placeholder="e.g. Terminal 1">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Cost (AUD)</label>
+          <input type="number" class="form-input" id="flightCost" placeholder="0.00" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Amount Paid (AUD)</label>
+          <input type="number" class="form-input" id="flightPaid" placeholder="0.00" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <select class="form-select" id="flightStatus">
+          <option value="booked">Booked ✓</option>
+          <option value="pending">To be booked</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="flightNotes" placeholder="e.g. Seats additional charge..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="flightDeleteBtn" style="margin-right:auto; display:none" onclick="deleteFlight()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('flightModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFlight()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TO-DO MODAL ==================== -->
+<div class="modal-backdrop" id="todoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="todoModalTitle">Add Task</div>
+      <button class="modal-close" onclick="closeModal('todoModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="todoEditId">
+      <div class="form-group">
+        <label class="form-label">Task</label>
+        <input type="text" class="form-input" id="todoTask" placeholder="e.g. Book LAX → YYC flights">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Due Date</label>
+          <input type="date" class="form-input" id="todoDueDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assigned To</label>
+          <select class="form-select" id="todoAssigned">
+            <option value="Dad">Dad</option>
+            <option value="Mum">Mum</option>
+            <option value="Isla">Isla</option>
+            <option value="Maisy">Maisy</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <select class="form-select" id="todoStatus">
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="todoNotes" placeholder="Any extra details..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="todoDeleteBtn" style="margin-right:auto; display:none" onclick="deleteTodo()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('todoModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTodo()">Save Task</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===========================
+// DATA STORE
+// ===========================
+let store = {
+  calEvents: [],
+  accommodations: [],
+  flights: []
+};
+
+function loadStore() {
+  try {
+    const s = localStorage.getItem('tripPlanner2026');
+    if (s) {
+      store = JSON.parse(s);
+      if (!store.todos) seedTodos();
+    } else {
+      seedData();
+      seedTodos();
+    }
+  } catch(e) { seedData(); seedTodos(); }
+}
+
+function saveStore() {
+  localStorage.setItem('tripPlanner2026', JSON.stringify(store));
+}
+
+function seedData() {
+  store.calEvents = [
+    { id: 'e1', date: '2026-09-15', type: 'flight', title: 'Depart Sydney → Fiji', time: '13:15', location: 'Sydney', notes: 'FJ 910 · Terminal 1' },
+    { id: 'e2', date: '2026-09-15', type: 'flight', title: 'Fiji → Los Angeles arrive 12:55pm', time: '21:40', location: 'Fiji', notes: 'FJ 810 · Overnight' },
+    { id: 'e3', date: '2026-09-15', type: 'hotel', title: 'Check-in: Sheraton Park Hotel Anaheim', time: '16:00', location: 'Los Angeles' },
+    { id: 'e4', date: '2026-09-17', type: 'activity', title: 'Disneyland / Disney Park', location: 'Anaheim', notes: '' },
+    { id: 'e5', date: '2026-09-19', type: 'activity', title: "Maisy's Birthday 🎂 + Disneyland", location: 'Anaheim' },
+    { id: 'e6', date: '2026-09-20', type: 'flight', title: 'Los Angeles → Calgary (WS1023)', time: '11:40', location: 'LAX', notes: 'Westjet · Seats 11A–11D' },
+    { id: 'e7', date: '2026-09-20', type: 'hotel', title: 'Check-in: The Westin Calgary', time: '15:00', location: 'Calgary' },
+    { id: 'e8', date: '2026-09-22', type: 'hotel', title: 'Check-in: Hotel Canoe & Suites Banff', time: '16:00', location: 'Banff' },
+    { id: 'e9', date: '2026-09-23', type: 'activity', title: 'Lake Louise visit', location: 'Banff' },
+    { id: 'e10', date: '2026-09-27', type: 'flight', title: 'Calgary → Vancouver (F8 805)', time: '14:20', location: 'YYC', notes: 'Flair Airlines' },
+    { id: 'e11', date: '2026-09-27', type: 'hotel', title: 'Check-in: Hotel BLU Vancouver', time: '16:00', location: 'Vancouver' },
+    { id: 'e12', date: '2026-10-01', type: 'flight', title: 'Vancouver → Los Angeles (AC 556)', time: '13:00', location: 'YVR', notes: 'Air Canada · Seats 13A–14C' },
+    { id: 'e13', date: '2026-10-01', type: 'hotel', title: 'Check-in: Viceroy Santa Monica', time: '15:00', location: 'Los Angeles' },
+    { id: 'e14', date: '2026-10-02', type: 'activity', title: 'Universal Studios', location: 'Los Angeles' },
+    { id: 'e15', date: '2026-10-04', type: 'flight', title: 'Los Angeles → Fiji (FJ 811)', time: '23:55', location: 'LAX', notes: 'Fiji Airways · overnight' },
+    { id: 'e16', date: '2026-10-06', type: 'hotel', title: 'Check-in: Sheraton Fiji Golf & Beach Resort', time: '15:00', location: 'Fiji' },
+    { id: 'e17', date: '2026-10-09', type: 'activity', title: '💕 Wedding Anniversary', location: 'Fiji' },
+    { id: 'e18', date: '2026-10-10', type: 'flight', title: 'Fiji → Sydney (FJ 911)', time: '09:00', location: 'Nadi', notes: 'Arrive SYD 12:45pm' },
+  ];
+
+  store.accommodations = [
+    { id: 'a1', city: 'Los Angeles', name: 'Sheraton Park Hotel at the Anaheim Resort', address: '1855 South Harbor Boulevard, Anaheim, California 92802 USA', checkin: '2026-09-15', checkinTime: '16:00', checkout: '2026-09-20', checkoutTime: '23:00', room: '2 Queen Beds, Traditional Guest Room', breakfast: 'Yes', cost: 2383, paid: 0, ref: 'Booked: 93217281', platform: 'Marriott Bonvoy', cancelBy: '2026-09-15', rating: '3.9 (246)', contact: '+1-714-750-1811', status: 'booked', notes: '' },
+    { id: 'a2', city: 'Calgary', name: 'The Westin Calgary', address: '320 4th Avenue Southwest, T2P 2S6 Calgary, Canada', checkin: '2026-09-20', checkinTime: '15:00', checkout: '2026-09-22', checkoutTime: '12:00', room: 'Standard Double Room, Two Double Beds', breakfast: 'Yes', cost: 974, paid: 0, ref: 'Booked: 5348858799', platform: 'Booking.com', cancelBy: '2026-09-17', rating: '4.2 (1,788)', contact: '+1 403-266-1611', status: 'booked', notes: '' },
+    { id: 'a3', city: 'Banff', name: 'Hotel Canoe and Suites', address: '600 Banff Avenue 2000, Banff, AB, T1L1H8 Canada', checkin: '2026-09-22', checkinTime: '16:00', checkout: '2026-09-27', checkoutTime: '12:00', room: 'Superior Room, 2 Queen Beds, Mountain View', breakfast: 'TBC', cost: 4264.35, paid: 0, ref: 'Booked: 73378525757483', platform: 'Expedia', cancelBy: '2026-09-19', rating: '4.4 (101)', contact: '+1 (403) 762-4581', status: 'booked', notes: '' },
+    { id: 'a4', city: 'Vancouver', name: 'Hotel BLU', address: '177 Robson Street, V6E 1B2 Vancouver, Canada', checkin: '2026-09-27', checkinTime: '16:00', checkout: '2026-10-01', checkoutTime: '12:00', room: 'Deluxe Queen Room with Two Queen Beds', breakfast: 'No – $26/pp/night', cost: 2068, paid: 0, ref: 'Booked: 5239573277', platform: 'Booking.com', cancelBy: '2026-09-24', rating: '4.7 (2,262)', contact: '+1 604-620-6200', status: 'booked', notes: '' },
+    { id: 'a5', city: 'Los Angeles', name: 'Viceroy Santa Monica', address: '1819 Ocean Avenue, Santa Monica, Los Angeles, CA 90401', checkin: '2026-10-01', checkinTime: '15:00', checkout: '2026-10-04', checkoutTime: '23:00', room: 'Ocean View Two Queens', breakfast: 'No – $32/pp/night', cost: 1565, paid: 0, ref: 'Booked: 6985396220', platform: 'Booking.com', cancelBy: '2026-09-24', rating: '4.3 (2,852)', contact: '+1 310-260-7500', status: 'booked', notes: '' },
+    { id: 'a6', city: 'Fiji', name: 'Sheraton Fiji Golf & Beach Resort', address: 'Denarau Island South, PO Box 9081 Nadi, Fiji', checkin: '2026-10-06', checkinTime: '15:00', checkout: '2026-10-10', checkoutTime: '12:00', room: 'Garden View, Guest Room, 2 Double', breakfast: 'Yes', cost: 2645.65, paid: 0, ref: 'Booked: 85442561', platform: 'Marriott Bonvoy', cancelBy: '2026-09-06', rating: '4.4 (646)', contact: '+679 675 0777', status: 'booked', notes: '' },
+  ];
+
+  store.flights = [
+    { id: 'f1', from: 'Sydney (SYD)', to: 'Los Angeles (LAX)', depDate: '2026-09-15', depTime: '13:15', arrDate: '2026-09-15', arrTime: '12:55', airline: 'Fiji Airways', flightNum: 'FJ 910 / FJ 810', duration: '14h 25m total', stops: '1 stop @ Fiji (arrive 6:55pm, depart 9:40pm)', seats: 'To be selected', baggage: '30kg + 7kg each', ref: 'EC8HO6', terminal: 'Sydney T1 / Nadi', cost: 5148, paid: 0, status: 'booked', notes: 'Seats additional charge' },
+    { id: 'f2', from: 'Los Angeles (LAX)', to: 'Calgary (YYC)', depDate: '2026-09-20', depTime: '11:40', arrDate: '2026-09-20', arrTime: '17:20', airline: 'Westjet', flightNum: 'WS 1023', duration: '3h 04m', stops: 'Direct', seats: '11A, 11B, 11C, 11D', baggage: '23kg + 7kg each', ref: 'To be booked', terminal: 'LAX Terminal 2 / YYC', cost: 1219, paid: 0, status: 'pending', notes: 'Seats are free' },
+    { id: 'f3', from: 'Calgary (YYC)', to: 'Vancouver (YVR)', depDate: '2026-09-27', depTime: '14:20', arrDate: '2026-09-27', arrTime: '15:00', airline: 'Flair Airlines', flightNum: 'F8 805', duration: '1h 40m', stops: 'Direct', seats: 'To be selected', baggage: '', ref: 'To be booked', terminal: 'YYC / YVR', cost: 1056, paid: 0, status: 'pending', notes: '' },
+    { id: 'f4', from: 'Vancouver (YVR)', to: 'Los Angeles (LAX)', depDate: '2026-10-01', depTime: '13:00', arrDate: '2026-10-01', arrTime: '16:00', airline: 'Air Canada', flightNum: 'AC 556', duration: '3h 00m', stops: 'Direct', seats: '13A, 13C, 14A, 14C', baggage: '23kg + 7kg each', ref: 'AW8K6A', terminal: 'YVR / LAX', cost: 1106, paid: 0, status: 'booked', notes: 'Seats are free' },
+    { id: 'f5', from: 'Los Angeles (LAX)', to: 'Fiji / Sydney (NAN → SYD)', depDate: '2026-10-04', depTime: '23:55', arrDate: '2026-10-10', arrTime: '12:45', airline: 'Fiji Airways', flightNum: 'FJ 811 / FJ 911', duration: '10h 50m + 4h 45m', stops: 'Stop @ Fiji (4 nights resort stay)', seats: 'To be selected', baggage: '30kg + 7kg each', ref: 'EC8HO6', terminal: 'LAX / Nadi / Sydney T1', cost: 0, paid: 0, status: 'booked', notes: 'Included in original Fiji Airways booking EC8HO6. Seats additional charge.' },
+  ];
+
+  saveStore();
+}
+
+// ===========================
+// CALENDAR
+// ===========================
+let calYear = 2026;
+let calMonth = 8; // 0-indexed, so 8 = September
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+function goToToday() {
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCalendar();
+}
+
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function renderCalendar() {
+  const label = document.getElementById('calMonthLabel');
+  label.textContent = MONTH_NAMES[calMonth] + ' ' + calYear;
+
+  const body = document.getElementById('calBody');
+  body.innerHTML = '';
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+
+  // Empty cells before first day
+  for (let i = 0; i < firstDay; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell empty';
+    body.appendChild(cell);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const events = store.calEvents.filter(e => e.date === dateStr);
+
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell' + (dateStr === todayStr ? ' today' : '') + (events.length > 0 ? ' has-event' : '');
+    cell.onclick = () => openCalModal(dateStr);
+
+    const dateDiv = document.createElement('div');
+    dateDiv.className = 'cal-date';
+    const dateNum = document.createElement('div');
+    dateNum.className = 'cal-date-num';
+    dateNum.textContent = d;
+    dateDiv.appendChild(dateNum);
+    cell.appendChild(dateDiv);
+
+    // Location badge
+    const loc = getLocationForDate(dateStr);
+    if (loc) {
+      const badge = document.createElement('div');
+      badge.className = `loc-badge loc-${loc.key}`;
+      badge.textContent = loc.label;
+      cell.appendChild(badge);
+    }
+
+    events.forEach(ev => {
+      const pill = document.createElement('div');
+      pill.className = `cal-event-pill type-${ev.type}`;
+      const typeIcon = { flight: '✈', hotel: '🏨', activity: '🎡', note: '📝' }[ev.type] || '•';
+      pill.innerHTML = `<span>${typeIcon}</span><span>${ev.time ? ev.time + ' ' : ''}${ev.title}</span>`;
+      pill.onclick = (e) => { e.stopPropagation(); openCalModal(dateStr, ev.id); };
+      cell.appendChild(pill);
+    });
+
+    const addBtn = document.createElement('button');
+    addBtn.className = 'cal-add-btn';
+    addBtn.textContent = '+';
+    addBtn.title = 'Add event';
+    addBtn.onclick = (e) => { e.stopPropagation(); openCalModal(dateStr); };
+    cell.appendChild(addBtn);
+
+    body.appendChild(cell);
+  }
+
+  // Fill remainder
+  const totalCells = firstDay + daysInMonth;
+  const rem = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+  for (let i = 0; i < rem; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell empty';
+    body.appendChild(cell);
+  }
+}
+
+function getLocationForDate(dateStr) {
+  const segments = [
+    { from: '2026-09-15', to: '2026-09-20', key: 'la', label: '📍 LA / Anaheim' },
+    { from: '2026-09-20', to: '2026-09-22', key: 'calgary', label: '📍 Calgary' },
+    { from: '2026-09-22', to: '2026-09-27', key: 'banff', label: '📍 Banff' },
+    { from: '2026-09-27', to: '2026-10-01', key: 'vancouver', label: '📍 Vancouver' },
+    { from: '2026-10-01', to: '2026-10-04', key: 'la', label: '📍 Santa Monica' },
+    { from: '2026-10-04', to: '2026-10-06', key: 'transit', label: '✈ In Transit' },
+    { from: '2026-10-06', to: '2026-10-10', key: 'fiji', label: '📍 Fiji' },
+  ];
+  for (const s of segments) {
+    if (dateStr >= s.from && dateStr < s.to) return s;
+    if (dateStr === s.to) return s; // include last day
+  }
+  return null;
+}
+
+// Cal modal
+function openCalModal(dateStr, editId) {
+  const modal = document.getElementById('calModal');
+  document.getElementById('calModalTitle').textContent = editId ? 'Edit Event' : 'Add Event';
+  document.getElementById('calDeleteBtn').style.display = editId ? 'inline-flex' : 'none';
+  document.getElementById('calEditId').value = editId || '';
+  document.getElementById('calDate').value = dateStr || '';
+  document.getElementById('calTitle').value = '';
+  document.getElementById('calType').value = 'flight';
+  document.getElementById('calTime').value = '';
+  document.getElementById('calLocation').value = '';
+  document.getElementById('calNotes').value = '';
+
+  if (editId) {
+    const ev = store.calEvents.find(e => e.id === editId);
+    if (ev) {
+      document.getElementById('calDate').value = ev.date;
+      document.getElementById('calType').value = ev.type;
+      document.getElementById('calTitle').value = ev.title;
+      document.getElementById('calTime').value = ev.time || '';
+      document.getElementById('calLocation').value = ev.location || '';
+      document.getElementById('calNotes').value = ev.notes || '';
+    }
+  }
+  modal.classList.add('open');
+}
+
+function saveCalEvent() {
+  const editId = document.getElementById('calEditId').value;
+  const ev = {
+    id: editId || 'e' + Date.now(),
+    date: document.getElementById('calDate').value,
+    type: document.getElementById('calType').value,
+    title: document.getElementById('calTitle').value.trim(),
+    time: document.getElementById('calTime').value,
+    location: document.getElementById('calLocation').value.trim(),
+    notes: document.getElementById('calNotes').value.trim(),
+  };
+  if (!ev.date || !ev.title) { showToast('Please fill in date and title.'); return; }
+  if (editId) {
+    const idx = store.calEvents.findIndex(e => e.id === editId);
+    if (idx >= 0) store.calEvents[idx] = ev;
+  } else {
+    store.calEvents.push(ev);
+  }
+  saveStore();
+  closeModal('calModal');
+  renderCalendar();
+  showToast('Event saved ✓');
+}
+
+function deleteCalEvent() {
+  const editId = document.getElementById('calEditId').value;
+  store.calEvents = store.calEvents.filter(e => e.id !== editId);
+  saveStore();
+  closeModal('calModal');
+  renderCalendar();
+  showToast('Event deleted');
+}
+
+// ===========================
+// ACCOMMODATION
+// ===========================
+function renderAccom() {
+  const grid = document.getElementById('accomGrid');
+  grid.innerHTML = '';
+
+  const totalCost = store.accommodations.reduce((s, a) => s + (parseFloat(a.cost) || 0), 0);
+  const totalPaid = store.accommodations.reduce((s, a) => s + (parseFloat(a.paid) || 0), 0);
+  const totalNights = store.accommodations.reduce((s, a) => {
+    if (!a.checkin || !a.checkout) return s;
+    const d = (new Date(a.checkout) - new Date(a.checkin)) / 86400000;
+    return s + (d > 0 ? d : 0);
+  }, 0);
+
+  document.getElementById('accomSummary').innerHTML = `
+    <div class="summary-card"><div class="summary-label">Total Hotels</div><div class="summary-value">${store.accommodations.length}</div><div class="summary-sub">properties</div></div>
+    <div class="summary-card"><div class="summary-label">Total Nights</div><div class="summary-value">${totalNights}</div><div class="summary-sub">nights away</div></div>
+    <div class="summary-card"><div class="summary-label">Total Cost</div><div class="summary-value">$${totalCost.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD</div></div>
+    <div class="summary-card"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">$${(totalCost-totalPaid).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD remaining</div></div>
+  `;
+
+  store.accommodations.forEach(a => {
+    const nights = a.checkin && a.checkout ? Math.round((new Date(a.checkout) - new Date(a.checkin)) / 86400000) : 0;
+    const perNight = nights > 0 ? (parseFloat(a.cost) / nights).toFixed(0) : 0;
+    const stars = parseFloat(a.rating) || 0;
+    const starsHtml = stars > 0 ? '★'.repeat(Math.round(stars)) + '☆'.repeat(5 - Math.round(stars)) : '';
+    const statusLabel = { booked: 'Booked ✓', pending: 'Pending', cancelled: 'Cancelled' }[a.status] || a.status;
+    const statusClass = { booked: 'status-booked', pending: 'status-pending', cancelled: 'status-cancelled' }[a.status] || '';
+
+    const card = document.createElement('div');
+    card.className = 'accom-card';
+    card.innerHTML = `
+      <div class="accom-card-header">
+        <div>
+          <div class="accom-city">${escHtml(a.city)}</div>
+          <div class="accom-name">${escHtml(a.name)}</div>
+        </div>
+        <span class="accom-status-badge ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="accom-body">
+        <div class="accom-dates">
+          <div class="accom-date-item">
+            <div class="accom-date-label">Check-in</div>
+            <div class="accom-date-val">${fmtDate(a.checkin)}</div>
+            <div style="font-size:11px;color:var(--text-light)">${escHtml(a.checkinTime || '')}</div>
+          </div>
+          <div class="accom-date-item">
+            <div class="accom-date-label">Check-out</div>
+            <div class="accom-date-val">${fmtDate(a.checkout)}</div>
+            <div style="font-size:11px;color:var(--text-light)">${escHtml(a.checkoutTime || '')} · ${nights} nights</div>
+          </div>
+        </div>
+        ${a.address ? `<div class="accom-row"><span class="accom-row-icon">📍</span><span style="font-size:12px;color:var(--text-mid)">${escHtml(a.address)}</span></div>` : ''}
+        ${a.room ? `<div class="accom-row"><span class="accom-row-icon">🛏</span><span class="accom-row-val">${escHtml(a.room)}</span></div>` : ''}
+        ${a.breakfast ? `<div class="accom-row"><span class="accom-row-icon">☕</span><span class="accom-row-label">Breakfast</span><span class="accom-row-val">${escHtml(a.breakfast)}</span></div>` : ''}
+        ${a.ref ? `<div class="accom-row"><span class="accom-row-icon">🔖</span><span class="accom-row-label">Booking</span><span class="accom-row-val">${escHtml(a.ref)}${a.platform ? ' · ' + escHtml(a.platform) : ''}</span></div>` : ''}
+        ${a.cancelBy ? `<div class="accom-row"><span class="accom-row-icon">⏰</span><span class="accom-row-label">Cancel by</span><span class="accom-row-val">${fmtDate(a.cancelBy)}</span></div>` : ''}
+        ${a.contact ? `<div class="accom-row"><span class="accom-row-icon">📞</span><span class="accom-row-val">${escHtml(a.contact)}</span></div>` : ''}
+        ${a.notes ? `<div style="font-size:12px;color:var(--text-light);margin-top:6px;padding:8px;background:var(--surface-3);border-radius:var(--r-sm)">${escHtml(a.notes)}</div>` : ''}
+      </div>
+      <div class="accom-footer">
+        <div>
+          <div class="accom-cost">$${parseFloat(a.cost||0).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})} <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--text-light)">AUD</span></div>
+          <div class="accom-cost-sub">$${perNight}/night${a.paid > 0 ? ' · $'+parseFloat(a.paid).toLocaleString()+' paid' : ' · unpaid'}</div>
+          ${starsHtml ? `<div class="rating-stars">${starsHtml} <span style="color:var(--text-light);font-family:'DM Sans';font-size:11px">${escHtml(a.rating)}</span></div>` : ''}
+        </div>
+        <div class="accom-actions">
+          <button class="btn btn-primary btn-sm accom-edit-btn" style="gap:5px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Edit
+          </button>
+        </div>
+      </div>
+    `;
+    // Wire edit button via addEventListener — avoids any inline onclick quoting issues
+    card.querySelector('.accom-edit-btn').addEventListener('click', () => openAccomModal(a.id));
+    grid.appendChild(card);
+  });
+
+  // Add button
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-card-btn';
+  addBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Accommodation`;
+  addBtn.onclick = () => openAccomModal();
+  grid.appendChild(addBtn);
+}
+
+function openAccomModal(editId) {
+  const modal = document.getElementById('accomModal');
+  document.getElementById('accomModalTitle').textContent = editId ? 'Edit Accommodation' : 'Add Accommodation';
+  document.getElementById('accomDeleteBtn').style.display = editId ? 'inline-flex' : 'none';
+  document.getElementById('accomEditId').value = editId || '';
+
+  const fields = ['City','Name','Address','Checkin','CheckinTime','Checkout','CheckoutTime','Room','Breakfast','Cost','Paid','Ref','Platform','CancelBy','Rating','Contact','Notes','Status'];
+  fields.forEach(f => {
+    const el = document.getElementById('accom'+f);
+    if (el) el.value = '';
+  });
+  document.getElementById('accomCheckinTime').value = '15:00';
+  document.getElementById('accomCheckoutTime').value = '12:00';
+  document.getElementById('accomBreakfast').value = 'TBC';
+  document.getElementById('accomStatus').value = 'booked';
+
+  if (editId) {
+    const a = store.accommodations.find(x => x.id === editId);
+    if (a) {
+      document.getElementById('accomCity').value = a.city || '';
+      document.getElementById('accomName').value = a.name || '';
+      document.getElementById('accomAddress').value = a.address || '';
+      document.getElementById('accomCheckin').value = a.checkin || '';
+      document.getElementById('accomCheckinTime').value = a.checkinTime || '15:00';
+      document.getElementById('accomCheckout').value = a.checkout || '';
+      document.getElementById('accomCheckoutTime').value = a.checkoutTime || '12:00';
+      document.getElementById('accomRoom').value = a.room || '';
+      document.getElementById('accomBreakfast').value = a.breakfast || 'TBC';
+      document.getElementById('accomCost').value = a.cost || '';
+      document.getElementById('accomPaid').value = a.paid || '';
+      document.getElementById('accomRef').value = a.ref || '';
+      document.getElementById('accomPlatform').value = a.platform || '';
+      document.getElementById('accomCancelBy').value = a.cancelBy || '';
+      document.getElementById('accomRating').value = a.rating || '';
+      document.getElementById('accomContact').value = a.contact || '';
+      document.getElementById('accomNotes').value = a.notes || '';
+      document.getElementById('accomStatus').value = a.status || 'booked';
+    }
+  }
+  modal.classList.add('open');
+}
+
+function saveAccom() {
+  const editId = document.getElementById('accomEditId').value;
+  const a = {
+    id: editId || 'a' + Date.now(),
+    city: document.getElementById('accomCity').value.trim(),
+    name: document.getElementById('accomName').value.trim(),
+    address: document.getElementById('accomAddress').value.trim(),
+    checkin: document.getElementById('accomCheckin').value,
+    checkinTime: document.getElementById('accomCheckinTime').value,
+    checkout: document.getElementById('accomCheckout').value,
+    checkoutTime: document.getElementById('accomCheckoutTime').value,
+    room: document.getElementById('accomRoom').value.trim(),
+    breakfast: document.getElementById('accomBreakfast').value,
+    cost: parseFloat(document.getElementById('accomCost').value) || 0,
+    paid: parseFloat(document.getElementById('accomPaid').value) || 0,
+    ref: document.getElementById('accomRef').value.trim(),
+    platform: document.getElementById('accomPlatform').value.trim(),
+    cancelBy: document.getElementById('accomCancelBy').value,
+    rating: document.getElementById('accomRating').value.trim(),
+    contact: document.getElementById('accomContact').value.trim(),
+    notes: document.getElementById('accomNotes').value.trim(),
+    status: document.getElementById('accomStatus').value,
+  };
+  if (!a.name) { showToast('Please enter hotel name.'); return; }
+  if (editId) {
+    const idx = store.accommodations.findIndex(x => x.id === editId);
+    if (idx >= 0) store.accommodations[idx] = a;
+  } else {
+    store.accommodations.push(a);
+  }
+  saveStore();
+  closeModal('accomModal');
+  renderAccom();
+  showToast('Accommodation saved ✓');
+}
+
+function deleteAccom() {
+  const editId = document.getElementById('accomEditId').value;
+  store.accommodations = store.accommodations.filter(x => x.id !== editId);
+  saveStore();
+  closeModal('accomModal');
+  renderAccom();
+  showToast('Accommodation deleted');
+}
+
+// ===========================
+// FLIGHTS
+// ===========================
+function renderFlights() {
+  const container = document.getElementById('flightsContainer');
+  container.innerHTML = '';
+
+  const totalCost = store.flights.reduce((s, f) => s + (parseFloat(f.cost) || 0), 0);
+  const totalPaid = store.flights.reduce((s, f) => s + (parseFloat(f.paid) || 0), 0);
+  const booked = store.flights.filter(f => f.status === 'booked').length;
+
+  document.getElementById('flightSummary').innerHTML = `
+    <div class="summary-card"><div class="summary-label">Total Legs</div><div class="summary-value">${store.flights.length}</div><div class="summary-sub">flight segments</div></div>
+    <div class="summary-card"><div class="summary-label">Confirmed</div><div class="summary-value" style="color:var(--teal)">${booked}</div><div class="summary-sub">of ${store.flights.length} booked</div></div>
+    <div class="summary-card"><div class="summary-label">Total Cost</div><div class="summary-value">$${totalCost.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD</div></div>
+    <div class="summary-card"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">$${(totalCost-totalPaid).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD remaining</div></div>
+  `;
+
+  store.flights.forEach((f, idx) => {
+    const statusLabel = { booked: 'Booked ✓', pending: 'To be booked', cancelled: 'Cancelled' }[f.status] || f.status;
+    const statusColor = { booked: 'green', pending: 'amber', cancelled: 'red' }[f.status] || '';
+
+    const card = document.createElement('div');
+    card.className = 'flight-card';
+    card.innerHTML = `
+      <div style="padding:12px 20px 0; display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:11px; font-weight:700; color:var(--text-light)">LEG ${idx+1}</span>
+          <span class="flight-airline-badge">✈ ${escHtml(f.airline || 'Unknown')}</span>
+          ${f.flightNum ? `<span class="tag">${escHtml(f.flightNum)}</span>` : ''}
+        </div>
+        <span class="tag ${statusColor}">${statusLabel}</span>
+      </div>
+      <div class="flight-card-inner">
+        <div class="flight-endpoint">
+          <div class="flight-time">${escHtml(f.depTime || '—')}</div>
+          <div class="flight-airport">${escHtml(f.from || '—')}</div>
+          <div class="flight-date">${fmtDate(f.depDate)}</div>
+        </div>
+        <div class="flight-middle">
+          <div class="flight-line">
+            <div class="flight-line-bar"></div>
+            <span class="flight-plane-icon">✈</span>
+            <div class="flight-line-bar"></div>
+          </div>
+          <div class="flight-duration">${escHtml(f.duration || '—')}</div>
+          <div class="flight-stops">${escHtml(f.stops || 'Direct')}</div>
+        </div>
+        <div class="flight-endpoint right">
+          <div class="flight-time">${escHtml(f.arrTime || '—')}</div>
+          <div class="flight-airport">${escHtml(f.to || '—')}</div>
+          <div class="flight-date">${fmtDate(f.arrDate)}</div>
+        </div>
+      </div>
+      <div class="flight-meta">
+        ${f.ref ? `<div class="flight-meta-item"><div class="flight-meta-label">Booking Ref</div><div class="flight-meta-val">${escHtml(f.ref)}</div></div>` : ''}
+        ${f.seats ? `<div class="flight-meta-item"><div class="flight-meta-label">Seats</div><div class="flight-meta-val">${escHtml(f.seats)}</div></div>` : ''}
+        ${f.baggage ? `<div class="flight-meta-item"><div class="flight-meta-label">Baggage</div><div class="flight-meta-val">${escHtml(f.baggage)}</div></div>` : ''}
+        ${f.terminal ? `<div class="flight-meta-item"><div class="flight-meta-label">Terminal</div><div class="flight-meta-val">${escHtml(f.terminal)}</div></div>` : ''}
+        ${f.notes ? `<div class="flight-meta-item"><div class="flight-meta-label">Notes</div><div class="flight-meta-val">${escHtml(f.notes)}</div></div>` : ''}
+      </div>
+      <div class="flight-footer">
+        <div>
+          <div class="flight-cost">$${parseFloat(f.cost||0).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})} <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--text-light)">AUD</span></div>
+          ${f.paid > 0 ? `<div style="font-size:11px;color:var(--text-light)">$${parseFloat(f.paid).toLocaleString()} paid</div>` : '<div style="font-size:11px;color:var(--coral)">Unpaid</div>'}
+        </div>
+        <button class="btn btn-primary btn-sm flight-edit-btn" style="gap:5px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit Flight
+        </button>
+      </div>
+    `;
+    // Wire edit button via addEventListener — avoids any inline onclick quoting issues
+    card.querySelector('.flight-edit-btn').addEventListener('click', () => openFlightModal(f.id));
+    container.appendChild(card);
+  });
+
+  // Add button
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-card-btn';
+  addBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Flight Leg`;
+  addBtn.onclick = () => openFlightModal();
+  container.appendChild(addBtn);
+}
+
+function openFlightModal(editId) {
+  const modal = document.getElementById('flightModal');
+  document.getElementById('flightModalTitle').textContent = editId ? 'Edit Flight' : 'Add Flight';
+  document.getElementById('flightDeleteBtn').style.display = editId ? 'inline-flex' : 'none';
+  document.getElementById('flightEditId').value = editId || '';
+
+  const ids = ['From','To','DepDate','DepTime','ArrDate','ArrTime','Airline','Number','Duration','Stops','Seats','Baggage','Ref','Terminal','Cost','Paid','Notes'];
+  ids.forEach(id => { const el = document.getElementById('flight'+id); if (el) el.value = ''; });
+  document.getElementById('flightStatus').value = 'pending';
+
+  if (editId) {
+    const f = store.flights.find(x => x.id === editId);
+    if (f) {
+      document.getElementById('flightFrom').value = f.from || '';
+      document.getElementById('flightTo').value = f.to || '';
+      document.getElementById('flightDepDate').value = f.depDate || '';
+      document.getElementById('flightDepTime').value = f.depTime || '';
+      document.getElementById('flightArrDate').value = f.arrDate || '';
+      document.getElementById('flightArrTime').value = f.arrTime || '';
+      document.getElementById('flightAirline').value = f.airline || '';
+      document.getElementById('flightNumber').value = f.flightNum || '';
+      document.getElementById('flightDuration').value = f.duration || '';
+      document.getElementById('flightStops').value = f.stops || '';
+      document.getElementById('flightSeats').value = f.seats || '';
+      document.getElementById('flightBaggage').value = f.baggage || '';
+      document.getElementById('flightRef').value = f.ref || '';
+      document.getElementById('flightTerminal').value = f.terminal || '';
+      document.getElementById('flightCost').value = f.cost || '';
+      document.getElementById('flightPaid').value = f.paid || '';
+      document.getElementById('flightStatus').value = f.status || 'pending';
+      document.getElementById('flightNotes').value = f.notes || '';
+    }
+  }
+  modal.classList.add('open');
+}
+
+function saveFlight() {
+  const editId = document.getElementById('flightEditId').value;
+  const f = {
+    id: editId || 'f' + Date.now(),
+    from: document.getElementById('flightFrom').value.trim(),
+    to: document.getElementById('flightTo').value.trim(),
+    depDate: document.getElementById('flightDepDate').value,
+    depTime: document.getElementById('flightDepTime').value,
+    arrDate: document.getElementById('flightArrDate').value,
+    arrTime: document.getElementById('flightArrTime').value,
+    airline: document.getElementById('flightAirline').value.trim(),
+    flightNum: document.getElementById('flightNumber').value.trim(),
+    duration: document.getElementById('flightDuration').value.trim(),
+    stops: document.getElementById('flightStops').value.trim(),
+    seats: document.getElementById('flightSeats').value.trim(),
+    baggage: document.getElementById('flightBaggage').value.trim(),
+    ref: document.getElementById('flightRef').value.trim(),
+    terminal: document.getElementById('flightTerminal').value.trim(),
+    cost: parseFloat(document.getElementById('flightCost').value) || 0,
+    paid: parseFloat(document.getElementById('flightPaid').value) || 0,
+    status: document.getElementById('flightStatus').value,
+    notes: document.getElementById('flightNotes').value.trim(),
+  };
+  if (!f.from || !f.to) { showToast('Please enter origin and destination.'); return; }
+  if (editId) {
+    const idx = store.flights.findIndex(x => x.id === editId);
+    if (idx >= 0) store.flights[idx] = f;
+  } else {
+    store.flights.push(f);
+  }
+  saveStore();
+  closeModal('flightModal');
+  renderFlights();
+  showToast('Flight saved ✓');
+}
+
+function deleteFlight() {
+  const editId = document.getElementById('flightEditId').value;
+  store.flights = store.flights.filter(x => x.id !== editId);
+  saveStore();
+  closeModal('flightModal');
+  renderFlights();
+  showToast('Flight deleted');
+}
+
+// ===========================
+// IMPORT / EXPORT
+// ===========================
+function exportJSON() {
+  const data = JSON.stringify(store, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'trip-planner-2026.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Exported to JSON ✓');
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.calEvents !== undefined || data.accommodations !== undefined || data.flights !== undefined) {
+        if (data.calEvents) store.calEvents = data.calEvents;
+        if (data.accommodations) store.accommodations = data.accommodations;
+        if (data.flights) store.flights = data.flights;
+        saveStore();
+        renderCalendar();
+        renderAccom();
+        renderFlights();
+        showToast('Data imported successfully ✓');
+      } else {
+        showToast('Invalid file format.');
+      }
+    } catch {
+      showToast('Failed to parse JSON file.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ===========================
+// UTILS
+// ===========================
+function showSection(id, tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  tab.classList.add('active');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close modal on backdrop click
+document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) backdrop.classList.remove('open');
+  });
+});
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function fmtDate(str) {
+  if (!str) return '—';
+  try {
+    const d = new Date(str + 'T12:00:00');
+    return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+  } catch { return str; }
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ===========================
+// TO-DO
+// ===========================
+let todoFilter = 'all';
+
+function seedTodos() {
+  store.todos = [
+    { id: 't1', task: 'Book LAX → Calgary (Westjet WS1023) flights', dueDate: '2026-08-01', assigned: 'Dad', status: 'Not Started', notes: 'Option: depart 11:40 or 15:05. Cost ~$1,219 AUD' },
+    { id: 't2', task: 'Book Calgary → Vancouver (Flair F8 805) flights', dueDate: '2026-08-01', assigned: 'Dad', status: 'Not Started', notes: 'Depart 14:20, arrive 15:00. Cost ~$1,056 AUD' },
+    { id: 't3', task: 'Select seats – Fiji Airways (EC8HO6)', dueDate: '2026-08-15', assigned: 'Mum', status: 'Not Started', notes: 'Seats cost extra. Both SYD↔LAX legs' },
+    { id: 't4', task: 'Buy Disneyland / Disney park tickets', dueDate: '2026-08-20', assigned: 'Mum', status: 'Not Started', notes: 'Sep 17 & 19 (Maisy birthday). Book early to secure dates' },
+    { id: 't5', task: 'Buy Universal Studios tickets', dueDate: '2026-09-01', assigned: 'Dad', status: 'Not Started', notes: 'Oct 2 – Santa Monica stay' },
+    { id: 't6', task: 'Arrange travel insurance for all 4', dueDate: '2026-08-01', assigned: 'Dad', status: 'Not Started', notes: '' },
+    { id: 't7', task: 'Check passport expiry dates (all 4)', dueDate: '2026-07-15', assigned: 'Mum', status: 'Not Started', notes: 'Passports must be valid 6 months beyond return date (Apr 2027)' },
+    { id: 't8', task: 'Apply for US ESTA (electronic travel authorisation)', dueDate: '2026-08-15', assigned: 'Dad', status: 'Not Started', notes: 'Required for all Australian passport holders entering USA' },
+    { id: 't9', task: 'Apply for Canadian eTA', dueDate: '2026-08-15', assigned: 'Dad', status: 'Not Started', notes: 'Required for visa-exempt foreign nationals flying into Canada' },
+    { id: 't10', task: 'Confirm free-cancellation deadlines for all hotels', dueDate: '2026-09-01', assigned: 'Mum', status: 'Not Started', notes: 'Earliest is Sheraton Fiji – cancel by 6 Sep' },
+    { id: 't11', task: 'Pack bags & check baggage allowances', dueDate: '2026-09-13', assigned: 'Mum', status: 'Not Started', notes: 'Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg' },
+    { id: 't12', task: 'Download offline maps (Google Maps) for all cities', dueDate: '2026-09-10', assigned: 'Isla', status: 'Not Started', notes: 'LA, Calgary, Banff, Vancouver, Fiji' },
+  ];
+}
+
+function daysLeft(dueDateStr) {
+  if (!dueDateStr) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const due = new Date(dueDateStr + 'T00:00:00');
+  return Math.round((due - today) / 86400000);
+}
+
+function daysBadge(days, status) {
+  if (status === 'Done') return `<span class="days-badge days-done">Done</span>`;
+  if (days === null) return `<span class="days-badge days-nodate">No date</span>`;
+  if (days < 0)  return `<span class="days-badge days-overdue">${Math.abs(days)}d overdue</span>`;
+  if (days === 0) return `<span class="days-badge days-urgent">Today!</span>`;
+  if (days <= 7)  return `<span class="days-badge days-urgent">${days}d left</span>`;
+  if (days <= 30) return `<span class="days-badge days-soon">${days}d left</span>`;
+  return `<span class="days-badge days-ok">${days}d left</span>`;
+}
+
+function personChip(name) {
+  const key = { Dad: 'dad', Mum: 'mum', Isla: 'isla', Maisy: 'maisy' }[name] || 'dad';
+  const initials = name.slice(0,1);
+  return `<span class="person-chip person-${key}">${initials} ${name}</span>`;
+}
+
+function statusPill(s) {
+  const map = {
+    'Not Started': ['status-notstarted', '○'],
+    'In Progress': ['status-inprogress', '◑'],
+    'Done':        ['status-done', '✓'],
+  };
+  const [cls, icon] = map[s] || ['status-notstarted', '○'];
+  return `<span class="status-pill ${cls}">${icon} ${s}</span>`;
+}
+
+function setTodoFilter(filter, btn) {
+  todoFilter = filter;
+  document.querySelectorAll('.todo-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTodos();
+}
+
+function renderTodos() {
+  if (!store.todos) store.todos = [];
+
+  const personFilter = document.getElementById('todoFilterPerson')?.value || 'all';
+  let todos = store.todos.filter(t => {
+    const statusMatch = todoFilter === 'all' || t.status === todoFilter;
+    const personMatch = personFilter === 'all' || t.assigned === personFilter;
+    return statusMatch && personMatch;
+  });
+
+  // Sort: overdue first, then by days left, done at bottom
+  todos.sort((a, b) => {
+    if (a.status === 'Done' && b.status !== 'Done') return 1;
+    if (b.status === 'Done' && a.status !== 'Done') return -1;
+    const da = daysLeft(a.dueDate);
+    const db = daysLeft(b.dueDate);
+    if (da === null) return 1;
+    if (db === null) return -1;
+    return da - db;
+  });
+
+  // Summary bar
+  const total = store.todos.length;
+  const done = store.todos.filter(t => t.status === 'Done').length;
+  const inProg = store.todos.filter(t => t.status === 'In Progress').length;
+  const notStarted = store.todos.filter(t => t.status === 'Not Started').length;
+  const overdue = store.todos.filter(t => t.status !== 'Done' && t.dueDate && daysLeft(t.dueDate) < 0).length;
+
+  document.getElementById('todoSummary').innerHTML = `
+    <div class="summary-card"><div class="summary-label">Total Tasks</div><div class="summary-value">${total}</div><div class="summary-sub">across the trip</div></div>
+    <div class="summary-card"><div class="summary-label">Done</div><div class="summary-value" style="color:var(--teal)">${done}</div><div class="summary-sub">completed</div></div>
+    <div class="summary-card"><div class="summary-label">In Progress</div><div class="summary-value" style="color:#856404">${inProg}</div><div class="summary-sub">underway</div></div>
+    <div class="summary-card"><div class="summary-label">Not Started</div><div class="summary-value" style="color:var(--text-mid)">${notStarted}</div><div class="summary-sub">to do</div></div>
+    ${overdue > 0 ? `<div class="summary-card"><div class="summary-label">Overdue</div><div class="summary-value" style="color:var(--coral)">${overdue}</div><div class="summary-sub">past due date</div></div>` : ''}
+  `;
+
+  // Update tab badge
+  const pending = store.todos.filter(t => t.status !== 'Done').length;
+  const badge = document.getElementById('todoCountBadge');
+  if (badge) {
+    badge.textContent = pending;
+    badge.style.display = pending > 0 ? 'inline-flex' : 'none';
+  }
+
+  const wrap = document.getElementById('todoTableWrap');
+
+  if (todos.length === 0) {
+    wrap.innerHTML = `
+      <div class="todo-empty">
+        <div class="todo-empty-icon">✅</div>
+        <div>${todoFilter === 'Done' ? 'No completed tasks yet.' : 'No tasks match this filter.'}</div>
+      </div>`;
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.className = 'todo-table';
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th style="width:36%">Task</th>
+        <th style="width:10%">Due Date</th>
+        <th style="width:11%">Days Left</th>
+        <th style="width:10%">Assigned</th>
+        <th style="width:13%">Status</th>
+        <th style="width:14%">Notes</th>
+        <th style="width:6%"></th>
+      </tr>
+    </thead>
+    <tbody id="todoTbody"></tbody>
+  `;
+
+  const tbody = table.querySelector('#todoTbody');
+
+  todos.forEach(t => {
+    const days = daysLeft(t.dueDate);
+    const isDone = t.status === 'Done';
+    const tr = document.createElement('tr');
+    if (isDone) tr.classList.add('todo-done');
+
+    tr.innerHTML = `
+      <td>
+        <div class="todo-task-text">${escHtml(t.task)}</div>
+      </td>
+      <td style="color:var(--text-mid); white-space:nowrap">${t.dueDate ? fmtDate(t.dueDate) : '<span style="color:var(--text-light)">—</span>'}</td>
+      <td>${daysBadge(days, t.status)}</td>
+      <td>${personChip(t.assigned)}</td>
+      <td>${statusPill(t.status)}</td>
+      <td style="font-size:12px; color:var(--text-light); max-width:160px; word-break:break-word">${escHtml(t.notes || '')}</td>
+      <td>
+        <button class="todo-edit-btn" title="Edit task">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
+      </td>
+    `;
+    tr.querySelector('.todo-edit-btn').addEventListener('click', () => openTodoModal(t.id));
+    tbody.appendChild(tr);
+  });
+
+  wrap.innerHTML = '';
+  wrap.appendChild(table);
+}
+
+function openTodoModal(editId) {
+  const modal = document.getElementById('todoModal');
+  document.getElementById('todoModalTitle').textContent = editId ? 'Edit Task' : 'Add Task';
+  document.getElementById('todoDeleteBtn').style.display = editId ? 'inline-flex' : 'none';
+  document.getElementById('todoEditId').value = editId || '';
+  document.getElementById('todoTask').value = '';
+  document.getElementById('todoDueDate').value = '';
+  document.getElementById('todoAssigned').value = 'Dad';
+  document.getElementById('todoStatus').value = 'Not Started';
+  document.getElementById('todoNotes').value = '';
+
+  if (editId) {
+    const t = (store.todos || []).find(x => x.id === editId);
+    if (t) {
+      document.getElementById('todoTask').value = t.task || '';
+      document.getElementById('todoDueDate').value = t.dueDate || '';
+      document.getElementById('todoAssigned').value = t.assigned || 'Dad';
+      document.getElementById('todoStatus').value = t.status || 'Not Started';
+      document.getElementById('todoNotes').value = t.notes || '';
+    }
+  }
+  modal.classList.add('open');
+}
+
+function saveTodo() {
+  if (!store.todos) store.todos = [];
+  const editId = document.getElementById('todoEditId').value;
+  const t = {
+    id: editId || 't' + Date.now(),
+    task: document.getElementById('todoTask').value.trim(),
+    dueDate: document.getElementById('todoDueDate').value,
+    assigned: document.getElementById('todoAssigned').value,
+    status: document.getElementById('todoStatus').value,
+    notes: document.getElementById('todoNotes').value.trim(),
+  };
+  if (!t.task) { showToast('Please enter a task description.'); return; }
+  if (editId) {
+    const idx = store.todos.findIndex(x => x.id === editId);
+    if (idx >= 0) store.todos[idx] = t; else store.todos.push(t);
+  } else {
+    store.todos.push(t);
+  }
+  saveStore();
+  closeModal('todoModal');
+  renderTodos();
+  showToast('Task saved ✓');
+}
+
+function deleteTodo() {
+  const editId = document.getElementById('todoEditId').value;
+  store.todos = (store.todos || []).filter(x => x.id !== editId);
+  saveStore();
+  closeModal('todoModal');
+  renderTodos();
+  showToast('Task deleted');
+}
+
+
+loadStore();
+renderCalendar();
+renderAccom();
+renderFlights();
+renderTodos();
+</script>
+</body>
+</html>
