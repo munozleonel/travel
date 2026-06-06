@@ -1899,14 +1899,16 @@ function importJSON(event) {
   reader.onload = (e) => {
     try {
       const data = JSON.parse(e.target.result);
-      if (data.calEvents !== undefined || data.accommodations !== undefined || data.flights !== undefined) {
+      if (data.calEvents !== undefined || data.accommodations !== undefined || data.flights !== undefined || data.todos !== undefined) {
         if (data.calEvents) store.calEvents = data.calEvents;
         if (data.accommodations) store.accommodations = data.accommodations;
         if (data.flights) store.flights = data.flights;
+        if (data.todos) store.todos = data.todos;
         saveStore();
         renderCalendar();
         renderAccom();
         renderFlights();
+        renderTodos();
         showToast('Data imported successfully ✓');
       } else {
         showToast('Invalid file format.');
