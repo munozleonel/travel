@@ -843,8 +843,17 @@
         Import JSON
         <input type="file" accept=".json" id="importFile" style="display:none" onchange="importJSON(event)">
       </label>
+      <button class="btn btn-ghost" id="githubSaveBtn" onclick="saveToGitHub()" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16.58A5 5 0 0018 7h-1.26A8 8 0 104 15.25"/><path d="M12 12v9"/><path d="M9 18l3-3 3 3"/></svg>
+        Save to GitHub
+      </button>
+      <button class="btn btn-ghost" id="githubFetchBtn" onclick="fetchFromGitHub(true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16.58A5 5 0 0018 7h-1.26A8 8 0 104 15.25"/><path d="M12 21v-9"/><path d="M9 15l3 3 3-3"/></svg>
+        Sync from GitHub
+      </button>
     </div>
   </div>
+  <div id="githubStatus" style="display:none; font-size:12px; padding:6px 2rem; text-align:right; font-family:monospace;"></div>
 </header>
 
 <div style="background:var(--surface); border-bottom: 1px solid var(--border);">
@@ -1320,6 +1329,178 @@ function loadStore() {
 
 function saveStore() {
   localStorage.setItem('tripPlanner2026', JSON.stringify(store));
+}
+
+// ===========================
+// GITHUB SYNC
+// ===========================
+// NOTE: update these to point at your own repo before using Save/Sync.
+const GH_OWNER   = 'munozleonel';
+const GH_REPO    = 'trip-planner';
+const GH_FILE    = 'trip_planner_2026.json';
+const GH_BRANCH  = 'main';
+const GH_PAT_KEY = 'tripPlanner_gh_pat';
+
+const GH_RAW_URL = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${GH_FILE}`;
+const GH_API_URL = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
+
+function getGHToken() { try { return localStorage.getItem(GH_PAT_KEY) || ''; } catch(e) { return ''; } }
+function setGHToken(t) { try { localStorage.setItem(GH_PAT_KEY, t); } catch(e) {} }
+
+function setGHStatus(msg, colour) {
+  const el = document.getElementById('githubStatus');
+  if (!el) return;
+  el.style.display = msg ? '' : 'none';
+  el.style.color = colour || 'var(--text-light)';
+  el.textContent = msg;
+}
+
+function promptForPAT() {
+  return new Promise((resolve) => {
+    const old = document.getElementById('patModal');
+    if (old) old.remove();
+    const modal = document.createElement('div');
+    modal.id = 'patModal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(10,22,40,0.75);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px';
+    modal.innerHTML = `
+      <div style="background:var(--surface);border:1px solid var(--border-mid);border-radius:var(--r-lg);padding:32px;max-width:460px;width:100%;box-shadow:var(--shadow-md)">
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:10px">GitHub Personal Access Token</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--navy);margin-bottom:10px">Connect to GitHub</h2>
+        <p style="color:var(--text-mid);font-size:0.88rem;line-height:1.6;margin-bottom:18px">
+          To save data back to your repo, you need a Personal Access Token with <strong style="color:var(--text)">repo</strong> scope.<br><br>
+          <a href="https://github.com/settings/tokens/new?scopes=repo&description=TripPlanner" target="_blank" style="color:var(--teal)">&#x2192; Create a token on GitHub</a>
+        </p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+          <label style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-light)">Paste your token</label>
+          <input id="patInput" type="password" placeholder="ghp_..." autocomplete="off"
+            style="background:var(--surface-2);border:1px solid var(--border-mid);border-radius:var(--r-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;padding:10px 14px;outline:none;" />
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text-mid);cursor:pointer">
+            <input type="checkbox" id="patRemember" checked />
+            Remember in this browser (stored in localStorage)
+          </label>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button id="patOK" class="btn btn-primary" style="border:none;cursor:pointer">Connect</button>
+          <button id="patCancel" class="btn btn-ghost" style="cursor:pointer">Cancel</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    const inp = modal.querySelector('#patInput');
+    const existing = getGHToken();
+    if (existing) inp.value = existing;
+    inp.focus();
+    modal.querySelector('#patOK').onclick = () => {
+      const val = inp.value.trim();
+      if (!val) { inp.style.borderColor = 'var(--coral)'; return; }
+      if (modal.querySelector('#patRemember').checked) setGHToken(val);
+      modal.remove();
+      resolve(val);
+    };
+    modal.querySelector('#patCancel').onclick = () => { modal.remove(); resolve(null); };
+    inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') modal.querySelector('#patOK').click(); });
+  });
+}
+
+function applyRemoteStore(data) {
+  if (!data || typeof data !== 'object') return false;
+  if (data.calEvents !== undefined || data.accommodations !== undefined || data.flights !== undefined || data.todos !== undefined) {
+    if (data.calEvents) store.calEvents = data.calEvents;
+    if (data.accommodations) store.accommodations = data.accommodations;
+    if (data.flights) store.flights = data.flights;
+    if (data.todos) store.todos = data.todos;
+    return true;
+  }
+  return false;
+}
+
+async function fetchFromGitHub(manual) {
+  const btn = document.getElementById('githubFetchBtn');
+  if (btn) { btn.disabled = true; btn.dataset.label = btn.innerHTML; btn.textContent = '⏳ Syncing…'; }
+  if (manual) setGHStatus('Fetching data from GitHub…', 'var(--text-light)');
+  try {
+    const res = await fetch(GH_RAW_URL + '?cb=' + Date.now());
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!applyRemoteStore(data)) throw new Error('Invalid data file');
+
+    saveStore();
+    renderCalendar();
+    renderAccom();
+    renderFlights();
+    renderTodos();
+
+    const saveBtn = document.getElementById('githubSaveBtn');
+    if (saveBtn) saveBtn.disabled = false;
+    setGHStatus('✓ Synced from GitHub · ' + new Date().toLocaleTimeString(), 'var(--teal)');
+    if (manual) setTimeout(() => setGHStatus('', ''), 4000);
+    if (manual) showToast('Synced from GitHub ✓');
+  } catch (e) {
+    console.warn('GitHub fetch failed:', e);
+    if (manual) { setGHStatus('✗ Could not sync from GitHub: ' + e.message, 'var(--coral)'); showToast('GitHub sync failed'); }
+    else setGHStatus('', '');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = btn.dataset.label || 'Sync from GitHub'; }
+  }
+}
+
+async function saveToGitHub() {
+  let token = getGHToken();
+  if (!token) {
+    token = await promptForPAT();
+    if (!token) return;
+  }
+
+  const btn = document.getElementById('githubSaveBtn');
+  if (btn) { btn.disabled = true; btn.dataset.label = btn.innerHTML; btn.textContent = '⏳ Saving…'; }
+  setGHStatus('Pushing to GitHub…', 'var(--text-light)');
+
+  try {
+    const jsonStr = JSON.stringify(store, null, 2);
+    // btoa with unicode support
+    const content = btoa(unescape(encodeURIComponent(jsonStr)));
+
+    // Get current SHA (needed to update an existing file)
+    let sha = null;
+    try {
+      const shaRes = await fetch(GH_API_URL, {
+        headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' }
+      });
+      if (shaRes.ok) { const d = await shaRes.json(); sha = d.sha; }
+    } catch (_) {}
+
+    const body = {
+      message: 'Update trip planner data · ' + new Date().toISOString().slice(0, 10),
+      content,
+      branch: GH_BRANCH
+    };
+    if (sha) body.sha = sha;
+
+    const putRes = await fetch(GH_API_URL, {
+      method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!putRes.ok) {
+      const err = await putRes.json().catch(() => ({}));
+      if (putRes.status === 401) { setGHToken(''); throw new Error('Invalid token (401) — re-enter your PAT next save.'); }
+      throw new Error(err.message || `HTTP ${putRes.status}`);
+    }
+
+    setGHStatus('✓ Saved to GitHub · ' + new Date().toLocaleTimeString(), 'var(--teal)');
+    setTimeout(() => setGHStatus('', ''), 5000);
+    showToast('Saved to GitHub ✓');
+  } catch (e) {
+    console.error('GitHub save failed:', e);
+    setGHStatus('✗ Save failed: ' + e.message, 'var(--coral)');
+    showToast('GitHub save failed');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = btn.dataset.label || 'Save to GitHub'; }
+  }
 }
 
 function seedData() {
@@ -2188,11 +2369,34 @@ function deleteTodo() {
 }
 
 
-loadStore();
-renderCalendar();
-renderAccom();
-renderFlights();
-renderTodos();
+async function init() {
+  // Try GitHub first; fall back to localStorage if unavailable.
+  let loadedFromGH = false;
+  try {
+    const ghRes = await fetch(GH_RAW_URL + '?cb=' + Date.now());
+    if (ghRes.ok) {
+      const data = await ghRes.json();
+      if (applyRemoteStore(data)) {
+        saveStore();
+        loadedFromGH = true;
+        setGHStatus('✓ Synced from GitHub', 'var(--teal)');
+        setTimeout(() => setGHStatus('', ''), 3000);
+      }
+    }
+  } catch (_) { /* offline or fetch failed — fall through to localStorage */ }
+
+  if (!loadedFromGH) loadStore();
+
+  renderCalendar();
+  renderAccom();
+  renderFlights();
+  renderTodos();
+
+  const saveBtn = document.getElementById('githubSaveBtn');
+  if (saveBtn) saveBtn.disabled = false;
+}
+
+init();
 </script>
 </body>
 </html>
