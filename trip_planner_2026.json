@@ -389,7 +389,7 @@
       "task": "Book LAX → Calgary (Westjet WS1023) flights",
       "dueDate": "2026-08-01",
       "assigned": "Dad",
-      "status": "Not Started",
+      "status": "Done",
       "notes": "Option: depart 11:40 or 15:05. Cost ~$1,219 AUD"
     },
     {
@@ -397,7 +397,7 @@
       "task": "Book Calgary → Vancouver (Flair F8 805) flights",
       "dueDate": "2026-08-01",
       "assigned": "Dad",
-      "status": "Not Started",
+      "status": "Done",
       "notes": "Depart 14:20, arrive 15:00. Cost ~$1,056 AUD"
     },
     {
@@ -479,6 +479,110 @@
       "assigned": "Isla",
       "status": "Not Started",
       "notes": "LA, Calgary, Banff, Vancouver, Fiji"
+    },
+    {
+      "id": "t1783041643838",
+      "task": "Isla and Maisy absent forms",
+      "dueDate": "2026-07-06",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041657959",
+      "task": "LA dodgers tickets",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041669519",
+      "task": "Ice Hockey tickets",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041681303",
+      "task": "Canada tours",
+      "dueDate": "2026-07-20",
+      "assigned": "Mum",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041699111",
+      "task": "Medications check",
+      "dueDate": "2026-08-17",
+      "assigned": "Mum",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041834078",
+      "task": "Sydney transfers",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041844454",
+      "task": "US transfers",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041856046",
+      "task": "Canada transfers",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041873422",
+      "task": "Wise card top up",
+      "dueDate": "2026-08-17",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041894662",
+      "task": "Clear out phone memory",
+      "dueDate": "2026-08-17",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041907511",
+      "task": "Download movies",
+      "dueDate": "2026-08-17",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041928941",
+      "task": "Buy new SD cards",
+      "dueDate": "2026-08-03",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041939174",
+      "task": "Travel eSim cards",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
     }
   ]
 }
