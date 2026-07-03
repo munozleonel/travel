@@ -294,7 +294,7 @@
       "ref": "EC8HO6",
       "terminal": "Sydney T1 / Nadi",
       "cost": 5148,
-      "paid": 0,
+      "paid": 5148,
       "status": "booked",
       "notes": "Seats additional charge"
     },
