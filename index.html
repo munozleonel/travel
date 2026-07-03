@@ -1347,6 +1347,17 @@ const GH_API_URL = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents
 function getGHToken() { try { return localStorage.getItem(GH_PAT_KEY) || ''; } catch(e) { return ''; } }
 function setGHToken(t) { try { localStorage.setItem(GH_PAT_KEY, t); } catch(e) {} }
 
+// Reads via the Contents API (not the raw.githubusercontent.com CDN) so we
+// always get the latest committed version — the CDN can lag ~1-2 min after a push.
+async function ghFetchLatestFile() {
+  const token = getGHToken();
+  const headers = { Accept: 'application/vnd.github.raw' };
+  if (token) headers.Authorization = 'Bearer ' + token;
+  const res = await fetch(GH_API_URL + '?ref=' + GH_BRANCH + '&t=' + Date.now(), { headers, cache: 'no-store' });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return await res.json();
+}
+
 function setGHStatus(msg, colour) {
   const el = document.getElementById('githubStatus');
   if (!el) return;
@@ -1418,9 +1429,7 @@ async function fetchFromGitHub(manual) {
   if (btn) { btn.disabled = true; btn.dataset.label = btn.innerHTML; btn.textContent = '⏳ Syncing…'; }
   if (manual) setGHStatus('Fetching data from GitHub…', 'var(--text-light)');
   try {
-    const res = await fetch(GH_RAW_URL + '?cb=' + Date.now());
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
+    const data = await ghFetchLatestFile();
     if (!applyRemoteStore(data)) throw new Error('Invalid data file');
 
     saveStore();
@@ -2376,15 +2385,12 @@ async function init() {
   // Try GitHub first; fall back to localStorage if unavailable.
   let loadedFromGH = false;
   try {
-    const ghRes = await fetch(GH_RAW_URL + '?cb=' + Date.now());
-    if (ghRes.ok) {
-      const data = await ghRes.json();
-      if (applyRemoteStore(data)) {
-        saveStore();
-        loadedFromGH = true;
-        setGHStatus('✓ Synced from GitHub', 'var(--teal)');
-        setTimeout(() => setGHStatus('', ''), 3000);
-      }
+    const data = await ghFetchLatestFile();
+    if (applyRemoteStore(data)) {
+      saveStore();
+      loadedFromGH = true;
+      setGHStatus('✓ Synced from GitHub', 'var(--teal)');
+      setTimeout(() => setGHStatus('', ''), 3000);
     }
   } catch (_) { /* offline or fetch failed — fall through to localStorage */ }
 
