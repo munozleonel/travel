@@ -36,6 +36,10 @@
     --r-xl: 20px;
   }
 
+  html {
+    overflow-x: hidden;
+    width: 100%;
+  }
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--surface-3);
@@ -43,6 +47,8 @@
     min-height: 100vh;
     font-size: 14px;
     line-height: 1.5;
+    overflow-x: hidden;
+    width: 100%;
   }
 
   /* === HEADER === */
@@ -57,16 +63,20 @@
   .header-inner {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 10px 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 16px;
+    min-height: 60px;
   }
   .header-brand {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
   }
   .brand-icon {
     width: 36px; height: 36px;
@@ -74,6 +84,7 @@
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 18px;
+    flex-shrink: 0;
   }
   .brand-title {
     font-family: 'DM Serif Display', serif;
@@ -90,6 +101,7 @@
   }
   .header-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
   }
   .btn {
@@ -139,7 +151,11 @@
     display: flex;
     gap: 0;
     padding: 0 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .nav-tabs::-webkit-scrollbar { display: none; }
   .nav-tab {
     padding: 14px 20px;
     font-size: 13px;
@@ -163,6 +179,7 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    width: 100%;
   }
   .section { display: none; }
   .section.active { display: block; }
@@ -712,6 +729,11 @@
     overflow: hidden;
     box-shadow: var(--shadow-sm);
   }
+  #todoTableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--r-lg);
+  }
   .todo-table thead tr {
     background: var(--navy);
   }
@@ -813,12 +835,69 @@
 
   @media (max-width: 768px) {
     .main { padding: 1rem; }
-    .header-inner { padding: 0 1rem; }
+    .header-inner { padding: 10px 1rem; }
+    #githubStatus { padding: 4px 1rem !important; text-align: center !important; }
+    .header-actions { width: 100%; justify-content: flex-start; }
+    .header-actions .btn { padding: 6px 10px; font-size: 12px; }
+    .nav-tabs { padding: 0 1rem; }
+    .nav-tab { padding: 12px 14px; font-size: 12px; }
+
+    .section-header { flex-direction: column; align-items: flex-start; }
+    .section-title { font-size: 22px; }
+
     .form-row { grid-template-columns: 1fr; }
-    .flight-card-inner { grid-template-columns: 1fr; text-align: center; }
+
+    /* Calendar */
+    .cal-controls { gap: 8px; }
+    .cal-month-label { min-width: 100px; font-size: 13px; }
+    .cal-day-header { padding: 6px 2px; font-size: 9px; letter-spacing: 0.03em; }
+    .cal-cell { min-height: 92px; padding: 6px; }
+    .cal-date-num { width: 20px; height: 20px; font-size: 11px; }
+    .cal-event-pill { font-size: 9px; padding: 2px 5px; }
+    .cal-add-btn { opacity: 1; width: 16px; height: 16px; font-size: 11px; }
+
+    /* Accommodation */
+    .accom-grid { grid-template-columns: 1fr; }
+
+    /* Flights */
+    .flight-card-inner { grid-template-columns: 1fr; text-align: center; gap: 12px; padding: 14px; }
     .flight-endpoint.right { text-align: center; }
+    .flight-meta { gap: 12px; padding: 10px 14px; }
+    .flight-footer { flex-wrap: wrap; gap: 10px; padding: 10px 14px; }
+
+    /* Summary cards */
+    .summary-bar { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .summary-card { padding: 10px 12px; }
+    .summary-value { font-size: 18px; }
+
+    /* To-do table: hide less critical columns, keep table scrollable for the rest */
     .todo-table td:nth-child(5),
     .todo-table th:nth-child(5) { display: none; }
+    .todo-table { min-width: 560px; }
+
+    /* Modal */
+    .modal-header { padding: 16px 18px 12px; }
+    .modal-body { padding: 16px 18px; }
+    .modal-footer { padding: 12px 18px; flex-wrap: wrap; }
+    .modal-footer .btn { flex: 1; justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    .header-actions .btn-label { display: none; }
+    .header-actions .btn { padding: 8px; }
+    .header-actions .btn svg { width: 16px; height: 16px; }
+    .brand-title { font-size: 16px; }
+    .brand-sub { font-size: 10px; }
+
+    .main { padding: 0.75rem; }
+    .section-title { font-size: 20px; }
+
+    .cal-cell { min-height: 76px; padding: 4px; }
+    .cal-event-pill { padding: 2px 4px; }
+
+    .summary-bar { grid-template-columns: 1fr 1fr; }
+
+    .accom-footer, .accom-actions { flex-wrap: wrap; }
   }
 </style>
 </head>
@@ -834,22 +913,22 @@
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn btn-ghost" onclick="exportJSON()">
+      <button class="btn btn-ghost" onclick="exportJSON()" title="Export JSON">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        Export JSON
+        <span class="btn-label">Export JSON</span>
       </button>
-      <label class="btn btn-ghost" style="cursor:pointer">
+      <label class="btn btn-ghost" style="cursor:pointer" title="Import JSON">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-        Import JSON
+        <span class="btn-label">Import JSON</span>
         <input type="file" accept=".json" id="importFile" style="display:none" onchange="importJSON(event)">
       </label>
-      <button class="btn btn-ghost" id="githubSaveBtn" onclick="saveToGitHub()" disabled>
+      <button class="btn btn-ghost" id="githubSaveBtn" onclick="saveToGitHub()" disabled title="Save to GitHub">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16.58A5 5 0 0018 7h-1.26A8 8 0 104 15.25"/><path d="M12 12v9"/><path d="M9 18l3-3 3 3"/></svg>
-        Save to GitHub
+        <span class="btn-label">Save to GitHub</span>
       </button>
-      <button class="btn btn-ghost" id="githubFetchBtn" onclick="fetchFromGitHub(true)">
+      <button class="btn btn-ghost" id="githubFetchBtn" onclick="fetchFromGitHub(true)" title="Sync from GitHub">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16.58A5 5 0 0018 7h-1.26A8 8 0 104 15.25"/><path d="M12 21v-9"/><path d="M9 15l3 3 3-3"/></svg>
-        Sync from GitHub
+        <span class="btn-label">Sync from GitHub</span>
       </button>
     </div>
   </div>
