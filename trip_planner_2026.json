@@ -357,9 +357,9 @@
       "ref": "AW8K6A",
       "terminal": "YVR / LAX",
       "cost": 1106,
-      "paid": 0,
+      "paid": 1106,
       "status": "booked",
-      "notes": "Seats are free"
+      "notes": ""
     },
     {
       "id": "f5",
@@ -377,8 +377,8 @@
       "baggage": "30kg + 7kg each",
       "ref": "EC8HO6",
       "terminal": "LAX / Nadi / Sydney T1",
-      "cost": 0,
-      "paid": 0,
+      "cost": 0.01,
+      "paid": 0.00001,
       "status": "booked",
       "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
     }
