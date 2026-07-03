@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>US & Canada Trip Planner 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -899,9 +902,248 @@
 
     .accom-footer, .accom-actions { flex-wrap: wrap; }
   }
+
+  /* ===========================================================
+     FLIGHT PATH WIDGET (scoped under #fp-root)
+     =========================================================== */
+  #fp-root {
+    --fp-bg: #05080f;
+    --fp-accent: #00c8ff;
+    --fp-accent3: #ffd700;
+    --fp-accent4: #ff6b35;
+    --fp-text: #e8f4ff;
+    --fp-dim: #4a7090;
+    --fp-panel: #070d1a;
+    --fp-glow: rgba(0,200,255,0.3);
+
+    font-family: 'DM Mono', monospace;
+    background: var(--fp-bg);
+    color: var(--fp-text);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    height: 640px;
+    display: flex;
+    flex-direction: column;
+  }
+  #fp-root * { box-sizing: border-box; }
+
+  .fp-header {
+    padding: 12px 20px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    border-bottom: 1px solid rgba(0,200,255,0.15);
+    flex-shrink: 0;
+  }
+  .fp-title-block h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+    color: var(--fp-accent);
+    text-shadow: 0 0 20px var(--fp-glow);
+    line-height: 1;
+  }
+  .fp-title-block p {
+    font-size: 0.58rem; color: var(--fp-dim);
+    letter-spacing: 3px; text-transform: uppercase; margin-top: 4px;
+  }
+  .fp-stats { display:flex; gap:16px; align-items:flex-end; flex-wrap: wrap; }
+  .fp-stat { text-align:right; }
+  .fp-stat-val { font-family:'Bebas Neue',sans-serif; font-size:1.2rem; color:var(--fp-accent3); line-height:1; }
+  .fp-stat-label { font-size:0.5rem; color:var(--fp-dim); letter-spacing:2px; text-transform:uppercase; }
+
+  .fp-main-body { flex: 1; display: flex; min-height: 0; overflow: hidden; }
+
+  #fp-map-wrap { flex: 1; position: relative; overflow: hidden; min-height: 0; }
+  #fp-map-wrap svg { width:100%; height:100%; display: block; }
+
+  #fp-side-panel {
+    width: 260px; flex-shrink: 0;
+    background: var(--fp-panel);
+    border-left: 1px solid rgba(0,200,255,0.12);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+
+  #fp-tz-clock { padding: 12px 16px 10px; border-bottom: 1px solid rgba(0,200,255,0.1); flex-shrink: 0; }
+  .fp-tz-label { font-size: 0.5rem; color: var(--fp-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+  .fp-clocks-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .fp-clock-item {
+    flex: 1; min-width: 70px;
+    background: rgba(0,200,255,0.04);
+    border: 1px solid rgba(0,200,255,0.1);
+    border-radius: 3px; padding: 6px 8px; transition: all 0.3s;
+  }
+  .fp-clock-item.active-tz { border-color: var(--fp-accent); background: rgba(0,200,255,0.08); box-shadow: 0 0 8px rgba(0,200,255,0.15); }
+  .fp-clock-city { font-size: 0.48rem; color: var(--fp-dim); letter-spacing: 1px; text-transform: uppercase; }
+  .fp-clock-item.active-tz .fp-clock-city { color: var(--fp-accent); }
+  .fp-clock-time { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--fp-text); letter-spacing: 2px; line-height: 1.1; }
+  .fp-clock-item.active-tz .fp-clock-time { color: var(--fp-accent); }
+  .fp-clock-date { font-size: 0.42rem; color: var(--fp-dim); margin-top: 1px; }
+
+  #fp-flight-detail { padding: 12px 16px; border-bottom: 1px solid rgba(0,200,255,0.1); flex-shrink: 0; }
+  .fp-fd-label { font-size: 0.5rem; color: var(--fp-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+  .fp-fd-route { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 3px; color: var(--fp-accent); line-height: 1; }
+  .fp-fd-cities { font-size: 0.52rem; color: #5a9aaa; margin-top: 2px; margin-bottom: 8px; }
+  .fp-fd-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .fp-fd-stat { background: rgba(0,200,255,0.04); border: 1px solid rgba(0,200,255,0.1); border-radius: 3px; padding: 6px 8px; }
+  .fp-fd-stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--fp-accent3); letter-spacing: 1px; line-height: 1; }
+  .fp-fd-stat-label { font-size: 0.44rem; color: var(--fp-dim); letter-spacing: 1px; text-transform: uppercase; margin-top: 1px; }
+  .fp-fd-tz-change { margin-top: 6px; padding: 5px 8px; background: rgba(255,107,53,0.07); border: 1px solid rgba(255,107,53,0.2); border-radius: 3px; font-size: 0.5rem; color: #ff9060; letter-spacing: 1px; }
+  .fp-fd-flight-num { margin-top: 5px; font-size: 0.5rem; color: var(--fp-dim); letter-spacing: 1px; }
+
+  #fp-itinerary {
+    flex: 1; overflow-y: auto; padding: 10px 16px 16px;
+    scrollbar-width: thin; scrollbar-color: rgba(0,200,255,0.2) transparent;
+  }
+  #fp-itinerary::-webkit-scrollbar { width: 3px; }
+  #fp-itinerary::-webkit-scrollbar-thumb { background: rgba(0,200,255,0.2); }
+  .fp-itin-label { font-size: 0.5rem; color: var(--fp-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+
+  .fp-itin-stop { position: relative; padding-left: 14px; margin-bottom: 14px; }
+  .fp-itin-stop::before {
+    content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--fp-dim); border: 1px solid var(--fp-dim);
+  }
+  .fp-itin-stop.current::before { background: var(--fp-accent); border-color: var(--fp-accent); box-shadow: 0 0 6px var(--fp-accent); }
+  .fp-itin-stop::after { content: ''; position: absolute; left: 2px; top: 14px; width: 1px; bottom: -8px; background: rgba(0,200,255,0.12); }
+  .fp-itin-stop:last-child::after { display: none; }
+  .fp-itin-date { font-size: 0.48rem; color: var(--fp-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+  .fp-itin-city { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 2px; color: var(--fp-text); line-height: 1.1; }
+  .fp-itin-stop.current .fp-itin-city { color: var(--fp-accent); }
+  .fp-itin-hotel { font-size: 0.48rem; color: #5a9aaa; margin-top: 2px; line-height: 1.4; }
+  .fp-itin-flight-badge {
+    display: inline-block; margin-top: 3px; padding: 2px 6px;
+    background: rgba(0,200,255,0.07); border: 1px solid rgba(0,200,255,0.15);
+    border-radius: 2px; font-size: 0.44rem; color: var(--fp-dim); letter-spacing: 1px;
+  }
+  .fp-itin-noflight-badge {
+    display: inline-block; margin-top: 3px; padding: 2px 6px;
+    background: rgba(255,107,53,0.06); border: 1px solid rgba(255,107,53,0.18);
+    border-radius: 2px; font-size: 0.44rem; color: #ff9060; letter-spacing: 1px;
+  }
+
+  .fp-flight-panel { background: #05080f; border-top: 1px solid rgba(0,200,255,0.12); padding: 7px 16px 10px; flex-shrink: 0; }
+  .fp-legs-track { display: flex; gap: 4px; align-items: stretch; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .fp-legs-track::-webkit-scrollbar { display:none; }
+  .fp-leg {
+    display: flex; flex-direction: column; justify-content: center; padding: 5px 9px;
+    border: 1px solid rgba(0,200,255,0.15); border-radius: 3px; background: rgba(10,22,40,0.85);
+    transition: all 0.3s; white-space: nowrap; cursor: pointer; flex-shrink: 0; min-width: 100px;
+  }
+  .fp-leg.active { border-color: var(--fp-accent); background: rgba(0,200,255,0.1); box-shadow: 0 0 10px rgba(0,200,255,0.2); }
+  .fp-leg.done { border-color: rgba(255,215,0,0.3); background: rgba(255,215,0,0.04); }
+  .fp-leg-codes { font-family:'Bebas Neue',sans-serif; font-size:0.95rem; letter-spacing:2px; color:var(--fp-text); line-height:1.1; }
+  .fp-leg.active .fp-leg-codes { color: var(--fp-accent); }
+  .fp-leg.done .fp-leg-codes { color: var(--fp-accent3); }
+  .fp-leg-cities { font-size:0.44rem; color:#5a8899; letter-spacing:0.5px; line-height:1.3; margin-top:1px; }
+  .fp-leg.active .fp-leg-cities { color: rgba(0,200,255,0.55); }
+  .fp-leg.done .fp-leg-cities { color: rgba(255,215,0,0.45); }
+  .fp-leg-flight { font-size:0.46rem; color:var(--fp-dim); letter-spacing:1px; margin-top:2px; }
+  .fp-leg.active .fp-leg-flight { color: rgba(0,200,255,0.5); }
+  .fp-leg.done .fp-leg-flight { color: rgba(255,215,0,0.4); }
+
+  .fp-controls { display: flex; justify-content: center; gap: 8px; margin-top: 6px; align-items: center; flex-wrap: wrap; }
+  #fp-root button {
+    background: transparent; border: 1px solid rgba(0,200,255,0.3); color: var(--fp-accent);
+    padding: 4px 12px; font-family:'DM Mono',monospace; font-size:0.58rem;
+    letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all 0.2s; border-radius:2px;
+  }
+  #fp-root button:hover { background: rgba(0,200,255,0.1); border-color: var(--fp-accent); }
+
+  .fp-progress-bar { width:140px; height:2px; background:rgba(0,200,255,0.1); border-radius:1px; overflow:hidden; }
+  .fp-progress-fill { height:100%; background:var(--fp-accent); transition:width 0.1s linear; box-shadow:0 0 6px var(--fp-accent); }
+  .fp-current-leg-info { text-align:center; font-size:0.52rem; color:var(--fp-dim); letter-spacing:2px; margin-top:3px; min-height:12px; }
+
+  #fp-root .fp-country { fill: #112233; stroke: #2a5070; stroke-width: 0.4; }
+  #fp-root .fp-graticule { fill: none; stroke: rgba(0,200,255,0.07); stroke-width: 0.5; }
+  #fp-root .fp-sphere { fill: #060e1c; }
+  #fp-root .fp-globe-outline { fill: none; stroke: rgba(0,200,255,0.2); stroke-width: 1; }
+
+  #fp-loading {
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:var(--fp-dim); font-size:0.65rem; letter-spacing:3px; text-transform:uppercase;
+    background:#060e1c; z-index:10;
+  }
+
+  @media (max-width: 768px) {
+    #fp-root { height: 780px; }
+    .fp-main-body { flex-direction: column; }
+    #fp-map-wrap { flex: none; height: 260px; }
+    #fp-side-panel { width: 100%; border-left: none; border-top: 1px solid rgba(0,200,255,0.12); flex: 1; min-height: 0; }
+    .fp-title-block h1 { font-size: 1.3rem; letter-spacing: 3px; }
+    .fp-stats { gap: 10px; }
+  }
+  @media (max-width: 480px) {
+    #fp-root { height: 820px; border-radius: var(--r-md); }
+    .fp-header { padding: 10px 14px 6px; }
+    .fp-leg { min-width: 84px; padding: 4px 7px; }
+    .fp-controls button { padding: 4px 8px; }
+    .fp-progress-bar { width: 90px; }
+  }
+
+  /* === Financial detail hiding === */
+  body.fin-locked .fin-detail {
+    filter: blur(6px);
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    transition: filter 0.2s;
+  }
 </style>
 </head>
-<body>
+<body class="fin-locked">
+
+<!-- ==================== PASSWORD GATE ==================== -->
+<div id="pwOverlay" style="position:fixed; inset:0; z-index:10000; background:rgba(10,22,40,0.82); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:20px;">
+  <div style="background:var(--surface); border:1px solid var(--border-mid); border-radius:var(--r-lg); padding:32px; max-width:380px; width:100%; box-shadow:var(--shadow-md);">
+    <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--teal); font-weight:600; margin-bottom:10px;">Protected Trip Details</div>
+    <h2 style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:var(--navy); margin-bottom:10px;">Enter Password</h2>
+    <p style="color:var(--text-mid); font-size:0.85rem; line-height:1.6; margin-bottom:18px;">
+      Enter the password to view costs and payment details. You can still browse the trip without it — financial figures will just stay hidden.
+    </p>
+    <input id="pwInput" type="password" placeholder="Password" autocomplete="off"
+      style="width:100%; background:var(--surface-2); border:1px solid var(--border-mid); border-radius:var(--r-sm); color:var(--text); font-family:'DM Sans',sans-serif; font-size:0.95rem; padding:10px 14px; outline:none; margin-bottom:8px;" />
+    <div id="pwError" style="display:none; color:var(--coral); font-size:0.78rem; margin-bottom:10px;">Incorrect password — financial details will stay hidden.</div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+      <button class="btn btn-primary" id="pwUnlockBtn" style="border:none; cursor:pointer;">Unlock</button>
+      <button class="btn btn-ghost" id="pwSkipBtn" style="cursor:pointer; background:var(--surface-2); color:var(--text-mid);">Continue without unlocking</button>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  const FIN_PASSWORD = 'cookie';
+  const overlay = document.getElementById('pwOverlay');
+  const input = document.getElementById('pwInput');
+  const errorMsg = document.getElementById('pwError');
+  const unlockBtn = document.getElementById('pwUnlockBtn');
+  const skipBtn = document.getElementById('pwSkipBtn');
+
+  function closeOverlay() { overlay.style.display = 'none'; }
+
+  function attemptUnlock() {
+    if (input.value === FIN_PASSWORD) {
+      document.body.classList.remove('fin-locked');
+      closeOverlay();
+    } else {
+      errorMsg.style.display = 'block';
+      input.style.borderColor = 'var(--coral)';
+      input.focus();
+      input.select();
+    }
+  }
+
+  unlockBtn.addEventListener('click', attemptUnlock);
+  skipBtn.addEventListener('click', closeOverlay); // fin-locked stays on body — financial details stay hidden
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') attemptUnlock(); });
+  input.addEventListener('input', () => { errorMsg.style.display = 'none'; input.style.borderColor = ''; });
+
+  setTimeout(() => input.focus(), 100);
+})();
+</script>
 
 <header>
   <div class="header-inner">
@@ -948,6 +1190,10 @@
     <div class="nav-tab" onclick="showSection('flights',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 21 4s-2 0-3.5 1.5L14 9 5.8 7.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 3.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
       Flights
+    </div>
+    <div class="nav-tab" onclick="showSection('flightpath',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20 15.3 15.3 0 010-20z"/></svg>
+      Flight Path
     </div>
     <div class="nav-tab" onclick="showSection('todos',this)" id="todoNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
@@ -1059,7 +1305,66 @@
     <div id="todoTableWrap"></div>
   </section>
 
+  <!-- ==================== FLIGHT PATH SECTION ==================== -->
+  <section id="section-flightpath" class="section">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Flight Path</h1>
+        <div class="section-sub">Sydney ⇄ North America · animated route overview</div>
+      </div>
+    </div>
+
+    <div id="fp-root">
+      <div class="fp-header">
+        <div class="fp-title-block">
+          <h1>Sydney ⇄ North America</h1>
+          <p id="fp-date-range">Sep 15 – Oct 10, 2026</p>
+        </div>
+        <div class="fp-stats" id="fp-stats"></div>
+      </div>
+
+      <div class="fp-main-body">
+        <div id="fp-map-wrap">
+          <div id="fp-loading">Loading world map…</div>
+          <svg id="fp-map-svg"></svg>
+        </div>
+
+        <div id="fp-side-panel">
+          <div id="fp-tz-clock">
+            <div class="fp-tz-label">Local Times</div>
+            <div class="fp-clocks-row" id="fp-clocks-row"></div>
+          </div>
+
+          <div id="fp-flight-detail">
+            <div class="fp-fd-label">Current Flight</div>
+            <div id="fp-fd-content">
+              <div style="color:var(--fp-dim);font-size:0.55rem;letter-spacing:2px;">Select a flight to see details</div>
+            </div>
+          </div>
+
+          <div id="fp-itinerary">
+            <div class="fp-itin-label">Itinerary</div>
+            <div id="fp-itin-content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fp-flight-panel">
+        <div class="fp-legs-track" id="fp-legs-track"></div>
+        <div class="fp-controls">
+          <button id="fp-btn-prev">◀ Prev</button>
+          <button id="fp-btn-play">⏸ Pause</button>
+          <div class="fp-progress-bar"><div class="fp-progress-fill" id="fp-progress-fill"></div></div>
+          <button id="fp-btn-next">Next ▶</button>
+          <button id="fp-btn-restart">↺ Restart</button>
+        </div>
+        <div class="fp-current-leg-info" id="fp-leg-info"></div>
+      </div>
+    </div>
+  </section>
+
 </main>
+
 
 <!-- ==================== CALENDAR EVENT MODAL ==================== -->
 <div class="modal-backdrop" id="calModal">
@@ -1826,8 +2131,8 @@ function renderAccom() {
   document.getElementById('accomSummary').innerHTML = `
     <div class="summary-card"><div class="summary-label">Total Hotels</div><div class="summary-value">${store.accommodations.length}</div><div class="summary-sub">properties</div></div>
     <div class="summary-card"><div class="summary-label">Total Nights</div><div class="summary-value">${totalNights}</div><div class="summary-sub">nights away</div></div>
-    <div class="summary-card"><div class="summary-label">Total Cost</div><div class="summary-value">$${totalCost.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD</div></div>
-    <div class="summary-card"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">$${(totalCost-totalPaid).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD remaining</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Total Cost</div><div class="summary-value">$${totalCost.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">$${(totalCost-totalPaid).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD remaining</div></div>
   `;
 
   store.accommodations.forEach(a => {
@@ -1871,8 +2176,8 @@ function renderAccom() {
       </div>
       <div class="accom-footer">
         <div>
-          <div class="accom-cost">$${parseFloat(a.cost||0).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})} <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--text-light)">AUD</span></div>
-          <div class="accom-cost-sub">$${perNight}/night${a.paid > 0 ? ' · $'+parseFloat(a.paid).toLocaleString()+' paid' : ' · unpaid'}</div>
+          <div class="accom-cost fin-detail">$${parseFloat(a.cost||0).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})} <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--text-light)">AUD</span></div>
+          <div class="accom-cost-sub fin-detail">$${perNight}/night${a.paid > 0 ? ' · $'+parseFloat(a.paid).toLocaleString()+' paid' : ' · unpaid'}</div>
           ${starsHtml ? `<div class="rating-stars">${starsHtml} <span style="color:var(--text-light);font-family:'DM Sans';font-size:11px">${escHtml(a.rating)}</span></div>` : ''}
         </div>
         <div class="accom-actions">
@@ -1997,8 +2302,8 @@ function renderFlights() {
   document.getElementById('flightSummary').innerHTML = `
     <div class="summary-card"><div class="summary-label">Total Legs</div><div class="summary-value">${store.flights.length}</div><div class="summary-sub">flight segments</div></div>
     <div class="summary-card"><div class="summary-label">Confirmed</div><div class="summary-value" style="color:var(--teal)">${booked}</div><div class="summary-sub">of ${store.flights.length} booked</div></div>
-    <div class="summary-card"><div class="summary-label">Total Cost</div><div class="summary-value">$${totalCost.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD</div></div>
-    <div class="summary-card"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">$${(totalCost-totalPaid).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD remaining</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Total Cost</div><div class="summary-value">$${totalCost.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">$${(totalCost-totalPaid).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD remaining</div></div>
   `;
 
   store.flights.forEach((f, idx) => {
@@ -2046,8 +2351,8 @@ function renderFlights() {
       </div>
       <div class="flight-footer">
         <div>
-          <div class="flight-cost">$${parseFloat(f.cost||0).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})} <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--text-light)">AUD</span></div>
-          ${f.paid > 0 ? `<div style="font-size:11px;color:var(--text-light)">$${parseFloat(f.paid).toLocaleString()} paid</div>` : '<div style="font-size:11px;color:var(--coral)">Unpaid</div>'}
+          <div class="flight-cost fin-detail">$${parseFloat(f.cost||0).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})} <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--text-light)">AUD</span></div>
+          ${f.paid > 0 ? `<div class="fin-detail" style="font-size:11px;color:var(--text-light)">$${parseFloat(f.paid).toLocaleString()} paid</div>` : '<div class="fin-detail" style="font-size:11px;color:var(--coral)">Unpaid</div>'}
         </div>
         <button class="btn btn-primary btn-sm flight-edit-btn" style="gap:5px;">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -2201,6 +2506,7 @@ function showSection(id, tab) {
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('section-' + id).classList.add('active');
   tab.classList.add('active');
+  if (id === 'flightpath' && window.fpInit) window.fpInit();
 }
 
 function closeModal(id) {
@@ -2485,6 +2791,427 @@ async function init() {
 }
 
 init();
+</script>
+
+<!-- ==================== FLIGHT PATH WIDGET SCRIPT ==================== -->
+<script>
+(function() {
+  'use strict';
+
+  // ── DATA (derived from the trip's actual flights/accommodation) ──
+  const fpCities = {
+    SYD: { name: 'Sydney',       lon: 151.21, lat: -33.87, tz: 'Australia/Sydney'     },
+    NAN: { name: 'Nadi, Fiji',   lon: 177.45, lat: -17.75, tz: 'Pacific/Fiji'          },
+    LAX: { name: 'Los Angeles',  lon: -118.41, lat: 33.94, tz: 'America/Los_Angeles'   },
+    YYC: { name: 'Calgary',      lon: -114.02, lat: 51.11, tz: 'America/Edmonton'      },
+    YVR: { name: 'Vancouver',    lon: -123.18, lat: 49.19, tz: 'America/Vancouver'     },
+  };
+
+  const fpLegs = [
+    { from:'SYD', to:'NAN', date:'Tue Sep 15', flight:'FJ 910',  label:'Transpacific',       dur:225, dist:1988, tzChange:+2  },
+    { from:'NAN', to:'LAX', date:'Tue Sep 15', flight:'FJ 810',  label:'Transpacific (o/n)', dur:640, dist:5535, tzChange:-19 },
+    { from:'LAX', to:'YYC', date:'Sun Sep 20', flight:'WS 1023', label:'SoCal → Rockies',    dur:184, dist:963,  tzChange:+1  },
+    { from:'YYC', to:'YVR', date:'Sun Sep 27', flight:'F8 805',  label:'Rockies → Coast',    dur:100, dist:419,  tzChange:-1  },
+    { from:'YVR', to:'LAX', date:'Thu Oct 1',  flight:'AC 556',  label:'Coast → SoCal',      dur:180, dist:1082, tzChange:0   },
+    { from:'LAX', to:'NAN', date:'Sun Oct 4',  flight:'FJ 811',  label:'Transpacific (o/n)', dur:650, dist:5535, tzChange:+19 },
+    { from:'NAN', to:'SYD', date:'Sat Oct 10', flight:'FJ 911',  label:'Transpacific',       dur:285, dist:1988, tzChange:-1  },
+  ];
+
+  // itinerary stops — includes Banff (idx 4), a non-flight, road-trip stop from Calgary
+  const fpItinerary = [
+    { code:'SYD', city:'Sydney',        arrive:'—',         depart:'Tue Sep 15', hotel:null,                                       note:'Departure',            flight:true  },
+    { code:'NAN', city:'Nadi, Fiji',    arrive:'Tue Sep 15',depart:'Tue Sep 15', hotel:null,                                       note:'Transit stopover',     flight:true  },
+    { code:'LAX', city:'Los Angeles',   arrive:'Tue Sep 15',depart:'Sun Sep 20', hotel:'Sheraton Park Hotel at the Anaheim Resort', note:'5 nights · Disneyland', flight:true  },
+    { code:'YYC', city:'Calgary',       arrive:'Sun Sep 20',depart:'Tue Sep 22', hotel:'The Westin Calgary',                        note:'2 nights',              flight:true  },
+    { code:'BAN', city:'Banff',         arrive:'Tue Sep 22',depart:'Sun Sep 27', hotel:'Hotel Canoe & Suites',                       note:'5 nights · road trip from Calgary', flight:false },
+    { code:'YVR', city:'Vancouver',     arrive:'Sun Sep 27',depart:'Thu Oct 1',  hotel:'Hotel BLU Vancouver',                        note:'4 nights',              flight:true  },
+    { code:'LAX', city:'Los Angeles',   arrive:'Thu Oct 1', depart:'Sun Oct 4',  hotel:'Viceroy Santa Monica',                       note:'3 nights · Universal Studios', flight:true },
+    { code:'NAN', city:'Nadi, Fiji',    arrive:'Sun Oct 4', depart:'Fri Oct 9',  hotel:'Sheraton Fiji Golf & Beach Resort',          note:'4 nights · 💕 Anniversary', flight:true },
+    { code:'SYD', city:'Sydney',        arrive:'Sat Oct 10',depart:'—',         hotel:null,                                        note:'Home',                  flight:true  },
+  ];
+
+  // maps leg index → itinerary index reached upon completing that leg (skips Banff, idx 4)
+  const fpStopMap = [1, 2, 3, 5, 6, 7, 8];
+
+  const fpClockZones = [
+    { label:'Sydney',   tz:'Australia/Sydney'    },
+    { label:'Fiji',     tz:'Pacific/Fiji'         },
+    { label:'LA / SFO', tz:'America/Los_Angeles'  },
+    { label:'Calgary',  tz:'America/Edmonton'     },
+    { label:'Vancouver',tz:'America/Vancouver'    },
+  ];
+
+  let fpInitialized = false;
+  let fpProjection, fpPathGen, fpSvg;
+  let fpSphereLayer, fpGratLayer, fpCountryLayer, fpBorderLayer, fpAtmosLayer, fpPathLayer, fpCityLayer, fpLabelLayer, fpPlaneLayer;
+  let fpSpherePath, fpGratPath, fpAtmosCircleGlow, fpAtmosCircleOutline;
+  let fpWorldData=null, fpCountryFeatures=null, fpBorderMesh=null, fpPathEls=[];
+  let fpW=0, fpH=0;
+  let fpCurrentLeg=0, fpIsPlaying=true, fpAnimFrame=null, fpAnimStart=null;
+  const FP_LEG_DUR=3200, FP_PAUSE_DUR=600;
+  let fpCurrentRotation=[0,-20,0];
+  let fpProgressFill, fpLegInfo;
+
+  function fpLerpAngle(a,b,t){ let d=b-a; while(d>180)d-=360; while(d<-180)d+=360; return a+d*t; }
+
+  function fpFormatDuration(mins){ const h=Math.floor(mins/60), m=mins%60; return `${h}h ${m}m`; }
+  function fpFormatDist(miles){ return miles.toLocaleString()+' mi'; }
+  function fpFormatTzChange(h){ if(h===0) return 'No change'; const sign=h>0?'+':''; return `${sign}${h}h (${h>0?'forward':'back'})`; }
+
+  function fpIsVisible(lon,lat){
+    const r = fpProjection.rotate();
+    const lam1=-r[0]*Math.PI/180, phi1=-r[1]*Math.PI/180;
+    const lam2=lon*Math.PI/180,   phi2=lat*Math.PI/180;
+    return Math.sin(phi1)*Math.sin(phi2)+Math.cos(phi1)*Math.cos(phi2)*Math.cos(lam2-lam1) > 0.05;
+  }
+
+  function fpRedrawGlobe(){
+    if (!fpWorldData) return;
+    fpSpherePath.attr('d', fpPathGen({type:'Sphere'}));
+    fpGratPath.attr('d', fpPathGen(d3.geoGraticule()()));
+    fpCountryLayer.selectAll('path').attr('d', fpPathGen);
+    fpBorderLayer.select('path').attr('d', fpPathGen(fpBorderMesh));
+    fpPathEls.forEach(p => { p.trackEl.attr('d', fpPathGen(p.line)); p.activeEl.attr('d', fpPathGen(p.line)); });
+
+    fpCityLayer.selectAll('*').remove();
+    fpLabelLayer.selectAll('*').remove();
+    Object.entries(fpCities).forEach(([code, city]) => {
+      if (!fpIsVisible(city.lon, city.lat)) return;
+      const [cx, cy] = fpProjection([city.lon, city.lat]);
+      fpCityLayer.append('circle').attr('cx',cx).attr('cy',cy).attr('r',7).attr('fill','rgba(0,200,255,0.07)').attr('stroke','rgba(0,200,255,0.3)').attr('stroke-width','1');
+      fpCityLayer.append('circle').attr('cx',cx).attr('cy',cy).attr('r',3.5).attr('fill','#00c8ff').attr('filter','url(#fp-glow-sm)');
+      const xOff = cx > fpW*0.75 ? -10 : 10;
+      const anchor = cx > fpW*0.75 ? 'end' : 'start';
+      fpLabelLayer.append('text').attr('x',cx+xOff).attr('y',cy-6).attr('fill','#00c8ff').attr('font-size','11').attr('font-family','Bebas Neue, sans-serif').attr('letter-spacing','2').attr('text-anchor',anchor).attr('filter','url(#fp-glow-sm)').text(code);
+      fpLabelLayer.append('text').attr('x',cx+xOff).attr('y',cy+5).attr('fill','#6aabb8').attr('font-size','8').attr('font-family','DM Mono, monospace').attr('letter-spacing','0.5').attr('text-anchor',anchor).text(city.name);
+    });
+  }
+
+  function fpGcPoints(lon1,lat1,lon2,lat2,steps=120){
+    const interp = d3.geoInterpolate([lon1,lat1],[lon2,lat2]);
+    return d3.range(0, 1+1/steps, 1/steps).map(t => interp(t));
+  }
+
+  function fpInitFlights(){
+    fpPathEls = fpLegs.map(leg => {
+      const from=fpCities[leg.from], to=fpCities[leg.to];
+      const pts = fpGcPoints(from.lon,from.lat,to.lon,to.lat,120);
+      const line = {type:'Feature',geometry:{type:'LineString',coordinates:pts}};
+      const trackEl = fpPathLayer.append('path').datum(line).attr('fill','none').attr('stroke','rgba(0,200,255,0.13)').attr('stroke-width','1.5').attr('stroke-dasharray','4 4').attr('d',fpPathGen);
+      const activeEl = fpPathLayer.append('path').datum(line).attr('fill','none').attr('stroke','#00c8ff').attr('stroke-width','2.2').attr('filter','url(#fp-glow)').attr('opacity','0').attr('d',fpPathGen);
+      return { trackEl, activeEl, line, leg, pts };
+    });
+  }
+
+  function fpUpdateClocks(activeTz){
+    const now = new Date();
+    fpClockZones.forEach(z => {
+      const id = 'fp-clock-' + z.tz.replace(/\//g,'-');
+      const el = document.getElementById(id);
+      if (!el) return;
+      const timeStr = now.toLocaleTimeString('en-AU', { timeZone: z.tz, hour:'2-digit', minute:'2-digit', hour12:true });
+      const dateStr = now.toLocaleDateString('en-AU', { timeZone: z.tz, weekday:'short', month:'short', day:'numeric' });
+      el.querySelector('.fp-clock-time').textContent = timeStr;
+      el.querySelector('.fp-clock-date').textContent = dateStr;
+      el.className = 'fp-clock-item' + (activeTz && z.tz === activeTz ? ' active-tz' : '');
+    });
+  }
+
+  function fpUpdateFlightDetail(legIdx){
+    const leg = fpLegs[legIdx];
+    const from = fpCities[leg.from], to = fpCities[leg.to];
+    window._fpActiveTz = to.tz;
+    fpUpdateClocks(to.tz);
+    document.getElementById('fp-fd-content').innerHTML = `
+      <div class="fp-fd-route">${leg.from} → ${leg.to}</div>
+      <div class="fp-fd-cities">${from.name} → ${to.name}</div>
+      <div class="fp-fd-stats">
+        <div class="fp-fd-stat"><div class="fp-fd-stat-val">${fpFormatDuration(leg.dur)}</div><div class="fp-fd-stat-label">Flight Time</div></div>
+        <div class="fp-fd-stat"><div class="fp-fd-stat-val">${fpFormatDist(leg.dist)}</div><div class="fp-fd-stat-label">Distance</div></div>
+      </div>
+      ${leg.tzChange !== 0 ? `<div class="fp-fd-tz-change">⏱ Timezone: ${fpFormatTzChange(leg.tzChange)}</div>` : `<div class="fp-fd-tz-change" style="border-color:rgba(0,200,255,0.15);background:rgba(0,200,255,0.04);color:var(--fp-dim)">⏱ Same timezone</div>`}
+      <div class="fp-fd-flight-num">${leg.flight} · ${leg.label} · ${leg.date}</div>
+    `;
+  }
+
+  function fpUpdateItinerary(legIdx){
+    const activeStop = legIdx < 0 ? 0 : (fpStopMap[legIdx] !== undefined ? fpStopMap[legIdx] : fpItinerary.length - 1);
+    document.querySelectorAll('.fp-itin-stop').forEach((el, i) => {
+      el.className = 'fp-itin-stop' + (i === activeStop ? ' current' : '');
+    });
+    document.getElementById(`fp-itin-stop-${activeStop}`)?.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+
+  function fpAnimateLeg(){
+    const { activeEl, line, leg, pts } = fpPathEls[fpCurrentLeg];
+    document.querySelectorAll('.fp-leg').forEach((el,i) => {
+      el.className = 'fp-leg'+(i<fpCurrentLeg?' done':i===fpCurrentLeg?' active':'');
+    });
+    document.getElementById(`fp-leg-card-${fpCurrentLeg}`)?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+
+    fpLegInfo.textContent = `${leg.date}  ·  ${fpCities[leg.from].name} → ${fpCities[leg.to].name}  ·  ${leg.flight}  ·  ${leg.label}`;
+    fpUpdateFlightDetail(fpCurrentLeg);
+    fpUpdateItinerary(fpCurrentLeg);
+
+    const node = activeEl.node();
+    activeEl.attr('opacity','1').attr('stroke','#00c8ff').attr('stroke-dasharray','none').attr('stroke-dashoffset',null);
+
+    const to = fpCities[leg.to];
+    const startRot = [...fpCurrentRotation];
+    const endRot = [-to.lon, -to.lat*0.5, 0];
+
+    fpProjection.rotate(startRot); fpPathGen.projection(fpProjection);
+    const stablePath = fpPathGen(line);
+    activeEl.attr('d',stablePath);
+    const stableLen = node.getTotalLength();
+    activeEl.attr('stroke-dasharray',stableLen).attr('stroke-dashoffset',stableLen);
+
+    const plane = d3.select('#fp-plane').attr('opacity','1');
+
+    function frame(ts){
+      if (!fpAnimStart) fpAnimStart=ts;
+      const t = Math.min((ts-fpAnimStart)/FP_LEG_DUR,1);
+      const e = t<0.5?2*t*t:-1+(4-2*t)*t;
+
+      const rot = [fpLerpAngle(startRot[0],endRot[0],e), fpLerpAngle(startRot[1],endRot[1],e), 0];
+      fpCurrentRotation = rot;
+      fpProjection.rotate(rot); fpPathGen.projection(fpProjection);
+      fpRedrawGlobe();
+
+      activeEl.attr('d',fpPathGen(line));
+      const curLen = node.getTotalLength();
+      activeEl.attr('stroke-dasharray',curLen).attr('stroke-dashoffset',curLen*(1-e));
+
+      const ptIdx = Math.min(Math.floor(e*(pts.length-1)), pts.length-2);
+      const ptFrac = e*(pts.length-1)-ptIdx;
+      const coord = d3.geoInterpolate(pts[ptIdx],pts[ptIdx+1])(ptFrac);
+      const projected = fpProjection(coord);
+      if (projected && fpIsVisible(coord[0],coord[1])) {
+        const nextCoord = d3.geoInterpolate(pts[ptIdx],pts[ptIdx+1])(Math.min(ptFrac+0.05,1));
+        const nextProj = fpProjection(nextCoord);
+        let angle=0;
+        if (nextProj) angle=Math.atan2(nextProj[1]-projected[1],nextProj[0]-projected[0])*180/Math.PI;
+        plane.attr('transform',`translate(${projected[0]},${projected[1]}) rotate(${angle})`).attr('opacity','1');
+      } else { plane.attr('opacity','0'); }
+
+      fpProgressFill.style.width = ((fpCurrentLeg+e)/fpLegs.length*100)+'%';
+
+      if (t<1) {
+        fpAnimFrame = requestAnimationFrame(frame);
+      } else {
+        activeEl.attr('d',fpPathGen(line)).attr('stroke','#ffd700').attr('stroke-dashoffset',0).attr('opacity','0.55');
+        document.querySelectorAll('.fp-leg')[fpCurrentLeg].className = 'fp-leg done';
+
+        setTimeout(() => {
+          if (!fpIsPlaying) return;
+          if (fpCurrentLeg < fpLegs.length-1) { fpCurrentLeg++; fpAnimStart=null; fpAnimateLeg(); }
+          else {
+            plane.attr('opacity','0');
+            const totalMiles = fpLegs.reduce((s,l)=>s+l.dist,0);
+            fpLegInfo.textContent = `✦  Journey Complete  ·  26 Days  ·  ${fpLegs.length} Flights  ·  ~${totalMiles.toLocaleString()} miles  ✦`;
+            fpProgressFill.style.width='100%'; fpIsPlaying=false;
+            document.getElementById('fp-btn-play').textContent='▶ Play';
+            document.querySelectorAll('.fp-leg').forEach(el=>el.className='fp-leg done');
+            window._fpActiveTz = fpCities['SYD'].tz;
+            fpUpdateClocks(window._fpActiveTz);
+          }
+        }, FP_PAUSE_DUR);
+      }
+    }
+    fpAnimFrame = requestAnimationFrame(frame);
+  }
+
+  function fpJumpToLeg(idx){
+    if (fpAnimFrame) cancelAnimationFrame(fpAnimFrame);
+    fpPathEls.forEach((p,i) => {
+      if (i<idx) p.activeEl.attr('stroke','#ffd700').attr('stroke-dashoffset',0).attr('opacity','0.55');
+      else p.activeEl.attr('opacity','0').attr('stroke','#00c8ff');
+    });
+    document.querySelectorAll('.fp-leg').forEach((el,i) => { el.className='fp-leg'+(i<idx?' done':i===idx?' active':''); });
+    const dep=fpCities[fpLegs[idx].from];
+    fpCurrentRotation=[-dep.lon,-dep.lat*0.5,0];
+    fpProjection.rotate(fpCurrentRotation); fpRedrawGlobe();
+    fpCurrentLeg=idx; fpAnimStart=null; fpIsPlaying=true;
+    document.getElementById('fp-btn-play').textContent='⏸ Pause';
+    fpUpdateFlightDetail(idx);
+    fpUpdateItinerary(idx);
+    fpAnimateLeg();
+  }
+
+  function fpStartAnimation(){
+    fpCurrentLeg=0; fpAnimStart=null; fpIsPlaying=true;
+    document.getElementById('fp-btn-play').textContent = '⏸ Pause';
+    const dep = fpCities[fpLegs[0].from];
+    fpCurrentRotation = [-dep.lon, -dep.lat*0.5, 0];
+    fpProjection.rotate(fpCurrentRotation);
+    fpRedrawGlobe();
+    fpUpdateFlightDetail(0);
+    fpUpdateItinerary(-1);
+    fpAnimateLeg();
+  }
+
+  function fpResize(){
+    const wrap = document.getElementById('fp-map-wrap');
+    if (!wrap) return;
+    fpW = wrap.clientWidth; fpH = wrap.clientHeight;
+    if (!fpW || !fpH) return;
+    fpSvg.attr('viewBox', `0 0 ${fpW} ${fpH}`);
+    const scale = Math.min(fpW, fpH) * 0.44;
+    fpProjection.scale(scale).translate([fpW/2, fpH/2]);
+    fpPathGen.projection(fpProjection);
+    fpAtmosCircleGlow.attr('cx',fpW/2).attr('cy',fpH/2).attr('r',scale*1.02);
+    fpAtmosCircleOutline.attr('cx',fpW/2).attr('cy',fpH/2).attr('r',scale);
+    fpRedrawGlobe();
+  }
+
+  function fpBuildStaticUI(){
+    // Clocks
+    const clocksRow = document.getElementById('fp-clocks-row');
+    fpClockZones.forEach(z => {
+      const el = document.createElement('div');
+      el.className = 'fp-clock-item';
+      el.id = 'fp-clock-' + z.tz.replace(/\//g,'-');
+      el.innerHTML = `<div class="fp-clock-city">${z.label}</div><div class="fp-clock-time">--:--</div><div class="fp-clock-date">---</div>`;
+      clocksRow.appendChild(el);
+    });
+    fpUpdateClocks(null);
+    setInterval(() => fpUpdateClocks(window._fpActiveTz || null), 1000);
+
+    // Itinerary
+    const itinContent = document.getElementById('fp-itin-content');
+    fpItinerary.forEach((stop, i) => {
+      const div = document.createElement('div');
+      div.className = 'fp-itin-stop';
+      div.id = `fp-itin-stop-${i}`;
+      div.innerHTML = `
+        <div class="fp-itin-date">${stop.arrive !== '—' ? stop.arrive : ''} ${stop.note ? '· ' + stop.note : ''}</div>
+        <div class="fp-itin-city">${stop.city}</div>
+        ${stop.hotel ? `<div class="fp-itin-hotel">🏨 ${stop.hotel}</div>` : ''}
+        ${stop.depart !== '—' ? (stop.flight ? `<div class="fp-itin-flight-badge">Departs ${stop.depart}</div>` : `<div class="fp-itin-noflight-badge">🚗 Departs ${stop.depart} (road trip)</div>`) : ''}
+      `;
+      itinContent.appendChild(div);
+    });
+
+    // Leg cards
+    const legsTrack = document.getElementById('fp-legs-track');
+    fpLegs.forEach((leg, i) => {
+      const from = fpCities[leg.from], to = fpCities[leg.to];
+      const el = document.createElement('div');
+      el.className = 'fp-leg'; el.id = `fp-leg-card-${i}`;
+      el.innerHTML = `
+        <div class="fp-leg-codes">${leg.from} → ${leg.to}</div>
+        <div class="fp-leg-cities">${from.name} → ${to.name}</div>
+        <div class="fp-leg-flight">${leg.flight} · ${leg.date}</div>`;
+      el.onclick = () => fpJumpToLeg(i);
+      legsTrack.appendChild(el);
+    });
+
+    // Header stats
+    const totalMiles = fpLegs.reduce((s,l)=>s+l.dist,0);
+    const uniqueCities = new Set(fpItinerary.map(s=>s.city)).size;
+    document.getElementById('fp-stats').innerHTML = `
+      <div class="fp-stat"><div class="fp-stat-val">~${totalMiles.toLocaleString()}</div><div class="fp-stat-label">Est. Miles</div></div>
+      <div class="fp-stat"><div class="fp-stat-val">${fpLegs.length}</div><div class="fp-stat-label">Flights</div></div>
+      <div class="fp-stat"><div class="fp-stat-val">${uniqueCities}</div><div class="fp-stat-label">Places</div></div>
+    `;
+
+    fpProgressFill = document.getElementById('fp-progress-fill');
+    fpLegInfo = document.getElementById('fp-leg-info');
+
+    document.getElementById('fp-btn-play').onclick = () => {
+      if (fpIsPlaying) { fpIsPlaying=false; if(fpAnimFrame)cancelAnimationFrame(fpAnimFrame); document.getElementById('fp-btn-play').textContent='▶ Play'; }
+      else { fpIsPlaying=true; document.getElementById('fp-btn-play').textContent='⏸ Pause'; fpAnimStart=null; if(fpCurrentLeg<fpLegs.length)fpAnimateLeg(); }
+    };
+    document.getElementById('fp-btn-next').onclick = () => {
+      if(fpAnimFrame)cancelAnimationFrame(fpAnimFrame);
+      if(fpCurrentLeg>=0&&fpCurrentLeg<fpLegs.length){ const{activeEl}=fpPathEls[fpCurrentLeg]; activeEl.attr('stroke','#ffd700').attr('stroke-dashoffset',0).attr('opacity','0.55'); }
+      if(fpCurrentLeg<fpLegs.length-1){ fpCurrentLeg++; fpAnimStart=null; fpIsPlaying=true; document.getElementById('fp-btn-play').textContent='⏸ Pause'; fpAnimateLeg(); }
+    };
+    document.getElementById('fp-btn-prev').onclick = () => fpJumpToLeg(Math.max(0,fpCurrentLeg-1));
+    document.getElementById('fp-btn-restart').onclick = () => {
+      if(fpAnimFrame)cancelAnimationFrame(fpAnimFrame);
+      fpPathEls.forEach(p=>p.activeEl.attr('opacity','0').attr('stroke','#00c8ff'));
+      d3.select('#fp-plane').attr('opacity','0');
+      fpProgressFill.style.width='0%';
+      document.querySelectorAll('.fp-leg').forEach(el=>el.className='fp-leg');
+      fpCurrentLeg=0; fpAnimStart=null; fpIsPlaying=true;
+      document.getElementById('fp-btn-play').textContent='⏸ Pause';
+      window._fpActiveTz=null;
+      setTimeout(fpStartAnimation,200);
+    };
+  }
+
+  window.fpInit = function() {
+    if (fpInitialized) { setTimeout(fpResize, 30); return; }
+    fpInitialized = true;
+
+    fpBuildStaticUI();
+
+    const wrap = document.getElementById('fp-map-wrap');
+    fpW = wrap.clientWidth; fpH = wrap.clientHeight;
+    fpSvg = d3.select('#fp-map-svg').attr('viewBox', `0 0 ${fpW} ${fpH}`);
+
+    fpProjection = d3.geoOrthographic()
+      .scale(Math.min(fpW, fpH) * 0.44)
+      .translate([fpW/2, fpH/2])
+      .clipAngle(90)
+      .rotate([0,-20]);
+    fpPathGen = d3.geoPath().projection(fpProjection);
+
+    const defs = fpSvg.append('defs');
+    defs.append('filter').attr('id','fp-glow').html(`<feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>`);
+    defs.append('filter').attr('id','fp-glow-sm').html(`<feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>`);
+    const rg = defs.append('radialGradient').attr('id','fp-atmos').attr('cx','50%').attr('cy','50%').attr('r','50%');
+    rg.append('stop').attr('offset','85%').attr('stop-color','transparent');
+    rg.append('stop').attr('offset','100%').attr('stop-color','rgba(0,150,255,0.15)');
+
+    fpSphereLayer  = fpSvg.append('g');
+    fpGratLayer    = fpSvg.append('g');
+    fpCountryLayer = fpSvg.append('g');
+    fpBorderLayer  = fpSvg.append('g');
+    fpAtmosLayer   = fpSvg.append('g');
+    fpPathLayer    = fpSvg.append('g');
+    fpCityLayer    = fpSvg.append('g');
+    fpLabelLayer   = fpSvg.append('g');
+    fpPlaneLayer   = fpSvg.append('g');
+
+    fpSpherePath = fpSphereLayer.append('path').datum({type:'Sphere'}).attr('class','fp-sphere');
+    const scale = Math.min(fpW, fpH) * 0.44;
+    fpAtmosCircleGlow = fpAtmosLayer.append('circle').attr('cx',fpW/2).attr('cy',fpH/2).attr('r',scale*1.02).attr('fill','url(#fp-atmos)').attr('pointer-events','none');
+    fpAtmosCircleOutline = fpAtmosLayer.append('circle').attr('cx',fpW/2).attr('cy',fpH/2).attr('r',scale).attr('class','fp-globe-outline').attr('pointer-events','none');
+    fpGratPath = fpGratLayer.append('path').datum(d3.geoGraticule()()).attr('class','fp-graticule');
+
+    const planeG = fpPlaneLayer.append('g').attr('id','fp-plane').attr('opacity','0').attr('filter','url(#fp-glow)');
+    planeG.append('circle').attr('r',8).attr('fill','rgba(0,200,255,0.18)');
+    planeG.append('circle').attr('r',4).attr('fill','#00c8ff');
+    planeG.append('text').attr('text-anchor','middle').attr('dominant-baseline','central').attr('font-size','8').attr('fill','#05080f').text('✈');
+
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+      .then(r => r.json())
+      .then(world => {
+        const loadingEl = document.getElementById('fp-loading');
+        if (loadingEl) loadingEl.style.display = 'none';
+        fpWorldData = world;
+        fpCountryFeatures = topojson.feature(world, world.objects.countries);
+        fpBorderMesh = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
+        fpCountryLayer.selectAll('path').data(fpCountryFeatures.features).join('path').attr('class','fp-country').attr('d', fpPathGen);
+        fpBorderLayer.append('path').datum(fpBorderMesh).attr('fill','none').attr('stroke','#2a5580').attr('stroke-width','0.6').attr('d', fpPathGen);
+        fpInitFlights();
+        fpRedrawGlobe();
+        setTimeout(fpStartAnimation, 600);
+      })
+      .catch(err => {
+        const loadingEl = document.getElementById('fp-loading');
+        if (loadingEl) loadingEl.textContent = 'Map load error — ' + err.message;
+      });
+
+    let fpResizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(fpResizeTimer);
+      fpResizeTimer = setTimeout(fpResize, 200);
+    });
+  };
+})();
 </script>
 </body>
 </html>
