@@ -203,14 +203,14 @@
       "room": "Superior Room, 2 Queen Beds, Mountain View",
       "breakfast": "TBC",
       "cost": 4264.35,
-      "paid": 0,
+      "paid": 4264.35,
       "ref": "Booked: 73378525757483",
       "platform": "Expedia",
       "cancelBy": "2026-09-19",
       "rating": "4.4 (101)",
       "contact": "+1 (403) 762-4581",
-      "status": "booked",
-      "notes": ""
+      "notes": "",
+      "status": "booked"
     },
     {
       "id": "a4",
@@ -274,6 +274,48 @@
       "contact": "+679 675 0777",
       "status": "booked",
       "notes": ""
+    },
+    {
+      "id": "a1783042890875",
+      "city": "Los Angeles",
+      "name": "The Westin Anaheim Resort",
+      "address": "1030 West Katella Avenue, Anaheim, CA 92802, United States",
+      "checkin": "2026-09-15",
+      "checkinTime": "15:00",
+      "checkout": "2026-09-20",
+      "checkoutTime": "11:00",
+      "room": "Guest room, 2 Queen",
+      "breakfast": "Yes",
+      "cost": 3318,
+      "paid": 0,
+      "ref": "6016548121",
+      "platform": "Booking.com",
+      "cancelBy": "2026-09-12",
+      "rating": "4.8  (1,124)",
+      "contact": "+1 877-264-9786",
+      "notes": "***TO CANCEL***",
+      "status": "booked"
+    },
+    {
+      "id": "a1783042990937",
+      "city": "Banff",
+      "name": "Canalta Lodge",
+      "address": "545 Banff Avenue, T1L 1B5 Banff, Canada",
+      "checkin": "2026-09-22",
+      "checkinTime": "16:00",
+      "checkout": "2026-09-27",
+      "checkoutTime": "12:00",
+      "room": "Queen Room with Balcony",
+      "breakfast": "TBC",
+      "cost": 4124,
+      "paid": 0,
+      "ref": "5720637209",
+      "platform": "Booking.com",
+      "cancelBy": "2026-09-18",
+      "rating": "4.4 (592)",
+      "contact": "+1 403-762-2112",
+      "notes": "***TO CANCEL***",
+      "status": "booked"
     }
   ],
   "flights": [
@@ -312,12 +354,12 @@
       "stops": "Direct",
       "seats": "11A, 11B, 11C, 11D",
       "baggage": "23kg + 7kg each",
-      "ref": "To be booked",
+      "ref": "GIGIEA",
       "terminal": "LAX Terminal 2 / YYC",
       "cost": 1219,
       "paid": 1219,
-      "status": "pending",
-      "notes": "Seats are free"
+      "status": "booked",
+      "notes": ""
     },
     {
       "id": "f3",
@@ -327,17 +369,17 @@
       "depTime": "14:20",
       "arrDate": "2026-09-27",
       "arrTime": "15:00",
-      "airline": "Flair Airlines",
-      "flightNum": "F8 805",
+      "airline": "Westjet",
+      "flightNum": "FIOCJF",
       "duration": "1h 40m",
       "stops": "Direct",
-      "seats": "To be selected",
-      "baggage": "",
-      "ref": "To be booked",
+      "seats": "9A, 9B, 9C, 8A",
+      "baggage": "23kg + 7kg each",
+      "ref": "FIOCJF",
       "terminal": "YYC / YVR",
-      "cost": 1056,
-      "paid": 0,
-      "status": "pending",
+      "cost": 764.88,
+      "paid": 764.88,
+      "status": "booked",
       "notes": ""
     },
     {
@@ -357,28 +399,49 @@
       "ref": "AW8K6A",
       "terminal": "YVR / LAX",
       "cost": 1106,
-      "paid": 0,
+      "paid": 1106,
       "status": "booked",
-      "notes": "Seats are free"
+      "notes": ""
     },
     {
       "id": "f5",
       "from": "Los Angeles (LAX)",
-      "to": "Fiji / Sydney (NAN → SYD)",
+      "to": "Fiji (NAN)",
       "depDate": "2026-10-04",
       "depTime": "23:55",
-      "arrDate": "2026-10-10",
-      "arrTime": "12:45",
+      "arrDate": "2026-10-06",
+      "arrTime": "05:45",
       "airline": "Fiji Airways",
-      "flightNum": "FJ 811 / FJ 911",
-      "duration": "10h 50m + 4h 45m",
-      "stops": "Stop @ Fiji (4 nights resort stay)",
+      "flightNum": "FJ 811",
+      "duration": "10h 50m",
+      "stops": "Direct",
       "seats": "To be selected",
       "baggage": "30kg + 7kg each",
       "ref": "EC8HO6",
-      "terminal": "LAX / Nadi / Sydney T1",
+      "terminal": "LAX / Nadi",
+      "cost": 0.01,
+      "paid": 0.00001,
+      "status": "booked",
+      "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
+    },
+    {
+      "id": "f1783042580404",
+      "from": "Fiji (NAN)",
+      "to": "Sydney (SYD)",
+      "depDate": "2026-09-10",
+      "depTime": "09:00",
+      "arrDate": "2026-09-10",
+      "arrTime": "12:45",
+      "airline": "Fiji Airways",
+      "flightNum": "FJ 911",
+      "duration": "4h 45m",
+      "stops": "Direct",
+      "seats": "To be selected",
+      "baggage": "30kg + 7kg each",
+      "ref": "EC8HO6",
+      "terminal": "Nadi / Sydney Terminal 1",
       "cost": 0,
-      "paid": 0,
+      "paid": 0.00001,
       "status": "booked",
       "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
     }
@@ -389,7 +452,7 @@
       "task": "Book LAX → Calgary (Westjet WS1023) flights",
       "dueDate": "2026-08-01",
       "assigned": "Dad",
-      "status": "Not Started",
+      "status": "Done",
       "notes": "Option: depart 11:40 or 15:05. Cost ~$1,219 AUD"
     },
     {
@@ -397,7 +460,7 @@
       "task": "Book Calgary → Vancouver (Flair F8 805) flights",
       "dueDate": "2026-08-01",
       "assigned": "Dad",
-      "status": "Not Started",
+      "status": "Done",
       "notes": "Depart 14:20, arrive 15:00. Cost ~$1,056 AUD"
     },
     {
@@ -479,6 +542,110 @@
       "assigned": "Isla",
       "status": "Not Started",
       "notes": "LA, Calgary, Banff, Vancouver, Fiji"
+    },
+    {
+      "id": "t1783041643838",
+      "task": "Isla and Maisy absent forms",
+      "dueDate": "2026-07-06",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041657959",
+      "task": "LA dodgers tickets",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041669519",
+      "task": "Ice Hockey tickets",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041681303",
+      "task": "Canada tours",
+      "dueDate": "2026-07-20",
+      "assigned": "Mum",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041699111",
+      "task": "Medications check",
+      "dueDate": "2026-08-17",
+      "assigned": "Mum",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041834078",
+      "task": "Sydney transfers",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041844454",
+      "task": "US transfers",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041856046",
+      "task": "Canada transfers",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041873422",
+      "task": "Wise card top up",
+      "dueDate": "2026-08-17",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041894662",
+      "task": "Clear out phone memory",
+      "dueDate": "2026-08-17",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041907511",
+      "task": "Download movies",
+      "dueDate": "2026-08-17",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041928941",
+      "task": "Buy new SD cards",
+      "dueDate": "2026-08-03",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
+    },
+    {
+      "id": "t1783041939174",
+      "task": "Travel eSim cards",
+      "dueDate": "2026-08-01",
+      "assigned": "Dad",
+      "status": "Not Started",
+      "notes": ""
     }
   ]
 }
