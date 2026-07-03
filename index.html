@@ -448,6 +448,69 @@
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 16px;
   }
+
+  /* === TRIP CARDS (landing page) === */
+  .trip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .trip-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.15s, transform 0.15s;
+    cursor: pointer;
+    position: relative;
+  }
+  .trip-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .trip-card-banner {
+    height: 84px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    color: rgba(255,255,255,0.9);
+  }
+  .trip-card-banner svg { width: 30px; height: 30px; opacity: 0.85; }
+  .trip-card-actions {
+    position: absolute; top: 8px; right: 8px;
+    display: flex; gap: 4px;
+    opacity: 0; transition: opacity 0.15s;
+  }
+  .trip-card:hover .trip-card-actions { opacity: 1; }
+  .trip-card-icon-btn {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: rgba(0,0,0,0.28); border: none; color: #fff;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .trip-card-icon-btn:hover { background: rgba(0,0,0,0.45); }
+  .trip-card-icon-btn svg { width: 13px; height: 13px; }
+  .trip-card-body { padding: 16px; }
+  .trip-card-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--navy); margin-bottom: 4px; }
+  .trip-card-locations { font-size: 12.5px; color: var(--text-mid); margin-bottom: 10px; line-height: 1.4; }
+  .trip-card-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .trip-card-dates { font-size: 11.5px; color: var(--text-light); }
+  .trip-card-days {
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+    color: var(--teal); background: rgba(45,143,138,0.1); padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+  }
+  .trip-card-badge {
+    position: absolute; top: 8px; left: 8px;
+    font-size: 9.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 20px; background: rgba(255,255,255,0.92); color: var(--navy);
+  }
+  .trip-empty-state {
+    text-align: center; padding: 60px 20px; color: var(--text-light);
+    border: 1.5px dashed var(--border-mid); border-radius: var(--r-lg); background: var(--surface);
+  }
+  .trip-empty-state svg { width: 40px; height: 40px; opacity: 0.4; margin-bottom: 10px; }
+
+  .brand-back {
+    font-size: 9.5px; color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 1px;
+  }
+
   .accom-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -861,6 +924,7 @@
 
     /* Accommodation */
     .accom-grid { grid-template-columns: 1fr; }
+    .trip-grid { grid-template-columns: 1fr; }
 
     /* Flights */
     .flight-card-inner { grid-template-columns: 1fr; text-align: center; gap: 12px; padding: 14px; }
@@ -1147,11 +1211,12 @@
 
 <header>
   <div class="header-inner">
-    <div class="header-brand">
+    <div class="header-brand" id="headerBrand" onclick="goToLanding()" style="cursor:pointer" title="All Trips">
       <div class="brand-icon">✈</div>
       <div>
-        <div class="brand-title">Trip Planner</div>
-        <div class="brand-sub">US &amp; Canada · Sep–Oct 2026</div>
+        <div class="brand-back" id="brandBack" style="display:none;">‹ All Trips</div>
+        <div class="brand-title" id="brandTitle">My Trips</div>
+        <div class="brand-sub" id="brandSub">Plan your next adventure</div>
       </div>
     </div>
     <div class="header-actions">
@@ -1177,6 +1242,26 @@
   <div id="githubStatus" style="display:none; font-size:12px; padding:6px 2rem; text-align:right; font-family:monospace;"></div>
 </header>
 
+<!-- ==================== LANDING PAGE (ALL TRIPS) ==================== -->
+<div id="landingView">
+  <div class="main">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">My Trips</h1>
+        <div class="section-sub" id="landingSub">0 trips planned</div>
+      </div>
+      <button class="btn btn-primary" onclick="openTripModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Trip
+      </button>
+    </div>
+    <div id="tripsGrid" class="trip-grid"></div>
+  </div>
+</div>
+
+<!-- ==================== TRIP VIEW (CALENDAR / ACCOM / FLIGHTS / TODOS / FLIGHTPATH) ==================== -->
+<div id="tripView" style="display:none;">
+
 <div style="background:var(--surface); border-bottom: 1px solid var(--border);">
   <div class="nav-tabs" style="max-width:1400px; margin:0 auto; padding:0 2rem;">
     <div class="nav-tab active" onclick="showSection('calendar',this)">
@@ -1191,7 +1276,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 21 4s-2 0-3.5 1.5L14 9 5.8 7.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 3.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
       Flights
     </div>
-    <div class="nav-tab" onclick="showSection('flightpath',this)">
+    <div class="nav-tab" onclick="showSection('flightpath',this)" id="flightPathNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20 15.3 15.3 0 010-20z"/></svg>
       Flight Path
     </div>
@@ -1365,6 +1450,44 @@
 
 </main>
 
+</div><!-- /#tripView -->
+
+
+<!-- ==================== TRIP MODAL (CREATE / EDIT) ==================== -->
+<div class="modal-backdrop" id="tripModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="tripModalTitle">New Trip</div>
+      <button class="modal-close" onclick="closeModal('tripModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="tripEditId">
+      <div class="form-group">
+        <label class="form-label">Trip Name</label>
+        <input type="text" class="form-input" id="tripName" placeholder="e.g. Japan Spring 2027">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Locations</label>
+        <input type="text" class="form-input" id="tripLocations" placeholder="e.g. Tokyo → Kyoto → Osaka">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Start Date</label>
+          <input type="date" class="form-input" id="tripStartDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">End Date</label>
+          <input type="date" class="form-input" id="tripEndDate">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="tripDeleteBtn" style="margin-right:auto; display:none" onclick="deleteTripFromModal()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('tripModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTripMeta()">Save Trip</button>
+    </div>
+  </div>
+</div>
 
 <!-- ==================== CALENDAR EVENT MODAL ==================== -->
 <div class="modal-backdrop" id="calModal">
@@ -1692,28 +1815,291 @@
 // ===========================
 // DATA STORE
 // ===========================
-let store = {
-  calEvents: [],
-  accommodations: [],
-  flights: []
-};
+const SEED_TRIP_ID = 'trip_us_canada_2026';
+const TRIPS_STORAGE_KEY = 'tripPlanner_allTrips_v1';
+const LEGACY_STORAGE_KEY = 'tripPlanner2026';
+
+let allTrips = { trips: {} };
+let currentTripId = null;
+let store = null; // reference to allTrips.trips[currentTripId] while a trip is open
+
+function newEmptyTripData(meta) {
+  return { meta, calEvents: [], accommodations: [], flights: [], todos: [] };
+}
+
+function ensureTripShape(t) {
+  if (!t.meta) t.meta = { name: 'Untitled Trip', locations: '', startDate: '', endDate: '' };
+  if (!t.calEvents) t.calEvents = [];
+  if (!t.accommodations) t.accommodations = [];
+  if (!t.flights) t.flights = [];
+  if (!t.todos) t.todos = [];
+  return t;
+}
+
+function seedDefaultTrip() {
+  const meta = {
+    name: 'US & Canada Trip',
+    locations: 'Sydney → Fiji → Los Angeles → Calgary → Banff → Vancouver → Fiji',
+    startDate: '2026-09-15',
+    endDate: '2026-10-10'
+  };
+  allTrips.trips[SEED_TRIP_ID] = newEmptyTripData(meta);
+  // seedData()/seedTodos() write via the `store` reference
+  const prevStore = store;
+  store = allTrips.trips[SEED_TRIP_ID];
+  seedData();
+  seedTodos();
+  store = prevStore;
+}
 
 function loadStore() {
   try {
-    const s = localStorage.getItem('tripPlanner2026');
+    const s = localStorage.getItem(TRIPS_STORAGE_KEY);
     if (s) {
-      store = JSON.parse(s);
-      if (!store.todos) seedTodos();
-    } else {
-      seedData();
-      seedTodos();
+      allTrips = JSON.parse(s);
+      if (!allTrips.trips) allTrips = { trips: {} };
+      Object.values(allTrips.trips).forEach(ensureTripShape);
+      if (Object.keys(allTrips.trips).length === 0) seedDefaultTrip();
+      return;
     }
-  } catch(e) { seedData(); seedTodos(); }
+    // Migrate legacy single-trip data if present
+    const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (legacy) {
+      const legacyStore = JSON.parse(legacy);
+      allTrips = { trips: {} };
+      allTrips.trips[SEED_TRIP_ID] = ensureTripShape({
+        meta: {
+          name: 'US & Canada Trip',
+          locations: 'Sydney → Fiji → Los Angeles → Calgary → Banff → Vancouver → Fiji',
+          startDate: '2026-09-15',
+          endDate: '2026-10-10'
+        },
+        calEvents: legacyStore.calEvents || [],
+        accommodations: legacyStore.accommodations || [],
+        flights: legacyStore.flights || [],
+        todos: legacyStore.todos || []
+      });
+      return;
+    }
+    allTrips = { trips: {} };
+    seedDefaultTrip();
+  } catch (e) {
+    allTrips = { trips: {} };
+    seedDefaultTrip();
+  }
 }
 
 function saveStore() {
-  localStorage.setItem('tripPlanner2026', JSON.stringify(store));
+  localStorage.setItem(TRIPS_STORAGE_KEY, JSON.stringify(allTrips));
 }
+
+// ===========================
+// MULTI-TRIP NAVIGATION
+// ===========================
+function openTrip(tripId) {
+  if (!allTrips.trips[tripId]) return;
+  currentTripId = tripId;
+  store = allTrips.trips[tripId];
+
+  document.getElementById('landingView').style.display = 'none';
+  document.getElementById('tripView').style.display = '';
+  document.getElementById('brandBack').style.display = '';
+  document.getElementById('brandTitle').textContent = store.meta.name || 'Untitled Trip';
+  document.getElementById('brandSub').textContent = store.meta.locations || formatDateRange(store.meta.startDate, store.meta.endDate);
+
+  // Flight Path tab only has real data for the original seeded trip
+  const fpTab = document.getElementById('flightPathNavTab');
+  if (fpTab) fpTab.style.display = (tripId === SEED_TRIP_ID) ? '' : 'none';
+
+  // Reset to Trip Calendar tab
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const calTab = document.querySelector('.nav-tab[onclick*="\'calendar\'"]');
+  if (calTab) calTab.classList.add('active');
+  document.getElementById('section-calendar').classList.add('active');
+
+  renderCalendar();
+  renderAccom();
+  renderFlights();
+  renderTodos();
+  window.scrollTo(0, 0);
+}
+
+function goToLanding() {
+  currentTripId = null;
+  store = null;
+  document.getElementById('tripView').style.display = 'none';
+  document.getElementById('landingView').style.display = '';
+  document.getElementById('brandBack').style.display = 'none';
+  document.getElementById('brandTitle').textContent = 'My Trips';
+  document.getElementById('brandSub').textContent = 'Plan your next adventure';
+  renderLandingPage();
+  window.scrollTo(0, 0);
+}
+
+function formatDateRange(start, end) {
+  if (!start && !end) return 'Dates TBD';
+  const opts = { month: 'short', day: 'numeric' };
+  const optsY = { month: 'short', day: 'numeric', year: 'numeric' };
+  try {
+    const s = start ? new Date(start + 'T00:00:00') : null;
+    const e = end ? new Date(end + 'T00:00:00') : null;
+    if (s && e) {
+      const sameYear = s.getFullYear() === e.getFullYear();
+      return `${s.toLocaleDateString('en-AU', opts)} – ${e.toLocaleDateString('en-AU', sameYear ? optsY : optsY)}`;
+    }
+    if (s) return s.toLocaleDateString('en-AU', optsY);
+    if (e) return e.toLocaleDateString('en-AU', optsY);
+  } catch (e) {}
+  return 'Dates TBD';
+}
+
+function tripDayCount(start, end) {
+  if (!start || !end) return null;
+  try {
+    const s = new Date(start + 'T00:00:00'), e = new Date(end + 'T00:00:00');
+    const days = Math.round((e - s) / 86400000) + 1;
+    return days > 0 ? days : null;
+  } catch (e) { return null; }
+}
+
+const TRIP_BANNER_GRADIENTS = [
+  'linear-gradient(135deg,#0a3d62,#3c6382)',
+  'linear-gradient(135deg,#8e44ad,#c0392b)',
+  'linear-gradient(135deg,#1e6f5c,#2d8f8a)',
+  'linear-gradient(135deg,#b8860b,#8b4513)',
+  'linear-gradient(135deg,#2c3e50,#4a69bd)',
+  'linear-gradient(135deg,#c0392b,#e67e22)',
+];
+
+function renderLandingPage() {
+  const grid = document.getElementById('tripsGrid');
+  const sub = document.getElementById('landingSub');
+  if (!grid) return;
+
+  const entries = Object.entries(allTrips.trips).sort((a, b) => {
+    const da = a[1].meta.startDate || '9999-99-99';
+    const db = b[1].meta.startDate || '9999-99-99';
+    return da.localeCompare(db);
+  });
+
+  sub.textContent = entries.length === 0 ? 'No trips yet' : `${entries.length} trip${entries.length === 1 ? '' : 's'} planned`;
+
+  if (entries.length === 0) {
+    grid.innerHTML = `
+      <div class="trip-empty-state" style="grid-column:1/-1;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 21 4s-2 0-3.5 1.5L14 9 5.8 7.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 3.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+        <div style="font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--navy); margin-bottom:6px;">No trips yet</div>
+        <div style="font-size:13px;">Click "New Trip" to start planning your next adventure.</div>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = entries.map(([id, trip], i) => {
+    const days = tripDayCount(trip.meta.startDate, trip.meta.endDate);
+    const gradient = TRIP_BANNER_GRADIENTS[i % TRIP_BANNER_GRADIENTS.length];
+    const today = new Date().toISOString().slice(0,10);
+    let badge = '';
+    if (trip.meta.startDate && trip.meta.endDate) {
+      if (today < trip.meta.startDate) badge = 'Upcoming';
+      else if (today > trip.meta.endDate) badge = 'Past';
+      else badge = 'In Progress';
+    }
+    return `
+      <div class="trip-card" onclick="openTrip('${id}')">
+        <div class="trip-card-banner" style="background:${gradient}">
+          ${badge ? `<div class="trip-card-badge">${escHtml(badge)}</div>` : ''}
+          <div class="trip-card-actions" onclick="event.stopPropagation()">
+            <button class="trip-card-icon-btn" onclick="openTripModal('${id}')" title="Edit trip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="trip-card-icon-btn" onclick="deleteTrip('${id}')" title="Delete trip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+            </button>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 21 4s-2 0-3.5 1.5L14 9 5.8 7.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 3.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+        </div>
+        <div class="trip-card-body">
+          <div class="trip-card-name">${escHtml(trip.meta.name || 'Untitled Trip')}</div>
+          <div class="trip-card-locations">${escHtml(trip.meta.locations || 'No locations set')}</div>
+          <div class="trip-card-meta">
+            <div class="trip-card-dates">${formatDateRange(trip.meta.startDate, trip.meta.endDate)}</div>
+            ${days ? `<div class="trip-card-days">${days} day${days===1?'':'s'}</div>` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openTripModal(tripId) {
+  const isEdit = !!tripId;
+  document.getElementById('tripModalTitle').textContent = isEdit ? 'Edit Trip' : 'New Trip';
+  document.getElementById('tripEditId').value = tripId || '';
+  document.getElementById('tripDeleteBtn').style.display = isEdit ? '' : 'none';
+  if (isEdit) {
+    const t = allTrips.trips[tripId];
+    document.getElementById('tripName').value = t.meta.name || '';
+    document.getElementById('tripLocations').value = t.meta.locations || '';
+    document.getElementById('tripStartDate').value = t.meta.startDate || '';
+    document.getElementById('tripEndDate').value = t.meta.endDate || '';
+  } else {
+    document.getElementById('tripName').value = '';
+    document.getElementById('tripLocations').value = '';
+    document.getElementById('tripStartDate').value = '';
+    document.getElementById('tripEndDate').value = '';
+  }
+  document.getElementById('tripModal').classList.add('open');
+}
+
+function saveTripMeta() {
+  const id = document.getElementById('tripEditId').value;
+  const name = document.getElementById('tripName').value.trim();
+  if (!name) { showToast('Please enter a trip name'); return; }
+  const meta = {
+    name,
+    locations: document.getElementById('tripLocations').value.trim(),
+    startDate: document.getElementById('tripStartDate').value,
+    endDate: document.getElementById('tripEndDate').value
+  };
+
+  if (id && allTrips.trips[id]) {
+    allTrips.trips[id].meta = meta;
+    if (currentTripId === id) {
+      document.getElementById('brandTitle').textContent = meta.name;
+      document.getElementById('brandSub').textContent = meta.locations || formatDateRange(meta.startDate, meta.endDate);
+    }
+  } else {
+    const newId = 'trip_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+    allTrips.trips[newId] = newEmptyTripData(meta);
+  }
+
+  saveStore();
+  closeModal('tripModal');
+  renderLandingPage();
+  showToast(id ? 'Trip updated ✓' : 'Trip created ✓');
+}
+
+function deleteTrip(tripId) {
+  const t = allTrips.trips[tripId];
+  if (!t) return;
+  if (!confirm(`Delete "${t.meta.name || 'this trip'}"? This removes all its calendar events, accommodation, flights, and to-dos. This cannot be undone.`)) return;
+  delete allTrips.trips[tripId];
+  saveStore();
+  if (currentTripId === tripId) goToLanding();
+  else renderLandingPage();
+  showToast('Trip deleted');
+}
+
+function deleteTripFromModal() {
+  const id = document.getElementById('tripEditId').value;
+  if (!id) return;
+  closeModal('tripModal');
+  deleteTrip(id);
+}
+
+
 
 // ===========================
 // GITHUB SYNC
@@ -1798,11 +2184,32 @@ function promptForPAT() {
 
 function applyRemoteStore(data) {
   if (!data || typeof data !== 'object') return false;
+
+  // New multi-trip shape: { trips: { id: {...} } }
+  if (data.trips && typeof data.trips === 'object') {
+    allTrips = { trips: {} };
+    Object.entries(data.trips).forEach(([id, t]) => { allTrips.trips[id] = ensureTripShape(t); });
+    if (currentTripId && allTrips.trips[currentTripId]) store = allTrips.trips[currentTripId];
+    else if (currentTripId) { currentTripId = null; store = null; }
+    return true;
+  }
+
+  // Legacy single-trip shape (old JSON files already saved to the repo)
   if (data.calEvents !== undefined || data.accommodations !== undefined || data.flights !== undefined || data.todos !== undefined) {
-    if (data.calEvents) store.calEvents = data.calEvents;
-    if (data.accommodations) store.accommodations = data.accommodations;
-    if (data.flights) store.flights = data.flights;
-    if (data.todos) store.todos = data.todos;
+    allTrips = { trips: {} };
+    allTrips.trips[SEED_TRIP_ID] = ensureTripShape({
+      meta: {
+        name: 'US & Canada Trip',
+        locations: 'Sydney → Fiji → Los Angeles → Calgary → Banff → Vancouver → Fiji',
+        startDate: '2026-09-15',
+        endDate: '2026-10-10'
+      },
+      calEvents: data.calEvents || [],
+      accommodations: data.accommodations || [],
+      flights: data.flights || [],
+      todos: data.todos || []
+    });
+    if (currentTripId) { currentTripId = null; store = null; }
     return true;
   }
   return false;
@@ -1817,10 +2224,14 @@ async function fetchFromGitHub(manual) {
     if (!applyRemoteStore(data)) throw new Error('Invalid data file');
 
     saveStore();
-    renderCalendar();
-    renderAccom();
-    renderFlights();
-    renderTodos();
+    if (currentTripId) {
+      renderCalendar();
+      renderAccom();
+      renderFlights();
+      renderTodos();
+    } else {
+      renderLandingPage();
+    }
 
     const saveBtn = document.getElementById('githubSaveBtn');
     if (saveBtn) saveBtn.disabled = false;
@@ -1848,7 +2259,7 @@ async function saveToGitHub() {
   setGHStatus('Pushing to GitHub…', 'var(--text-light)');
 
   try {
-    const jsonStr = JSON.stringify(store, null, 2);
+    const jsonStr = JSON.stringify(allTrips, null, 2);
     // btoa with unicode support
     const content = btoa(unescape(encodeURIComponent(jsonStr)));
 
@@ -2458,12 +2869,12 @@ function deleteFlight() {
 // IMPORT / EXPORT
 // ===========================
 function exportJSON() {
-  const data = JSON.stringify(store, null, 2);
+  const data = JSON.stringify(allTrips, null, 2);
   const blob = new Blob([data], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'trip-planner-2026.json';
+  a.download = 'trip-planner-all-trips.json';
   a.click();
   URL.revokeObjectURL(url);
   showToast('Exported to JSON ✓');
@@ -2476,16 +2887,16 @@ function importJSON(event) {
   reader.onload = (e) => {
     try {
       const data = JSON.parse(e.target.result);
-      if (data.calEvents !== undefined || data.accommodations !== undefined || data.flights !== undefined || data.todos !== undefined) {
-        if (data.calEvents) store.calEvents = data.calEvents;
-        if (data.accommodations) store.accommodations = data.accommodations;
-        if (data.flights) store.flights = data.flights;
-        if (data.todos) store.todos = data.todos;
+      if (applyRemoteStore(data)) {
         saveStore();
-        renderCalendar();
-        renderAccom();
-        renderFlights();
-        renderTodos();
+        if (currentTripId) {
+          renderCalendar();
+          renderAccom();
+          renderFlights();
+          renderTodos();
+        } else {
+          renderLandingPage();
+        }
         showToast('Data imported successfully ✓');
       } else {
         showToast('Invalid file format.');
@@ -2781,10 +3192,7 @@ async function init() {
 
   if (!loadedFromGH) loadStore();
 
-  renderCalendar();
-  renderAccom();
-  renderFlights();
-  renderTodos();
+  renderLandingPage();
 
   const saveBtn = document.getElementById('githubSaveBtn');
   if (saveBtn) saveBtn.disabled = false;
