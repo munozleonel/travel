@@ -1487,7 +1487,10 @@ async function saveToGitHub() {
 
     if (!putRes.ok) {
       const err = await putRes.json().catch(() => ({}));
-      if (putRes.status === 401) { setGHToken(''); throw new Error('Invalid token (401) — re-enter your PAT next save.'); }
+      if (putRes.status === 401 || putRes.status === 404) {
+        setGHToken('');
+        throw new Error(`${err.message || 'Not Found'} (HTTP ${putRes.status}) — token cleared, re-enter it next save. Check the token is fresh, has 'repo' scope, and the repo/branch name is correct.`);
+      }
       throw new Error(err.message || `HTTP ${putRes.status}`);
     }
 
