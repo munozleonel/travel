@@ -312,12 +312,12 @@
       "stops": "Direct",
       "seats": "11A, 11B, 11C, 11D",
       "baggage": "23kg + 7kg each",
-      "ref": "To be booked",
+      "ref": "GIGIEA",
       "terminal": "LAX Terminal 2 / YYC",
       "cost": 1219,
       "paid": 1219,
-      "status": "pending",
-      "notes": "Seats are free"
+      "status": "booked",
+      "notes": ""
     },
     {
       "id": "f3",
