@@ -315,7 +315,7 @@
       "ref": "To be booked",
       "terminal": "LAX Terminal 2 / YYC",
       "cost": 1219,
-      "paid": 1218,
+      "paid": 1219,
       "status": "pending",
       "notes": "Seats are free"
     },
