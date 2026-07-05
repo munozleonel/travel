@@ -1,6 +1,6 @@
 {
-  "name": "Trip Planner",
-  "short_name": "Trip Planner",
+  "name": "Travel Planner",
+  "short_name": "Travel Planner",
   "description": "Plan trips, flights, accommodation, and itineraries — synced to GitHub.",
   "start_url": "./index.html",
   "scope": "./",

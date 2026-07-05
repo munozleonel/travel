@@ -1,7 +1,7 @@
 // Trip Planner service worker
 // Bump CACHE_VERSION whenever index.html/manifest/icons change so clients
 // pick up the new version instead of serving a stale cached copy.
-const CACHE_VERSION = 'trip-planner-v1';
+const CACHE_VERSION = 'trip-planner-v2';
 const APP_SHELL = [
   './index.html',
   './manifest.json',
