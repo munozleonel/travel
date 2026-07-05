@@ -459,7 +459,7 @@
           "id": "t1",
           "task": "Book LAX → Calgary (Westjet WS1023) flights",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Done",
           "notes": "Option: depart 11:40 or 15:05. Cost ~$1,219 AUD"
         },
@@ -467,7 +467,7 @@
           "id": "t2",
           "task": "Book Calgary → Vancouver (Flair F8 805) flights",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Done",
           "notes": "Depart 14:20, arrive 15:00. Cost ~$1,056 AUD"
         },
@@ -475,7 +475,7 @@
           "id": "t3",
           "task": "Select seats – Fiji Airways (EC8HO6)",
           "dueDate": "2026-08-15",
-          "assigned": "Mum",
+          "assigned": "Kat",
           "status": "Not Started",
           "notes": "Seats cost extra. Both SYD↔LAX legs"
         },
@@ -483,7 +483,7 @@
           "id": "t4",
           "task": "Buy Disneyland / Disney park tickets",
           "dueDate": "2026-08-20",
-          "assigned": "Mum",
+          "assigned": "Kat",
           "status": "Not Started",
           "notes": "Sep 17 & 19 (Maisy birthday). Book early to secure dates"
         },
@@ -491,7 +491,7 @@
           "id": "t5",
           "task": "Buy Universal Studios tickets",
           "dueDate": "2026-09-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": "Oct 2 – Santa Monica stay"
         },
@@ -499,7 +499,7 @@
           "id": "t6",
           "task": "Arrange travel insurance for all 4",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -507,7 +507,7 @@
           "id": "t7",
           "task": "Check passport expiry dates (all 4)",
           "dueDate": "2026-07-15",
-          "assigned": "Mum",
+          "assigned": "Kat",
           "status": "Not Started",
           "notes": "Passports must be valid 6 months beyond return date (Apr 2027)"
         },
@@ -515,7 +515,7 @@
           "id": "t8",
           "task": "Apply for US ESTA (electronic travel authorisation)",
           "dueDate": "2026-08-15",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": "Required for all Australian passport holders entering USA"
         },
@@ -523,7 +523,7 @@
           "id": "t9",
           "task": "Apply for Canadian eTA",
           "dueDate": "2026-08-15",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": "Required for visa-exempt foreign nationals flying into Canada"
         },
@@ -531,7 +531,7 @@
           "id": "t10",
           "task": "Confirm free-cancellation deadlines for all hotels",
           "dueDate": "2026-09-01",
-          "assigned": "Mum",
+          "assigned": "Kat",
           "status": "Not Started",
           "notes": "Earliest is Sheraton Fiji – cancel by 6 Sep"
         },
@@ -539,7 +539,7 @@
           "id": "t11",
           "task": "Pack bags & check baggage allowances",
           "dueDate": "2026-09-13",
-          "assigned": "Mum",
+          "assigned": "Kat",
           "status": "Not Started",
           "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg"
         },
@@ -555,7 +555,7 @@
           "id": "t1783041643838",
           "task": "Isla and Maisy absent forms",
           "dueDate": "2026-07-13",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -563,7 +563,7 @@
           "id": "t1783041657959",
           "task": "LA dodgers tickets",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -571,7 +571,7 @@
           "id": "t1783041669519",
           "task": "Ice Hockey tickets",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -579,7 +579,7 @@
           "id": "t1783041681303",
           "task": "Canada tours",
           "dueDate": "2026-07-20",
-          "assigned": "Mum",
+          "assigned": "Kat",
           "status": "Not Started",
           "notes": ""
         },
@@ -587,7 +587,7 @@
           "id": "t1783041699111",
           "task": "Medications check",
           "dueDate": "2026-08-17",
-          "assigned": "Mum",
+          "assigned": "Kat",
           "status": "Not Started",
           "notes": ""
         },
@@ -595,7 +595,7 @@
           "id": "t1783041834078",
           "task": "Sydney transfers",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -603,7 +603,7 @@
           "id": "t1783041844454",
           "task": "US transfers",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -611,7 +611,7 @@
           "id": "t1783041856046",
           "task": "Canada transfers",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -619,7 +619,7 @@
           "id": "t1783041873422",
           "task": "Wise card top up",
           "dueDate": "2026-08-17",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -627,7 +627,7 @@
           "id": "t1783041894662",
           "task": "Clear out phone memory",
           "dueDate": "2026-08-17",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -635,7 +635,7 @@
           "id": "t1783041907511",
           "task": "Download movies",
           "dueDate": "2026-08-17",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -643,7 +643,7 @@
           "id": "t1783041928941",
           "task": "Buy new SD cards",
           "dueDate": "2026-08-03",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
@@ -651,10 +651,15 @@
           "id": "t1783041939174",
           "task": "Travel eSim cards",
           "dueDate": "2026-08-01",
-          "assigned": "Dad",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         }
+      ],
+      "people": [
+        "Leo",
+        "Kat",
+        "Isla"
       ]
     }
   }
