@@ -154,6 +154,15 @@
           "time": "09:00",
           "location": "Nadi",
           "notes": "Arrive SYD 12:45pm"
+        },
+        {
+          "id": "e1783755842213",
+          "date": "2026-10-03",
+          "type": "activity",
+          "title": "LA Viral desserts",
+          "time": "12:00",
+          "location": "Aurora LA",
+          "notes": ""
         }
       ],
       "accommodations": [
