@@ -337,6 +337,12 @@
   .cal-event-pill.type-hotel { background: #e9f7ef; color: #145a32; border-left: 3px solid #27ae60; }
   .cal-event-pill.type-activity { background: #fef9e7; color: #7d6608; border-left: 3px solid #f1c40f; }
   .cal-event-pill.type-note { background: #f5eef8; color: #6c3483; border-left: 3px solid #9b59b6; }
+
+  .cost-type-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .cost-type-badge.cost-Experience { background: #fef9e7; color: #7d6608; }
+  .cost-type-badge.cost-Food { background: #e9f7ef; color: #145a32; }
+  .cost-type-badge.cost-Transport { background: #e8f4fd; color: #1a5276; }
+  .cost-type-badge.cost-Other { background: #f5eef8; color: #6c3483; }
   .cal-add-btn {
     position: absolute;
     bottom: 6px; right: 6px;
@@ -1306,6 +1312,10 @@
       To-Do
       <span id="todoCountBadge" style="display:none; background:var(--coral); color:#fff; font-size:10px; font-weight:700; padding:1px 6px; border-radius:20px; margin-left:2px;"></span>
     </div>
+    <div class="nav-tab" onclick="showSection('othercosts',this)" id="otherCostsNavTab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Other costs
+    </div>
   </div>
 </div>
 
@@ -1409,6 +1419,21 @@
     </div>
 
     <div id="todoTableWrap"></div>
+  </section>
+
+  <!-- ==================== OTHER COSTS SECTION ==================== -->
+  <section id="section-othercosts" class="section">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Other Costs</h1>
+        <div class="section-sub">Experiences, food, transport & everything else</div>
+      </div>
+      <button class="btn btn-primary" onclick="openOtherCostModal()">+ Add Cost</button>
+    </div>
+
+    <div class="summary-bar" id="otherCostsSummary"></div>
+
+    <div id="otherCostsTableWrap"></div>
   </section>
 
   <!-- ==================== FLIGHT PATH SECTION ==================== -->
@@ -1849,6 +1874,56 @@
   </div>
 </div>
 
+<div class="modal-backdrop" id="otherCostModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="otherCostModalTitle">Add Cost</div>
+      <button class="modal-close" onclick="closeModal('otherCostModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="otherCostEditId">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-select" id="otherCostType">
+            <option value="Experience">Experience</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-input" id="otherCostDate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-input" id="otherCostDescription" placeholder="e.g. Banff gondola tickets">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Cost</label>
+          <input type="number" step="0.01" min="0" class="form-input" id="otherCostCost" placeholder="0.00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cost Paid</label>
+          <input type="number" step="0.01" min="0" class="form-input" id="otherCostPaid" placeholder="0.00">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="otherCostNotes" placeholder="Any extra details..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="otherCostDeleteBtn" style="margin-right:auto; display:none" onclick="deleteOtherCost()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('otherCostModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveOtherCost()">Save Cost</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1864,7 +1939,7 @@ let currentTripId = null;
 let store = null; // reference to allTrips.trips[currentTripId] while a trip is open
 
 function newEmptyTripData(meta) {
-  return { meta, calEvents: [], accommodations: [], flights: [], todos: [], people: ['Leo', 'Kat'] };
+  return { meta, calEvents: [], accommodations: [], flights: [], todos: [], otherCosts: [], people: ['Leo', 'Kat'] };
 }
 
 function ensureTripShape(t) {
@@ -1873,6 +1948,7 @@ function ensureTripShape(t) {
   if (!t.accommodations) t.accommodations = [];
   if (!t.flights) t.flights = [];
   if (!t.todos) t.todos = [];
+  if (!t.otherCosts) t.otherCosts = [];
   if (!t.people || !t.people.length) {
     // Derive people list from any names already used on existing to-dos, so
     // migrated/legacy trips don't lose track of who tasks are assigned to.
@@ -1923,7 +1999,8 @@ function loadStore() {
         calEvents: legacyStore.calEvents || [],
         accommodations: legacyStore.accommodations || [],
         flights: legacyStore.flights || [],
-        todos: legacyStore.todos || []
+        todos: legacyStore.todos || [],
+        otherCosts: legacyStore.otherCosts || []
       });
       return;
     }
@@ -1968,6 +2045,7 @@ function openTrip(tripId) {
   renderAccom();
   renderFlights();
   renderTodos();
+  renderOtherCosts();
   window.scrollTo(0, 0);
 }
 
@@ -2241,7 +2319,7 @@ function applyRemoteStore(data) {
   }
 
   // Legacy single-trip shape (old JSON files already saved to the repo)
-  if (data.calEvents !== undefined || data.accommodations !== undefined || data.flights !== undefined || data.todos !== undefined) {
+  if (data.calEvents !== undefined || data.accommodations !== undefined || data.flights !== undefined || data.todos !== undefined || data.otherCosts !== undefined) {
     allTrips = { trips: {} };
     allTrips.trips[SEED_TRIP_ID] = ensureTripShape({
       meta: {
@@ -2253,7 +2331,8 @@ function applyRemoteStore(data) {
       calEvents: data.calEvents || [],
       accommodations: data.accommodations || [],
       flights: data.flights || [],
-      todos: data.todos || []
+      todos: data.todos || [],
+      otherCosts: data.otherCosts || []
     });
     if (currentTripId) { currentTripId = null; store = null; }
     return true;
@@ -2275,6 +2354,7 @@ async function fetchFromGitHub(manual) {
       renderAccom();
       renderFlights();
       renderTodos();
+      renderOtherCosts();
     } else {
       renderLandingPage();
     }
@@ -2592,7 +2672,14 @@ function renderAccom() {
     <div class="summary-card fin-detail"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">$${(totalCost-totalPaid).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD remaining</div></div>
   `;
 
-  store.accommodations.forEach(a => {
+  const sortedAccommodations = [...store.accommodations].sort((a, b) => {
+    if (!a.checkin && !b.checkin) return 0;
+    if (!a.checkin) return 1;
+    if (!b.checkin) return -1;
+    return new Date(a.checkin) - new Date(b.checkin);
+  });
+
+  sortedAccommodations.forEach(a => {
     const nights = a.checkin && a.checkout ? Math.round((new Date(a.checkout) - new Date(a.checkin)) / 86400000) : 0;
     const perNight = nights > 0 ? (parseFloat(a.cost) / nights).toFixed(0) : 0;
     const stars = parseFloat(a.rating) || 0;
@@ -2940,6 +3027,7 @@ function importJSON(event) {
           renderAccom();
           renderFlights();
           renderTodos();
+          renderOtherCosts();
         } else {
           renderLandingPage();
         }
@@ -3301,6 +3389,143 @@ function deleteTodo() {
   closeModal('todoModal');
   renderTodos();
   showToast('Task deleted');
+}
+
+// ===========================
+// OTHER COSTS
+// ===========================
+function renderOtherCosts() {
+  if (!store.otherCosts) store.otherCosts = [];
+
+  const costs = [...store.otherCosts].sort((a, b) => {
+    if (!a.date && !b.date) return 0;
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return new Date(a.date) - new Date(b.date);
+  });
+
+  const totalCost = store.otherCosts.reduce((s, c) => s + (parseFloat(c.cost) || 0), 0);
+  const totalPaid = store.otherCosts.reduce((s, c) => s + (parseFloat(c.paid) || 0), 0);
+
+  document.getElementById('otherCostsSummary').innerHTML = `
+    <div class="summary-card"><div class="summary-label">Total Entries</div><div class="summary-value">${store.otherCosts.length}</div><div class="summary-sub">costs logged</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Total Cost</div><div class="summary-value">$${totalCost.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Paid</div><div class="summary-value" style="color:var(--teal)">$${totalPaid.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD paid so far</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">$${(totalCost-totalPaid).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="summary-sub">AUD remaining</div></div>
+  `;
+
+  const wrap = document.getElementById('otherCostsTableWrap');
+
+  if (costs.length === 0) {
+    wrap.innerHTML = `
+      <div class="todo-empty">
+        <div class="todo-empty-icon">💸</div>
+        <div>No other costs logged yet.</div>
+      </div>`;
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.className = 'todo-table';
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th style="width:12%">Type</th>
+        <th style="width:26%">Description</th>
+        <th style="width:10%">Date</th>
+        <th style="width:11%">Cost</th>
+        <th style="width:11%">Paid</th>
+        <th style="width:24%">Notes</th>
+        <th style="width:6%"></th>
+      </tr>
+    </thead>
+    <tbody id="otherCostsTbody"></tbody>
+  `;
+
+  const tbody = table.querySelector('#otherCostsTbody');
+
+  costs.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="cost-type-badge cost-${escHtml(c.type || 'Other')}">${escHtml(c.type || 'Other')}</span></td>
+      <td><div class="todo-task-text">${escHtml(c.description || '')}</div></td>
+      <td style="color:var(--text-mid); white-space:nowrap">${c.date ? fmtDate(c.date) : '<span style="color:var(--text-light)">—</span>'}</td>
+      <td class="fin-detail">$${parseFloat(c.cost||0).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</td>
+      <td class="fin-detail">$${parseFloat(c.paid||0).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0})}</td>
+      <td style="font-size:12px; color:var(--text-light); max-width:200px; word-break:break-word">${escHtml(c.notes || '')}</td>
+      <td>
+        <button class="todo-edit-btn" title="Edit cost">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
+      </td>
+    `;
+    tr.querySelector('.todo-edit-btn').addEventListener('click', () => openOtherCostModal(c.id));
+    tbody.appendChild(tr);
+  });
+
+  wrap.innerHTML = '';
+  wrap.appendChild(table);
+}
+
+function openOtherCostModal(editId) {
+  const modal = document.getElementById('otherCostModal');
+  document.getElementById('otherCostModalTitle').textContent = editId ? 'Edit Cost' : 'Add Cost';
+  document.getElementById('otherCostDeleteBtn').style.display = editId ? 'inline-flex' : 'none';
+  document.getElementById('otherCostEditId').value = editId || '';
+  document.getElementById('otherCostType').value = 'Experience';
+  document.getElementById('otherCostDescription').value = '';
+  document.getElementById('otherCostDate').value = '';
+  document.getElementById('otherCostCost').value = '';
+  document.getElementById('otherCostPaid').value = '';
+  document.getElementById('otherCostNotes').value = '';
+
+  if (editId) {
+    const c = (store.otherCosts || []).find(x => x.id === editId);
+    if (c) {
+      document.getElementById('otherCostType').value = c.type || 'Experience';
+      document.getElementById('otherCostDescription').value = c.description || '';
+      document.getElementById('otherCostDate').value = c.date || '';
+      document.getElementById('otherCostCost').value = c.cost || '';
+      document.getElementById('otherCostPaid').value = c.paid || '';
+      document.getElementById('otherCostNotes').value = c.notes || '';
+    }
+  }
+  modal.classList.add('open');
+}
+
+function saveOtherCost() {
+  if (!store.otherCosts) store.otherCosts = [];
+  const editId = document.getElementById('otherCostEditId').value;
+  const c = {
+    id: editId || 'oc' + Date.now(),
+    type: document.getElementById('otherCostType').value,
+    description: document.getElementById('otherCostDescription').value.trim(),
+    date: document.getElementById('otherCostDate').value,
+    cost: parseFloat(document.getElementById('otherCostCost').value) || 0,
+    paid: parseFloat(document.getElementById('otherCostPaid').value) || 0,
+    notes: document.getElementById('otherCostNotes').value.trim(),
+  };
+  if (!c.description) { showToast('Please enter a description.'); return; }
+  if (editId) {
+    const idx = store.otherCosts.findIndex(x => x.id === editId);
+    if (idx >= 0) store.otherCosts[idx] = c; else store.otherCosts.push(c);
+  } else {
+    store.otherCosts.push(c);
+  }
+  saveStore();
+  closeModal('otherCostModal');
+  renderOtherCosts();
+  showToast('Cost saved ✓');
+}
+
+function deleteOtherCost() {
+  const editId = document.getElementById('otherCostEditId').value;
+  store.otherCosts = (store.otherCosts || []).filter(x => x.id !== editId);
+  saveStore();
+  closeModal('otherCostModal');
+  renderOtherCosts();
+  showToast('Cost deleted');
 }
 
 
