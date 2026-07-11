@@ -193,8 +193,8 @@
           "cancelBy": "2026-09-15",
           "rating": "3.9 (246)",
           "contact": "+1-714-750-1811",
-          "status": "booked",
-          "notes": ""
+          "notes": "****TO CANCEL****",
+          "status": "booked"
         },
         {
           "id": "a2",
@@ -267,9 +267,9 @@
           "checkin": "2026-10-01",
           "checkinTime": "15:00",
           "checkout": "2026-10-04",
-          "checkoutTime": "23:00",
+          "checkoutTime": "11:00",
           "room": "Ocean View Two Queens",
-          "breakfast": "No – $32/pp/night",
+          "breakfast": "",
           "cost": 1565,
           "paid": 0,
           "ref": "Booked: 6985396220",
@@ -277,8 +277,8 @@
           "cancelBy": "2026-09-24",
           "rating": "4.3 (2,852)",
           "contact": "+1 310-260-7500",
-          "status": "booked",
-          "notes": ""
+          "notes": "",
+          "status": "booked"
         },
         {
           "id": "a6",
@@ -319,7 +319,7 @@
           "cancelBy": "2026-09-12",
           "rating": "4.8  (1,124)",
           "contact": "+1 877-264-9786",
-          "notes": "***TO CANCEL***",
+          "notes": "",
           "status": "booked"
         },
         {
