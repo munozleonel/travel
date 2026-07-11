@@ -525,7 +525,7 @@
           "dueDate": "2026-08-15",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "Required for visa-exempt foreign nationals flying into Canada"
+          "notes": "https://e-visacan.com"
         },
         {
           "id": "t10",
@@ -654,12 +654,21 @@
           "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
+        },
+        {
+          "id": "t1783755775807",
+          "task": "Los Angeles viral desserts",
+          "dueDate": "2026-08-01",
+          "assigned": "Maisy",
+          "status": "Not Started",
+          "notes": "Aurora LA\n\n211 S La Brea Ave, Los Angeles, CA 90036, United States"
         }
       ],
       "people": [
         "Leo",
         "Kat",
-        "Isla"
+        "Isla",
+        "Maisy"
       ]
     }
   }
