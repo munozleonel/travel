@@ -602,15 +602,15 @@
         },
         {
           "id": "t1783041834078",
-          "task": "Sydney transfers",
-          "dueDate": "2026-08-01",
+          "task": "Sydney return transfers",
+          "dueDate": "2026-08-08",
           "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         },
         {
           "id": "t1783041844454",
-          "task": "US transfers",
+          "task": "LAX to Anaheim return transfer",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
@@ -618,7 +618,7 @@
         },
         {
           "id": "t1783041856046",
-          "task": "Canada transfers",
+          "task": "Calgary airport to Hotel transfer",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
@@ -651,7 +651,7 @@
         {
           "id": "t1783041928941",
           "task": "Buy new SD cards",
-          "dueDate": "2026-08-03",
+          "dueDate": "2026-07-17",
           "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
@@ -659,7 +659,7 @@
         {
           "id": "t1783041939174",
           "task": "Travel eSim cards",
-          "dueDate": "2026-08-01",
+          "dueDate": "2026-07-17",
           "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
@@ -671,6 +671,30 @@
           "assigned": "Maisy",
           "status": "Not Started",
           "notes": "Aurora LA\n\n211 S La Brea Ave, Los Angeles, CA 90036, United States"
+        },
+        {
+          "id": "t1783765390975",
+          "task": "Vancouver return transfers",
+          "dueDate": "2026-08-01",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "notes": ""
+        },
+        {
+          "id": "t1783765440885",
+          "task": "Calgary to Banff transport",
+          "dueDate": "2026-08-01",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "notes": ""
+        },
+        {
+          "id": "t1783765597382",
+          "task": "Banff to Calgary airport transfer",
+          "dueDate": "2026-08-01",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "notes": ""
         }
       ],
       "people": [
