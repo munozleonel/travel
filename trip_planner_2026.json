@@ -711,6 +711,35 @@
         "Kat",
         "Isla",
         "Maisy"
+      ],
+      "otherCosts": [
+        {
+          "id": "oc1783769720088",
+          "type": "Experience",
+          "description": "Disneyland",
+          "date": "2026-09-19",
+          "cost": 2000,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783769742784",
+          "type": "Transport",
+          "description": "LA airport to hotel",
+          "date": "2026-09-15",
+          "cost": 150,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783769760623",
+          "type": "Transport",
+          "description": "LA hotel to airport",
+          "date": "2026-07-20",
+          "cost": 150,
+          "paid": 0,
+          "notes": ""
+        }
       ]
     }
   }
