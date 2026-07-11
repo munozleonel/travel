@@ -825,6 +825,11 @@
     -webkit-overflow-scrolling: touch;
     border-radius: var(--r-lg);
   }
+  #otherCostsTableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--r-lg);
+  }
   .todo-table thead tr {
     background: var(--navy);
   }
@@ -965,9 +970,14 @@
     .summary-value { font-size: 18px; }
 
     /* To-do table: hide less critical columns, keep table scrollable for the rest */
-    .todo-table td:nth-child(5),
-    .todo-table th:nth-child(5) { display: none; }
-    .todo-table { min-width: 560px; }
+    #todoTableWrap .todo-table td:nth-child(5),
+    #todoTableWrap .todo-table th:nth-child(5) { display: none; }
+    #todoTableWrap .todo-table { min-width: 560px; }
+
+    /* Other costs table: hide Notes column on mobile, keep table scrollable for the rest */
+    #otherCostsTableWrap .todo-table td:nth-child(6),
+    #otherCostsTableWrap .todo-table th:nth-child(6) { display: none; }
+    #otherCostsTableWrap .todo-table { min-width: 480px; }
 
     /* Modal */
     .modal-header { padding: 16px 18px 12px; }
@@ -1432,6 +1442,16 @@
     </div>
 
     <div class="summary-bar" id="otherCostsSummary"></div>
+
+    <!-- Filter bar -->
+    <div style="display:flex; gap:8px; margin-bottom:1.5rem; flex-wrap:wrap; align-items:center;">
+      <span style="font-size:12px; font-weight:600; color:var(--text-light); text-transform:uppercase; letter-spacing:.05em;">Filter:</span>
+      <button class="todo-filter-btn active" data-filter="all" onclick="setOtherCostFilter('all',this)">All</button>
+      <button class="todo-filter-btn" data-filter="Experience" onclick="setOtherCostFilter('Experience',this)">Experience</button>
+      <button class="todo-filter-btn" data-filter="Food" onclick="setOtherCostFilter('Food',this)">Food</button>
+      <button class="todo-filter-btn" data-filter="Transport" onclick="setOtherCostFilter('Transport',this)">Transport</button>
+      <button class="todo-filter-btn" data-filter="Other" onclick="setOtherCostFilter('Other',this)">Other</button>
+    </div>
 
     <div id="otherCostsTableWrap"></div>
   </section>
@@ -3394,15 +3414,26 @@ function deleteTodo() {
 // ===========================
 // OTHER COSTS
 // ===========================
+let otherCostFilter = 'all';
+
+function setOtherCostFilter(filter, btn) {
+  otherCostFilter = filter;
+  document.querySelectorAll('#section-othercosts .todo-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOtherCosts();
+}
+
 function renderOtherCosts() {
   if (!store.otherCosts) store.otherCosts = [];
 
-  const costs = [...store.otherCosts].sort((a, b) => {
-    if (!a.date && !b.date) return 0;
-    if (!a.date) return 1;
-    if (!b.date) return -1;
-    return new Date(a.date) - new Date(b.date);
-  });
+  const costs = store.otherCosts
+    .filter(c => otherCostFilter === 'all' || c.type === otherCostFilter)
+    .sort((a, b) => {
+      if (!a.date && !b.date) return 0;
+      if (!a.date) return 1;
+      if (!b.date) return -1;
+      return new Date(a.date) - new Date(b.date);
+    });
 
   const totalCost = store.otherCosts.reduce((s, c) => s + (parseFloat(c.cost) || 0), 0);
   const totalPaid = store.otherCosts.reduce((s, c) => s + (parseFloat(c.paid) || 0), 0);
@@ -3420,7 +3451,7 @@ function renderOtherCosts() {
     wrap.innerHTML = `
       <div class="todo-empty">
         <div class="todo-empty-icon">💸</div>
-        <div>No other costs logged yet.</div>
+        <div>${otherCostFilter === 'all' ? 'No other costs logged yet.' : 'No costs match this filter.'}</div>
       </div>`;
     return;
   }
