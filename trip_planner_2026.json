@@ -193,8 +193,8 @@
           "cancelBy": "2026-09-15",
           "rating": "3.9 (246)",
           "contact": "+1-714-750-1811",
-          "status": "booked",
-          "notes": ""
+          "notes": "****TO CANCEL****",
+          "status": "booked"
         },
         {
           "id": "a2",
@@ -267,9 +267,9 @@
           "checkin": "2026-10-01",
           "checkinTime": "15:00",
           "checkout": "2026-10-04",
-          "checkoutTime": "23:00",
+          "checkoutTime": "11:00",
           "room": "Ocean View Two Queens",
-          "breakfast": "No – $32/pp/night",
+          "breakfast": "",
           "cost": 1565,
           "paid": 0,
           "ref": "Booked: 6985396220",
@@ -277,8 +277,8 @@
           "cancelBy": "2026-09-24",
           "rating": "4.3 (2,852)",
           "contact": "+1 310-260-7500",
-          "status": "booked",
-          "notes": ""
+          "notes": "",
+          "status": "booked"
         },
         {
           "id": "a6",
@@ -319,7 +319,7 @@
           "cancelBy": "2026-09-12",
           "rating": "4.8  (1,124)",
           "contact": "+1 877-264-9786",
-          "notes": "***TO CANCEL***",
+          "notes": "",
           "status": "booked"
         },
         {
@@ -579,7 +579,7 @@
         },
         {
           "id": "t1783041657959",
-          "task": "LA dodgers tickets",
+          "task": "Sports tickets - LA dodgers",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
@@ -587,7 +587,7 @@
         },
         {
           "id": "t1783041669519",
-          "task": "Ice Hockey tickets",
+          "task": "Sports tickets - Ice Hockey",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
@@ -611,7 +611,7 @@
         },
         {
           "id": "t1783041834078",
-          "task": "Sydney return transfers",
+          "task": "Transfer - Sydney home to airport (return)",
           "dueDate": "2026-08-08",
           "assigned": "Leo",
           "status": "Not Started",
@@ -619,7 +619,7 @@
         },
         {
           "id": "t1783041844454",
-          "task": "LAX to Anaheim return transfer",
+          "task": "Transfer - LAX to Anaheim hotel (return)",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
@@ -627,7 +627,7 @@
         },
         {
           "id": "t1783041856046",
-          "task": "Calgary airport to Hotel transfer",
+          "task": "Transfer - Calgary airport to hotel (return)",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
@@ -683,7 +683,7 @@
         },
         {
           "id": "t1783765390975",
-          "task": "Vancouver return transfers",
+          "task": "Transfer - Vancouver airport to hotel (return)",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
@@ -691,7 +691,7 @@
         },
         {
           "id": "t1783765440885",
-          "task": "Calgary to Banff transport",
+          "task": "Transfer - Calgary hotel to Banff hotel",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
@@ -699,7 +699,7 @@
         },
         {
           "id": "t1783765597382",
-          "task": "Banff to Calgary airport transfer",
+          "task": "Transfer - Banff hotel to Calgary airport",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
