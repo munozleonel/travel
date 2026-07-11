@@ -735,8 +735,125 @@
           "id": "oc1783769760623",
           "type": "Transport",
           "description": "LA hotel to airport",
-          "date": "2026-07-20",
+          "date": "2026-09-20",
           "cost": 150,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783769941281",
+          "type": "Transport",
+          "description": "Calgary airport to hotel",
+          "date": "2026-09-20",
+          "cost": 150,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783769971823",
+          "type": "Transport",
+          "description": "Calgary hotel to Banff hotel",
+          "date": "2026-09-22",
+          "cost": 200,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770036431",
+          "type": "Transport",
+          "description": "Banff hotel to Calgary airport",
+          "date": "2026-07-27",
+          "cost": 200,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770064927",
+          "type": "Transport",
+          "description": "Vancouver airport to hotel",
+          "date": "2026-09-27",
+          "cost": 150,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770099062",
+          "type": "Transport",
+          "description": "Vancouver hotel to airport",
+          "date": "2026-10-01",
+          "cost": 150,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770123366",
+          "type": "Transport",
+          "description": "LA airport to Santa Monica hotel",
+          "date": "2026-01-01",
+          "cost": 150,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770147455",
+          "type": "Experience",
+          "description": "Universal Studios",
+          "date": "2026-10-02",
+          "cost": 1500,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770187160",
+          "type": "Transport",
+          "description": "Santa Monica hotel to LA airport",
+          "date": "2026-10-04",
+          "cost": 150,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770207912",
+          "type": "Transport",
+          "description": "Fiji airport to hotel",
+          "date": "2026-10-06",
+          "cost": 150,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770240822",
+          "type": "Transport",
+          "description": "Fiji hotel to airport",
+          "date": "2026-10-10",
+          "cost": 150,
+          "paid": 0,
+          "notes": "Cost TBC"
+        },
+        {
+          "id": "oc1783770312574",
+          "type": "Food",
+          "description": "LA Viral desserts",
+          "date": "2026-10-03",
+          "cost": 100,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770336742",
+          "type": "Experience",
+          "description": "Disney Park",
+          "date": "2026-09-17",
+          "cost": 1500,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1783770372294",
+          "type": "Experience",
+          "description": "Lake Louise tour",
+          "date": "2026-09-23",
+          "cost": 500,
           "paid": 0,
           "notes": ""
         }
