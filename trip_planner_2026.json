@@ -163,6 +163,15 @@
           "time": "12:00",
           "location": "Aurora LA",
           "notes": ""
+        },
+        {
+          "id": "e1783765678901",
+          "date": "2026-09-29",
+          "type": "activity",
+          "title": "Whistler",
+          "time": "",
+          "location": "",
+          "notes": ""
         }
       ],
       "accommodations": [
