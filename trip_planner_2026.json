@@ -518,8 +518,8 @@
           "task": "Arrange travel insurance for all 4",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": ""
+          "status": "In Progress",
+          "notes": "NAB credit card travel insurance"
         },
         {
           "id": "t7",
@@ -565,7 +565,7 @@
           "id": "t12",
           "task": "Download offline maps (Google Maps) for all cities",
           "dueDate": "2026-09-10",
-          "assigned": "Isla",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": "LA, Calgary, Banff, Vancouver, Fiji"
         },
@@ -702,6 +702,22 @@
           "task": "Transfer - Banff hotel to Calgary airport",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
+          "status": "Not Started",
+          "notes": ""
+        },
+        {
+          "id": "t1784544269057",
+          "task": "Pack - Isla",
+          "dueDate": "2026-09-01",
+          "assigned": "Isla",
+          "status": "Not Started",
+          "notes": ""
+        },
+        {
+          "id": "t1784544282537",
+          "task": "Pack - Maisy",
+          "dueDate": "2026-09-01",
+          "assigned": "Maisy",
           "status": "Not Started",
           "notes": ""
         }
