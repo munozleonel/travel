@@ -30,16 +30,18 @@
           "id": "e3",
           "date": "2026-09-15",
           "type": "hotel",
-          "title": "Check-in: Sheraton Park Hotel Anaheim",
+          "title": "Check-in: Westin Anaheim",
           "time": "16:00",
-          "location": "Los Angeles"
+          "location": "Los Angeles",
+          "notes": ""
         },
         {
           "id": "e4",
           "date": "2026-09-17",
           "type": "activity",
-          "title": "Disneyland / Disney Park",
-          "location": "Anaheim",
+          "title": "Universal Studios",
+          "time": "",
+          "location": "Hollywood",
           "notes": ""
         },
         {
