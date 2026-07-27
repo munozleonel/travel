@@ -545,7 +545,7 @@
           "task": "Apply for US ESTA (electronic travel authorisation)",
           "dueDate": "2026-08-15",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "Done",
           "notes": "Required for all Australian passport holders entering USA"
         },
         {
@@ -553,8 +553,8 @@
           "task": "Apply for Canadian eTA",
           "dueDate": "2026-08-15",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "https://e-visacan.com"
+          "status": "Done",
+          "notes": "https://eta.onlineservices-servicesenligne.apps.cic.gc.ca/eta/welcome?lang=en"
         },
         {
           "id": "t10",
