@@ -521,8 +521,8 @@
           "task": "Buy Universal Studios tickets",
           "dueDate": "2026-09-01",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "Oct 2 – Santa Monica stay"
+          "status": "Done",
+          "notes": "Fast passes to be purchased on the day\n17/Sep - First visit\n2/Oct - Second visit"
         },
         {
           "id": "t6",
@@ -827,8 +827,8 @@
           "description": "Universal Studios",
           "date": "2026-10-02",
           "cost": 1500,
-          "paid": 0,
-          "notes": ""
+          "paid": 700,
+          "notes": "Buy one get one free\nFast passes to be purchased on the day"
         },
         {
           "id": "oc1783770187160",
