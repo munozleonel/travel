@@ -475,7 +475,7 @@
           "ref": "EC8HO6",
           "terminal": "LAX / Nadi",
           "cost": 0.01,
-          "paid": 0.00001,
+          "paid": 1e-05,
           "status": "booked",
           "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
         },
@@ -496,7 +496,7 @@
           "ref": "EC8HO6",
           "terminal": "Nadi / Sydney Terminal 1",
           "cost": 0,
-          "paid": 0.00001,
+          "paid": 1e-05,
           "status": "booked",
           "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
         }
@@ -902,6 +902,15 @@
           "paid": 0,
           "notes": ""
         }
+      ],
+      "documents": [],
+      "documentCities": [
+        "Sydney",
+        "Fiji",
+        "Los Angeles",
+        "Calgary",
+        "Banff",
+        "Vancouver"
       ]
     }
   }

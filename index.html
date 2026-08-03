@@ -343,6 +343,16 @@
   .cost-type-badge.cost-Food { background: #e9f7ef; color: #145a32; }
   .cost-type-badge.cost-Transport { background: #e8f4fd; color: #1a5276; }
   .cost-type-badge.cost-Other { background: #f5eef8; color: #6c3483; }
+  .cost-type-badge.doc-Passports { background: #fdedec; color: #922b21; }
+  .cost-type-badge.doc-Hotel-bookings { background: #eaf2f8; color: #1a5276; }
+  .cost-type-badge.doc-Flights { background: #e8f8f5; color: #0e6655; }
+  .cost-type-badge.doc-Experiences { background: #fef9e7; color: #7d6608; }
+  .cost-type-badge.doc-Other { background: #f5eef8; color: #6c3483; }
+  .doc-link-row {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--navy); font-weight: 600; text-decoration: none; font-size: 13px;
+  }
+  .doc-link-row:hover { text-decoration: underline; }
   .cal-add-btn {
     position: absolute;
     bottom: 6px; right: 6px;
@@ -1326,6 +1336,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
       Other costs
     </div>
+    <div class="nav-tab" onclick="showSection('documents',this)" id="documentsNavTab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Documents
+    </div>
   </div>
 </div>
 
@@ -1454,6 +1468,43 @@
     </div>
 
     <div id="otherCostsTableWrap"></div>
+  </section>
+
+  <!-- ==================== DOCUMENTS SECTION ==================== -->
+  <section id="section-documents" class="section">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Documents</h1>
+        <div class="section-sub">Links to passports, bookings & other files in Google Docs</div>
+      </div>
+      <button class="btn btn-primary" onclick="openDocumentModal()">+ Add Document</button>
+    </div>
+
+    <div class="summary-bar" id="documentsSummary"></div>
+
+    <!-- Filter bar -->
+    <div style="display:flex; gap:16px; margin-bottom:1.5rem; flex-wrap:wrap; align-items:flex-end;">
+      <div style="min-width:200px;">
+        <label class="form-label" style="display:flex; align-items:center; justify-content:space-between;">
+          <span>Categories</span>
+          <span onclick="openDocCategoriesModal()" style="cursor:pointer; color:var(--teal); font-weight:500; font-size:11px; text-transform:none; letter-spacing:0;">✎ Manage</span>
+        </label>
+        <select class="form-select" id="documentCategoryFilter" onchange="setDocumentCategoryFilter(this.value)">
+          <option value="all">All Categories</option>
+        </select>
+      </div>
+      <div style="min-width:200px;">
+        <label class="form-label" style="display:flex; align-items:center; justify-content:space-between;">
+          <span>City</span>
+          <span onclick="openDocCitiesModal()" style="cursor:pointer; color:var(--teal); font-weight:500; font-size:11px; text-transform:none; letter-spacing:0;">✎ Manage</span>
+        </label>
+        <select class="form-select" id="documentCityFilter" onchange="setDocumentCityFilter(this.value)">
+          <option value="all">All Cities</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="documentsTableWrap"></div>
   </section>
 
   <!-- ==================== FLIGHT PATH SECTION ==================== -->
@@ -1944,6 +1995,95 @@
   </div>
 </div>
 
+<div class="modal-backdrop" id="documentModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="documentModalTitle">Add Document</div>
+      <button class="modal-close" onclick="closeModal('documentModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="documentEditId">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" style="display:flex; align-items:center; justify-content:space-between;">
+            <span>Category</span>
+            <span onclick="openDocCategoriesModal()" style="cursor:pointer; color:var(--teal); font-weight:500; font-size:11px; text-transform:none; letter-spacing:0;">✎ Manage</span>
+          </label>
+          <input type="text" class="form-input" id="documentCategory" list="documentCategoryList" placeholder="e.g. Passports">
+          <datalist id="documentCategoryList"></datalist>
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="display:flex; align-items:center; justify-content:space-between;">
+            <span>City</span>
+            <span onclick="openDocCitiesModal()" style="cursor:pointer; color:var(--teal); font-weight:500; font-size:11px; text-transform:none; letter-spacing:0;">✎ Manage</span>
+          </label>
+          <input type="text" class="form-input" id="documentCity" list="documentCityList" placeholder="e.g. Los Angeles">
+          <datalist id="documentCityList"></datalist>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-input" id="documentTitle" placeholder="e.g. Leo's Passport Scan">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Google Docs Link</label>
+        <input type="url" class="form-input" id="documentUrl" placeholder="https://docs.google.com/...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="documentNotes" placeholder="Any extra details..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="documentDeleteBtn" style="margin-right:auto; display:none" onclick="deleteDocument()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('documentModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDocument()">Save Document</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MANAGE DOCUMENT CATEGORIES MODAL ==================== -->
+<div class="modal-backdrop" id="documentCategoriesModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Manage Categories</div>
+      <button class="modal-close" onclick="closeModal('documentCategoriesModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:12.5px; color:var(--text-mid); margin-bottom:14px;">
+        Rename, add, or remove document categories. Renaming a category updates all documents already using it.
+      </p>
+      <div id="documentCategoriesFieldsWrap" style="display:flex; flex-direction:column; gap:8px;"></div>
+      <button class="btn btn-ghost" style="margin-top:10px; width:100%; justify-content:center; background:var(--surface-2); color:var(--text-mid);" onclick="addDocCategoryField()">+ Add Category</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('documentCategoriesModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDocCategories()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MANAGE DOCUMENT CITIES MODAL ==================== -->
+<div class="modal-backdrop" id="documentCitiesModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Manage Cities</div>
+      <button class="modal-close" onclick="closeModal('documentCitiesModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:12.5px; color:var(--text-mid); margin-bottom:14px;">
+        Rename, add, or remove cities. Renaming a city updates all documents already tagged with it.
+      </p>
+      <div id="documentCitiesFieldsWrap" style="display:flex; flex-direction:column; gap:8px;"></div>
+      <button class="btn btn-ghost" style="margin-top:10px; width:100%; justify-content:center; background:var(--surface-2); color:var(--text-mid);" onclick="addDocCityField()">+ Add City</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('documentCitiesModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDocCities()">Save</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1959,7 +2099,10 @@ let currentTripId = null;
 let store = null; // reference to allTrips.trips[currentTripId] while a trip is open
 
 function newEmptyTripData(meta) {
-  return { meta, calEvents: [], accommodations: [], flights: [], todos: [], otherCosts: [], people: ['Leo', 'Kat'] };
+  const cities = (meta && meta.locations)
+    ? Array.from(new Set(meta.locations.split('→').map(s => s.trim()).filter(Boolean)))
+    : [];
+  return { meta, calEvents: [], accommodations: [], flights: [], todos: [], otherCosts: [], documents: [], documentCities: cities, documentCategories: ['Passports', 'Hotel bookings', 'Flights', 'Experiences', 'Other'], people: ['Leo', 'Kat'] };
 }
 
 function ensureTripShape(t) {
@@ -1969,6 +2112,18 @@ function ensureTripShape(t) {
   if (!t.flights) t.flights = [];
   if (!t.todos) t.todos = [];
   if (!t.otherCosts) t.otherCosts = [];
+  if (!t.documents) t.documents = [];
+  if (!t.documentCities || !t.documentCities.length) {
+    const fromLocations = (t.meta && t.meta.locations)
+      ? t.meta.locations.split('→').map(s => s.trim()).filter(Boolean)
+      : [];
+    const fromDocs = (t.documents || []).map(d => d.city).filter(Boolean);
+    t.documentCities = Array.from(new Set([...fromLocations, ...fromDocs]));
+  }
+  if (!t.documentCategories || !t.documentCategories.length) {
+    const fromDocs = (t.documents || []).map(d => d.category).filter(Boolean);
+    t.documentCategories = Array.from(new Set(['Passports', 'Hotel bookings', 'Flights', 'Experiences', 'Other', ...fromDocs]));
+  }
   if (!t.people || !t.people.length) {
     // Derive people list from any names already used on existing to-dos, so
     // migrated/legacy trips don't lose track of who tasks are assigned to.
@@ -2020,7 +2175,8 @@ function loadStore() {
         accommodations: legacyStore.accommodations || [],
         flights: legacyStore.flights || [],
         todos: legacyStore.todos || [],
-        otherCosts: legacyStore.otherCosts || []
+        otherCosts: legacyStore.otherCosts || [],
+        documents: legacyStore.documents || []
       });
       return;
     }
@@ -2066,6 +2222,7 @@ function openTrip(tripId) {
   renderFlights();
   renderTodos();
   renderOtherCosts();
+  renderDocuments();
   window.scrollTo(0, 0);
 }
 
@@ -2352,7 +2509,8 @@ function applyRemoteStore(data) {
       accommodations: data.accommodations || [],
       flights: data.flights || [],
       todos: data.todos || [],
-      otherCosts: data.otherCosts || []
+      otherCosts: data.otherCosts || [],
+      documents: data.documents || []
     });
     if (currentTripId) { currentTripId = null; store = null; }
     return true;
@@ -2375,6 +2533,7 @@ async function fetchFromGitHub(manual) {
       renderFlights();
       renderTodos();
       renderOtherCosts();
+      renderDocuments();
     } else {
       renderLandingPage();
     }
@@ -3048,6 +3207,7 @@ function importJSON(event) {
           renderFlights();
           renderTodos();
           renderOtherCosts();
+          renderDocuments();
         } else {
           renderLandingPage();
         }
@@ -3557,6 +3717,329 @@ function deleteOtherCost() {
   closeModal('otherCostModal');
   renderOtherCosts();
   showToast('Cost deleted');
+}
+
+// ===========================
+// DOCUMENTS (Google Docs links)
+// ===========================
+let documentFilter = 'all';
+let documentCityFilter = 'all';
+
+const DOC_BADGE_DEFAULT_CATEGORIES = ['Passports', 'Hotel bookings', 'Flights', 'Experiences', 'Other'];
+const DOC_BADGE_PALETTE = [
+  { bg: '#fdedec', fg: '#922b21' },
+  { bg: '#eaf2f8', fg: '#1a5276' },
+  { bg: '#e8f8f5', fg: '#0e6655' },
+  { bg: '#fef9e7', fg: '#7d6608' },
+  { bg: '#f5eef8', fg: '#6c3483' },
+  { bg: '#eafaf1', fg: '#1d8348' },
+  { bg: '#fdf2e9', fg: '#a04000' },
+  { bg: '#ebf5fb', fg: '#21618c' },
+];
+
+function setDocumentCategoryFilter(filter) {
+  documentFilter = filter;
+  renderDocuments();
+}
+
+function setDocumentCityFilter(filter) {
+  documentCityFilter = filter;
+  renderDocuments();
+}
+
+function docBadgeColor(label) {
+  const str = String(label || 'Other');
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) hash = (hash * 31 + str.charCodeAt(i)) >>> 0;
+  return DOC_BADGE_PALETTE[hash % DOC_BADGE_PALETTE.length];
+}
+
+function tripCitiesFromLocations(meta) {
+  if (!meta || !meta.locations) return [];
+  return Array.from(new Set(
+    meta.locations.split('→').map(s => s.trim()).filter(Boolean)
+  ));
+}
+
+function ensureDocListValue(listKey, val) {
+  if (!val) return;
+  if (!store[listKey]) store[listKey] = [];
+  if (!store[listKey].includes(val)) store[listKey].push(val);
+}
+
+function ensureDocumentLists() {
+  if (!store.documents) store.documents = [];
+  if (!store.documentCities || !store.documentCities.length) {
+    const fromLocations = tripCitiesFromLocations(store.meta);
+    const fromDocs = store.documents.map(d => d.city).filter(Boolean);
+    store.documentCities = Array.from(new Set([...fromLocations, ...fromDocs]));
+  }
+  if (!store.documentCategories || !store.documentCategories.length) {
+    const fromDocs = store.documents.map(d => d.category).filter(Boolean);
+    store.documentCategories = Array.from(new Set([...DOC_BADGE_DEFAULT_CATEGORIES, ...fromDocs]));
+  }
+}
+
+function populateCategoryFilterOptions() {
+  const sel = document.getElementById('documentCategoryFilter');
+  if (!sel) return;
+  const current = documentFilter;
+  const cats = (store.documentCategories || []).slice().sort((a, b) => a.localeCompare(b));
+  sel.innerHTML = '<option value="all">All Categories</option>' +
+    cats.map(c => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('');
+  sel.value = cats.includes(current) || current === 'all' ? current : 'all';
+  if (sel.value !== current) documentFilter = sel.value;
+}
+
+function populateCityFilterOptions() {
+  const sel = document.getElementById('documentCityFilter');
+  if (!sel) return;
+  const current = documentCityFilter;
+  const cities = (store.documentCities || []).slice().sort((a, b) => a.localeCompare(b));
+  sel.innerHTML = '<option value="all">All Cities</option>' +
+    cities.map(c => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('');
+  sel.value = cities.includes(current) || current === 'all' ? current : 'all';
+  if (sel.value !== current) documentCityFilter = sel.value;
+}
+
+function populateCategoryDatalist() {
+  const dl = document.getElementById('documentCategoryList');
+  if (!dl) return;
+  const cats = (store.documentCategories || []).slice().sort((a, b) => a.localeCompare(b));
+  dl.innerHTML = cats.map(c => `<option value="${escHtml(c)}"></option>`).join('');
+}
+
+function populateCityDatalist() {
+  const dl = document.getElementById('documentCityList');
+  if (!dl) return;
+  const cities = (store.documentCities || []).slice().sort((a, b) => a.localeCompare(b));
+  dl.innerHTML = cities.map(c => `<option value="${escHtml(c)}"></option>`).join('');
+}
+
+function renderDocuments() {
+  ensureDocumentLists();
+
+  populateCategoryFilterOptions();
+  populateCityFilterOptions();
+  populateCategoryDatalist();
+  populateCityDatalist();
+
+  const docs = store.documents
+    .filter(d => documentFilter === 'all' || d.category === documentFilter)
+    .filter(d => documentCityFilter === 'all' || d.city === documentCityFilter)
+    .slice()
+    .sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+
+  const counts = {};
+  store.documents.forEach(d => { counts[d.category] = (counts[d.category] || 0) + 1; });
+  const topCats = (store.documentCategories || []).slice(0, 3);
+
+  document.getElementById('documentsSummary').innerHTML = `
+    <div class="summary-card"><div class="summary-label">Total Documents</div><div class="summary-value">${store.documents.length}</div><div class="summary-sub">links saved</div></div>
+    ${topCats.map(c => `<div class="summary-card"><div class="summary-label">${escHtml(c)}</div><div class="summary-value">${counts[c] || 0}</div><div class="summary-sub">on file</div></div>`).join('')}
+  `;
+
+  const wrap = document.getElementById('documentsTableWrap');
+
+  if (docs.length === 0) {
+    wrap.innerHTML = `
+      <div class="todo-empty">
+        <div class="todo-empty-icon">📄</div>
+        <div>${documentFilter === 'all' && documentCityFilter === 'all' ? 'No documents added yet.' : 'No documents match this filter.'}</div>
+      </div>`;
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.className = 'todo-table';
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th style="width:14%">Category</th>
+        <th style="width:14%">City</th>
+        <th style="width:20%">Title</th>
+        <th style="width:20%">Link</th>
+        <th style="width:24%">Notes</th>
+        <th style="width:8%"></th>
+      </tr>
+    </thead>
+    <tbody id="documentsTbody"></tbody>
+  `;
+
+  const tbody = table.querySelector('#documentsTbody');
+
+  docs.forEach(d => {
+    const color = docBadgeColor(d.category);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="cost-type-badge" style="background:${color.bg}; color:${color.fg}">${escHtml(d.category || 'Other')}</span></td>
+      <td style="color:var(--text-mid)">${d.city ? escHtml(d.city) : '<span style="color:var(--text-light)">—</span>'}</td>
+      <td><div class="todo-task-text">${escHtml(d.title || '')}</div></td>
+      <td>${d.url ? `<a class="doc-link-row" href="${escHtml(d.url)}" target="_blank" rel="noopener noreferrer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Open doc</a>` : '<span style="color:var(--text-light)">—</span>'}</td>
+      <td style="font-size:12px; color:var(--text-light); max-width:220px; word-break:break-word">${escHtml(d.notes || '')}</td>
+      <td>
+        <button class="todo-edit-btn" title="Edit document">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
+      </td>
+    `;
+    tr.querySelector('.todo-edit-btn').addEventListener('click', () => openDocumentModal(d.id));
+    tbody.appendChild(tr);
+  });
+
+  wrap.innerHTML = '';
+  wrap.appendChild(table);
+}
+
+function openDocumentModal(editId) {
+  ensureDocumentLists();
+  const modal = document.getElementById('documentModal');
+  populateCategoryDatalist();
+  populateCityDatalist();
+  document.getElementById('documentModalTitle').textContent = editId ? 'Edit Document' : 'Add Document';
+  document.getElementById('documentDeleteBtn').style.display = editId ? 'inline-flex' : 'none';
+  document.getElementById('documentEditId').value = editId || '';
+  document.getElementById('documentCategory').value = (store.documentCategories && store.documentCategories[0]) || 'Other';
+  document.getElementById('documentCity').value = '';
+  document.getElementById('documentTitle').value = '';
+  document.getElementById('documentUrl').value = '';
+  document.getElementById('documentNotes').value = '';
+
+  if (editId) {
+    const d = (store.documents || []).find(x => x.id === editId);
+    if (d) {
+      document.getElementById('documentCategory').value = d.category || 'Other';
+      document.getElementById('documentCity').value = d.city || '';
+      document.getElementById('documentTitle').value = d.title || '';
+      document.getElementById('documentUrl').value = d.url || '';
+      document.getElementById('documentNotes').value = d.notes || '';
+    }
+  }
+  modal.classList.add('open');
+}
+
+function saveDocument() {
+  if (!store.documents) store.documents = [];
+  const editId = document.getElementById('documentEditId').value;
+  const category = document.getElementById('documentCategory').value.trim();
+  const city = document.getElementById('documentCity').value.trim();
+  const d = {
+    id: editId || 'doc' + Date.now(),
+    category: category || 'Other',
+    city: city,
+    title: document.getElementById('documentTitle').value.trim(),
+    url: document.getElementById('documentUrl').value.trim(),
+    notes: document.getElementById('documentNotes').value.trim(),
+  };
+  if (!d.title) { showToast('Please enter a title.'); return; }
+  if (!d.url) { showToast('Please enter a Google Docs link.'); return; }
+  ensureDocListValue('documentCategories', d.category);
+  ensureDocListValue('documentCities', city);
+  if (editId) {
+    const idx = store.documents.findIndex(x => x.id === editId);
+    if (idx >= 0) store.documents[idx] = d; else store.documents.push(d);
+  } else {
+    store.documents.push(d);
+  }
+  saveStore();
+  closeModal('documentModal');
+  renderDocuments();
+  showToast('Document saved ✓');
+}
+
+function deleteDocument() {
+  const editId = document.getElementById('documentEditId').value;
+  store.documents = (store.documents || []).filter(x => x.id !== editId);
+  saveStore();
+  closeModal('documentModal');
+  renderDocuments();
+  showToast('Document deleted');
+}
+
+// ---- Manage Categories / Cities (shared rename+add+remove UI) ----
+function renderDocListModalFields(wrapId, values) {
+  const wrap = document.getElementById(wrapId);
+  wrap.innerHTML = values.map((v) => `
+    <div style="display:flex; gap:8px;" data-doclist-row>
+      <input type="text" class="form-input" value="${escHtml(v)}" placeholder="Name" style="flex:1;">
+      <button class="btn btn-ghost" style="background:var(--surface-2); color:var(--coral); padding:8px 10px;" onclick="this.closest('[data-doclist-row]').remove()" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function addDocListField(wrapId) {
+  const wrap = document.getElementById(wrapId);
+  const div = document.createElement('div');
+  div.style.display = 'flex';
+  div.style.gap = '8px';
+  div.setAttribute('data-doclist-row', '');
+  div.innerHTML = `
+    <input type="text" class="form-input" value="" placeholder="Name" style="flex:1;">
+    <button class="btn btn-ghost" style="background:var(--surface-2); color:var(--coral); padding:8px 10px;" onclick="this.closest('[data-doclist-row]').remove()" title="Remove">✕</button>
+  `;
+  wrap.appendChild(div);
+  div.querySelector('input').focus();
+}
+
+function openDocCategoriesModal() {
+  if (!store) return;
+  ensureDocumentLists();
+  renderDocListModalFields('documentCategoriesFieldsWrap', store.documentCategories.length ? store.documentCategories : ['']);
+  document.getElementById('documentCategoriesModal').classList.add('open');
+}
+
+function addDocCategoryField() {
+  addDocListField('documentCategoriesFieldsWrap');
+}
+
+function saveDocCategories() {
+  const rows = document.querySelectorAll('#documentCategoriesFieldsWrap [data-doclist-row] input');
+  const oldVals = store.documentCategories ? [...store.documentCategories] : [];
+  const newVals = Array.from(rows).map(inp => inp.value.trim()).filter(Boolean);
+  if (newVals.length === 0) { showToast('Add at least one category'); return; }
+
+  // Map old→new by position, so renaming a category updates existing documents too.
+  (store.documents || []).forEach(d => {
+    const idx = oldVals.indexOf(d.category);
+    if (idx !== -1 && newVals[idx] && newVals[idx] !== oldVals[idx]) d.category = newVals[idx];
+  });
+
+  store.documentCategories = newVals;
+  saveStore();
+  closeModal('documentCategoriesModal');
+  renderDocuments();
+  showToast('Categories updated ✓');
+}
+
+function openDocCitiesModal() {
+  if (!store) return;
+  ensureDocumentLists();
+  renderDocListModalFields('documentCitiesFieldsWrap', store.documentCities.length ? store.documentCities : ['']);
+  document.getElementById('documentCitiesModal').classList.add('open');
+}
+
+function addDocCityField() {
+  addDocListField('documentCitiesFieldsWrap');
+}
+
+function saveDocCities() {
+  const rows = document.querySelectorAll('#documentCitiesFieldsWrap [data-doclist-row] input');
+  const oldVals = store.documentCities ? [...store.documentCities] : [];
+  const newVals = Array.from(rows).map(inp => inp.value.trim()).filter(Boolean);
+  if (newVals.length === 0) { showToast('Add at least one city'); return; }
+
+  // Map old→new by position, so renaming a city updates existing documents too.
+  (store.documents || []).forEach(d => {
+    const idx = oldVals.indexOf(d.city);
+    if (idx !== -1 && newVals[idx] && newVals[idx] !== oldVals[idx]) d.city = newVals[idx];
+  });
+
+  store.documentCities = newVals;
+  saveStore();
+  closeModal('documentCitiesModal');
+  renderDocuments();
+  showToast('Cities updated ✓');
 }
 
 
