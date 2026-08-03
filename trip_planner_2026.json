@@ -475,7 +475,7 @@
           "ref": "EC8HO6",
           "terminal": "LAX / Nadi",
           "cost": 0.01,
-          "paid": 1e-05,
+          "paid": 0.00001,
           "status": "booked",
           "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
         },
@@ -496,7 +496,7 @@
           "ref": "EC8HO6",
           "terminal": "Nadi / Sydney Terminal 1",
           "cost": 0,
-          "paid": 1e-05,
+          "paid": 0.00001,
           "status": "booked",
           "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
         }
@@ -903,7 +903,16 @@
           "notes": ""
         }
       ],
-      "documents": [],
+      "documents": [
+        {
+          "id": "doc1785757726564",
+          "category": "Other",
+          "city": "Los Angeles",
+          "title": "ESTA",
+          "url": "https://drive.google.com/file/d/1prMCgjXa1sdTqsidyBXeNC0XuP5IeKSw/view?usp=drive_link",
+          "notes": ""
+        }
+      ],
       "documentCities": [
         "Sydney",
         "Fiji",
@@ -911,6 +920,13 @@
         "Calgary",
         "Banff",
         "Vancouver"
+      ],
+      "documentCategories": [
+        "Passports",
+        "Hotel bookings",
+        "Flights",
+        "Experiences",
+        "Other"
       ]
     }
   }
