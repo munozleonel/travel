@@ -197,8 +197,17 @@
           "id": "e1785560240513",
           "date": "2026-09-24",
           "type": "activity",
-          "title": "Gondola",
+          "title": "TBA",
           "time": "",
+          "location": "",
+          "notes": ""
+        },
+        {
+          "id": "e1786276938934",
+          "date": "2026-09-22",
+          "type": "activity",
+          "title": "Gondola",
+          "time": "12:30",
           "location": "",
           "notes": ""
         }
@@ -612,7 +621,7 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "Only Sat 19/Sep"
         },
         {
           "id": "t1783041669519",
@@ -652,7 +661,7 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "Private transfer"
         },
         {
           "id": "t1783041856046",
@@ -747,6 +756,14 @@
           "task": "Pack - Maisy",
           "dueDate": "2026-09-01",
           "assigned": "Maisy",
+          "status": "Not Started",
+          "notes": ""
+        },
+        {
+          "id": "t1786278933967",
+          "task": "Transfer LAX to Santa Monica hotel",
+          "dueDate": "2026-08-01",
+          "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
         }
