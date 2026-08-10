@@ -48,8 +48,10 @@
           "id": "e5",
           "date": "2026-09-19",
           "type": "activity",
-          "title": "Maisy's Birthday 🎂 + Disneyland",
-          "location": "Anaheim"
+          "title": "Maisy's Birthday 🎂 + Disney California Adventure",
+          "time": "",
+          "location": "Anaheim",
+          "notes": ""
         },
         {
           "id": "e6",
@@ -188,7 +190,7 @@
           "id": "e1785560161022",
           "date": "2026-09-25",
           "type": "activity",
-          "title": "Lakes",
+          "title": "Lake Louise",
           "time": "",
           "location": "",
           "notes": ""
@@ -215,8 +217,8 @@
           "id": "e1786362121878",
           "date": "2026-09-17",
           "type": "note",
-          "title": "Uber hotel > Universal",
-          "time": "09:00",
+          "title": "Dinner TBA",
+          "time": "19:00",
           "location": "",
           "notes": ""
         },
@@ -227,6 +229,15 @@
           "title": "Lake Moraine",
           "time": "15:00",
           "location": "Banff",
+          "notes": ""
+        },
+        {
+          "id": "e1786363727620",
+          "date": "2026-09-16",
+          "type": "activity",
+          "title": "Disneyland Park",
+          "time": "",
+          "location": "",
           "notes": ""
         }
       ],
