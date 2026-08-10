@@ -1021,6 +1021,30 @@
           "title": "Vancouver Hotel BLU",
           "url": "https://drive.google.com/file/d/1niZKcEctD8ESbQD3H2wjDBnHFgvohN3h/view?usp=drive_link",
           "notes": ""
+        },
+        {
+          "id": "doc1786364232813",
+          "category": "Flights",
+          "city": "",
+          "title": "Sydney > Fiji > Los Angeles return",
+          "url": "https://drive.google.com/file/d/1S6M-sE1UBS6RTUxBOkBH06jLLlUPyHvn/view?usp=drive_link",
+          "notes": "Fiji Airways"
+        },
+        {
+          "id": "doc1786364536875",
+          "category": "Flights",
+          "city": "",
+          "title": "Vancouver > Los Angeles",
+          "url": "https://drive.google.com/file/d/1OdQ6j36wPjASnfzGmvd9uUBfAOb_gwIc/view?usp=drive_link",
+          "notes": "Air Canada"
+        },
+        {
+          "id": "doc1786364642555",
+          "category": "Flights",
+          "city": "",
+          "title": "Calgary > Vancouver",
+          "url": "https://drive.google.com/file/d/1A3TSLNclQTDm56MFujWPjmO0PwW35QAd/view?usp=drive_link",
+          "notes": "Westjet"
         }
       ],
       "documentCities": [
