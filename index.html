@@ -312,10 +312,29 @@
     font-size: 13px;
     font-weight: 500;
     color: var(--text);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .cal-date-num:hover {
+    background: var(--teal);
+    color: #fff;
   }
   .cal-cell.today .cal-date-num {
     background: var(--navy);
     color: #fff;
+  }
+  .cal-cell.today .cal-date-num:hover {
+    background: var(--teal);
+  }
+  .itin-dot {
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--coral);
+    border: 1.5px solid var(--surface);
   }
   .cal-event-pill {
     font-size: 11px;
@@ -393,6 +412,81 @@
   .loc-vancouver { background: #eaf4fb; color: #1a6e8b; }
   .loc-fiji { background: #fdf2e9; color: #935116; }
   .loc-transit { background: #f4f6f7; color: #717d7e; }
+
+  /* === DAY ITINERARY MODAL === */
+  .modal.modal-lg { max-width: 640px; }
+  .day-itin-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+  .day-itin-section { margin-bottom: 22px; }
+  .day-itin-section:last-child { margin-bottom: 0; }
+  .day-itin-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .day-itin-section-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; color: var(--navy);
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .day-itin-add-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-mid);
+    color: var(--teal);
+    font-size: 12px; font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.12s;
+  }
+  .day-itin-add-btn:hover { background: #e6f4f2; }
+  .day-itin-empty {
+    font-size: 13px;
+    color: var(--text-light);
+    font-style: italic;
+    padding: 10px 0;
+  }
+  .day-itin-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    background: var(--surface);
+  }
+  .day-itin-item:hover { background: var(--surface-2); border-color: var(--border-mid); }
+  .day-itin-item-icon {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .day-itin-item.cat-meal .day-itin-item-icon { background: #fef9e7; }
+  .day-itin-item.cat-transport .day-itin-item-icon { background: #e8f4fd; }
+  .day-itin-item.cat-attraction .day-itin-item-icon { background: #f5eef8; }
+  .day-itin-item-body { flex: 1; min-width: 0; }
+  .day-itin-item-title { font-size: 14px; font-weight: 600; color: var(--text); overflow-wrap: anywhere; }
+  .day-itin-item-meta { font-size: 12px; color: var(--text-light); margin-top: 2px; overflow-wrap: anywhere; }
+  .day-itin-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 1px 7px;
+    border-radius: 20px;
+    margin-right: 6px;
+  }
+  .day-itin-badge.cat-meal { background: #fef9e7; color: #7d6608; }
+  .day-itin-badge.cat-transport { background: #e8f4fd; color: #1a5276; }
+  .day-itin-badge.cat-attraction { background: #f5eef8; color: #6c3483; }
+  .day-itin-back-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--teal); font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; gap: 4px;
+    padding: 4px 0; margin-bottom: 14px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .day-itin-back-btn:hover { text-decoration: underline; }
 
   /* === MODAL === */
   .modal-backdrop {
@@ -1350,7 +1444,7 @@
     <div class="section-header">
       <div>
         <h1 class="section-title">Trip Calendar</h1>
-        <div class="section-sub">Click any day to add events · Click events to edit</div>
+        <div class="section-sub">Click a date number for the day's detailed itinerary · Click empty space or + to add a calendar event</div>
       </div>
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
         <span class="cal-event-pill type-flight" style="margin:0">✈ Flight</span>
@@ -1672,6 +1766,98 @@
       <button class="btn btn-ghost" id="calDeleteBtn" style="margin-right:auto; display:none" onclick="deleteCalEvent()">Delete</button>
       <button class="btn btn-ghost" onclick="closeModal('calModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveCalEvent()">Save Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DAY ITINERARY MODAL ==================== -->
+<div class="modal-backdrop" id="dayItinModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Day Itinerary</div>
+        <div class="day-itin-sub" id="dayItinDateLabel"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('dayItinModal')">✕</button>
+    </div>
+
+    <!-- LIST VIEW: overview of meals / transportation / attractions for the day -->
+    <div class="modal-body" id="dayItinListView">
+      <div class="day-itin-section">
+        <div class="day-itin-section-header">
+          <div class="day-itin-section-title">🍽 Meals</div>
+          <button class="day-itin-add-btn" onclick="openDayItinForm('meal')">+ Add Meal</button>
+        </div>
+        <div id="dayItinMeals"></div>
+      </div>
+      <div class="day-itin-section">
+        <div class="day-itin-section-header">
+          <div class="day-itin-section-title">🚗 Transportation</div>
+          <button class="day-itin-add-btn" onclick="openDayItinForm('transport')">+ Add Transport</button>
+        </div>
+        <div id="dayItinTransport"></div>
+      </div>
+      <div class="day-itin-section">
+        <div class="day-itin-section-header">
+          <div class="day-itin-section-title">🎟 Attractions</div>
+          <button class="day-itin-add-btn" onclick="openDayItinForm('attraction')">+ Add Attraction</button>
+        </div>
+        <div id="dayItinAttractions"></div>
+      </div>
+    </div>
+    <div class="modal-footer" id="dayItinListFooter">
+      <button class="btn btn-ghost" onclick="closeModal('dayItinModal')">Close</button>
+    </div>
+
+    <!-- FORM VIEW: add / edit a single entry -->
+    <div class="modal-body" id="dayItinFormView" style="display:none">
+      <button class="day-itin-back-btn" onclick="backToDayItinList()">← Back to day overview</button>
+      <input type="hidden" id="dayItinEditId">
+      <input type="hidden" id="dayItinCategory">
+      <div class="form-group" id="dayItinMealTypeGroup">
+        <label class="form-label">Meal</label>
+        <select class="form-select" id="dayItinMealType">
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group" id="dayItinModeGroup">
+        <label class="form-label">Mode</label>
+        <select class="form-select" id="dayItinMode">
+          <option value="taxi">Taxi / Rideshare</option>
+          <option value="public">Public Transit</option>
+          <option value="rental">Rental Car</option>
+          <option value="train">Train</option>
+          <option value="ferry">Ferry</option>
+          <option value="walking">Walking</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Title / Description</label>
+        <input type="text" class="form-input" id="dayItinTitle" placeholder="e.g. Breakfast at the hotel">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Time (optional)</label>
+          <input type="time" class="form-input" id="dayItinTime">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-input" id="dayItinLocation" placeholder="e.g. Hotel restaurant">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="dayItinNotes" placeholder="Any extra details..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer" id="dayItinFormFooter" style="display:none">
+      <button class="btn btn-ghost" id="dayItinDeleteBtn" style="margin-right:auto; display:none" onclick="deleteDayItinItem()">Delete</button>
+      <button class="btn btn-ghost" onclick="backToDayItinList()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDayItinItem()">Save Entry</button>
     </div>
   </div>
 </div>
@@ -2102,7 +2288,7 @@ function newEmptyTripData(meta) {
   const cities = (meta && meta.locations)
     ? Array.from(new Set(meta.locations.split('→').map(s => s.trim()).filter(Boolean)))
     : [];
-  return { meta, calEvents: [], accommodations: [], flights: [], todos: [], otherCosts: [], documents: [], documentCities: cities, documentCategories: ['Passports', 'Hotel bookings', 'Flights', 'Experiences', 'Other'], people: ['Leo', 'Kat'] };
+  return { meta, calEvents: [], accommodations: [], flights: [], todos: [], otherCosts: [], documents: [], itinerary: [], documentCities: cities, documentCategories: ['Passports', 'Hotel bookings', 'Flights', 'Experiences', 'Other'], people: ['Leo', 'Kat'] };
 }
 
 function ensureTripShape(t) {
@@ -2113,6 +2299,7 @@ function ensureTripShape(t) {
   if (!t.todos) t.todos = [];
   if (!t.otherCosts) t.otherCosts = [];
   if (!t.documents) t.documents = [];
+  if (!t.itinerary) t.itinerary = [];
   if (!t.documentCities || !t.documentCities.length) {
     const fromLocations = (t.meta && t.meta.locations)
       ? t.meta.locations.split('→').map(s => s.trim()).filter(Boolean)
@@ -2176,7 +2363,8 @@ function loadStore() {
         flights: legacyStore.flights || [],
         todos: legacyStore.todos || [],
         otherCosts: legacyStore.otherCosts || [],
-        documents: legacyStore.documents || []
+        documents: legacyStore.documents || [],
+        itinerary: legacyStore.itinerary || []
       });
       return;
     }
@@ -2510,7 +2698,8 @@ function applyRemoteStore(data) {
       flights: data.flights || [],
       todos: data.todos || [],
       otherCosts: data.otherCosts || [],
-      documents: data.documents || []
+      documents: data.documents || [],
+      itinerary: data.itinerary || []
     });
     if (currentTripId) { currentTripId = null; store = null; }
     return true;
@@ -2654,6 +2843,14 @@ function seedData() {
     { id: 'f5', from: 'Los Angeles (LAX)', to: 'Fiji / Sydney (NAN → SYD)', depDate: '2026-10-04', depTime: '23:55', arrDate: '2026-10-10', arrTime: '12:45', airline: 'Fiji Airways', flightNum: 'FJ 811 / FJ 911', duration: '10h 50m + 4h 45m', stops: 'Stop @ Fiji (4 nights resort stay)', seats: 'To be selected', baggage: '30kg + 7kg each', ref: 'EC8HO6', terminal: 'LAX / Nadi / Sydney T1', cost: 0, paid: 0, status: 'booked', notes: 'Included in original Fiji Airways booking EC8HO6. Seats additional charge.' },
   ];
 
+  // Sample detailed day itinerary entries, shown via the calendar's day-number popup
+  store.itinerary = [
+    { id: 'di1', date: '2026-09-17', category: 'meal', mealType: 'breakfast', title: 'Breakfast at the hotel', time: '08:00', location: 'Sheraton Park Hotel', notes: '' },
+    { id: 'di2', date: '2026-09-17', category: 'transport', mode: 'taxi', title: 'Uber to Universal Studios', time: '09:30', location: 'Anaheim → Hollywood', notes: '~35 min drive' },
+    { id: 'di3', date: '2026-09-17', category: 'attraction', title: 'Universal Studios Hollywood', time: '10:30', location: 'Hollywood', notes: 'Fast passes on the day' },
+    { id: 'di4', date: '2026-09-17', category: 'meal', mealType: 'lunch', title: 'Lunch at Studio City Walk', time: '13:00', location: 'CityWalk', notes: '' },
+  ];
+
   saveStore();
 }
 
@@ -2711,6 +2908,13 @@ function renderCalendar() {
     const dateNum = document.createElement('div');
     dateNum.className = 'cal-date-num';
     dateNum.textContent = d;
+    dateNum.title = 'View day itinerary';
+    dateNum.onclick = (e) => { e.stopPropagation(); openDayItineraryModal(dateStr); };
+    if (store.itinerary && store.itinerary.some(it => it.date === dateStr)) {
+      const dot = document.createElement('span');
+      dot.className = 'itin-dot';
+      dateNum.appendChild(dot);
+    }
     dateDiv.appendChild(dateNum);
     cell.appendChild(dateDiv);
 
@@ -2827,6 +3031,185 @@ function deleteCalEvent() {
   closeModal('calModal');
   renderCalendar();
   showToast('Event deleted');
+}
+
+// ===========================
+// DAY ITINERARY (detailed view per calendar day)
+// ===========================
+let dayItinCurrentDate = null;
+
+const MEAL_TYPE_LABELS = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', other: 'Other' };
+const TRANSPORT_MODE_LABELS = { taxi: 'Taxi / Rideshare', public: 'Public Transit', rental: 'Rental Car', train: 'Train', ferry: 'Ferry', walking: 'Walking', other: 'Other' };
+const DAY_ITIN_ICONS = { meal: '🍽', transport: '🚗', attraction: '🎟' };
+
+function formatDateLong(dateStr) {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-AU', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  } catch (e) { return dateStr; }
+}
+
+function openDayItineraryModal(dateStr) {
+  dayItinCurrentDate = dateStr;
+  document.getElementById('dayItinDateLabel').textContent = formatDateLong(dateStr);
+  showDayItinListView();
+  renderDayItinLists();
+  document.getElementById('dayItinModal').classList.add('open');
+}
+
+function renderDayItinLists() {
+  renderDayItinSection('meal', 'dayItinMeals', 'No meals planned yet.');
+  renderDayItinSection('transport', 'dayItinTransport', 'No transportation planned yet.');
+  renderDayItinSection('attraction', 'dayItinAttractions', 'No attractions planned yet.');
+}
+
+function renderDayItinSection(category, containerId, emptyText) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  const items = (store.itinerary || [])
+    .filter(it => it.date === dayItinCurrentDate && it.category === category)
+    .sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'));
+
+  if (!items.length) {
+    const empty = document.createElement('div');
+    empty.className = 'day-itin-empty';
+    empty.textContent = emptyText;
+    container.appendChild(empty);
+    return;
+  }
+
+  items.forEach(it => {
+    const row = document.createElement('div');
+    row.className = `day-itin-item cat-${it.category}`;
+    row.onclick = () => openDayItinForm(it.category, it.id);
+
+    const icon = document.createElement('div');
+    icon.className = 'day-itin-item-icon';
+    icon.textContent = DAY_ITIN_ICONS[it.category] || '•';
+    row.appendChild(icon);
+
+    const body = document.createElement('div');
+    body.className = 'day-itin-item-body';
+
+    const titleLine = document.createElement('div');
+    titleLine.className = 'day-itin-item-title';
+    let badgeText = '';
+    if (it.category === 'meal') badgeText = MEAL_TYPE_LABELS[it.mealType] || 'Meal';
+    if (it.category === 'transport') badgeText = TRANSPORT_MODE_LABELS[it.mode] || 'Transport';
+    if (badgeText) {
+      const badge = document.createElement('span');
+      badge.className = `day-itin-badge cat-${it.category}`;
+      badge.textContent = badgeText;
+      titleLine.appendChild(badge);
+    }
+    titleLine.appendChild(document.createTextNode(it.title || '(untitled)'));
+    body.appendChild(titleLine);
+
+    const metaParts = [];
+    if (it.time) metaParts.push(it.time);
+    if (it.location) metaParts.push(it.location);
+    if (metaParts.length) {
+      const meta = document.createElement('div');
+      meta.className = 'day-itin-item-meta';
+      meta.textContent = metaParts.join(' · ');
+      body.appendChild(meta);
+    }
+
+    row.appendChild(body);
+    container.appendChild(row);
+  });
+}
+
+function showDayItinListView() {
+  document.getElementById('dayItinListView').style.display = '';
+  document.getElementById('dayItinListFooter').style.display = '';
+  document.getElementById('dayItinFormView').style.display = 'none';
+  document.getElementById('dayItinFormFooter').style.display = 'none';
+}
+
+function showDayItinFormView() {
+  document.getElementById('dayItinListView').style.display = 'none';
+  document.getElementById('dayItinListFooter').style.display = 'none';
+  document.getElementById('dayItinFormView').style.display = '';
+  document.getElementById('dayItinFormFooter').style.display = '';
+}
+
+function backToDayItinList() {
+  showDayItinListView();
+  renderDayItinLists();
+}
+
+function openDayItinForm(category, editId) {
+  document.getElementById('dayItinEditId').value = editId || '';
+  document.getElementById('dayItinCategory').value = category;
+  document.getElementById('dayItinTitle').value = '';
+  document.getElementById('dayItinTime').value = '';
+  document.getElementById('dayItinLocation').value = '';
+  document.getElementById('dayItinNotes').value = '';
+  document.getElementById('dayItinMealType').value = 'breakfast';
+  document.getElementById('dayItinMode').value = 'taxi';
+  document.getElementById('dayItinDeleteBtn').style.display = editId ? 'inline-flex' : 'none';
+
+  document.getElementById('dayItinMealTypeGroup').style.display = category === 'meal' ? '' : 'none';
+  document.getElementById('dayItinModeGroup').style.display = category === 'transport' ? '' : 'none';
+
+  const titleField = document.getElementById('dayItinTitle');
+  const placeholders = { meal: 'e.g. Breakfast at the hotel', transport: 'e.g. Uber to the airport', attraction: 'e.g. Universal Studios Hollywood' };
+  titleField.placeholder = placeholders[category] || 'Description';
+
+  if (editId) {
+    const it = (store.itinerary || []).find(x => x.id === editId);
+    if (it) {
+      document.getElementById('dayItinTitle').value = it.title || '';
+      document.getElementById('dayItinTime').value = it.time || '';
+      document.getElementById('dayItinLocation').value = it.location || '';
+      document.getElementById('dayItinNotes').value = it.notes || '';
+      if (it.mealType) document.getElementById('dayItinMealType').value = it.mealType;
+      if (it.mode) document.getElementById('dayItinMode').value = it.mode;
+    }
+  }
+
+  showDayItinFormView();
+}
+
+function saveDayItinItem() {
+  const editId = document.getElementById('dayItinEditId').value;
+  const category = document.getElementById('dayItinCategory').value;
+  const item = {
+    id: editId || 'di' + Date.now(),
+    date: dayItinCurrentDate,
+    category,
+    title: document.getElementById('dayItinTitle').value.trim(),
+    time: document.getElementById('dayItinTime').value,
+    location: document.getElementById('dayItinLocation').value.trim(),
+    notes: document.getElementById('dayItinNotes').value.trim(),
+  };
+  if (category === 'meal') item.mealType = document.getElementById('dayItinMealType').value;
+  if (category === 'transport') item.mode = document.getElementById('dayItinMode').value;
+
+  if (!item.title) { showToast('Please enter a title.'); return; }
+
+  if (!store.itinerary) store.itinerary = [];
+  if (editId) {
+    const idx = store.itinerary.findIndex(x => x.id === editId);
+    if (idx >= 0) store.itinerary[idx] = item;
+  } else {
+    store.itinerary.push(item);
+  }
+  saveStore();
+  showToast('Itinerary entry saved ✓');
+  backToDayItinList();
+  renderCalendar();
+}
+
+function deleteDayItinItem() {
+  const editId = document.getElementById('dayItinEditId').value;
+  store.itinerary = (store.itinerary || []).filter(x => x.id !== editId);
+  saveStore();
+  showToast('Itinerary entry deleted');
+  backToDayItinList();
+  renderCalendar();
 }
 
 // ===========================
