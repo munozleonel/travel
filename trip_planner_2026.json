@@ -40,7 +40,7 @@
           "date": "2026-09-17",
           "type": "activity",
           "title": "Universal Studios",
-          "time": "",
+          "time": "10:00",
           "location": "Hollywood",
           "notes": ""
         },
@@ -48,8 +48,10 @@
           "id": "e5",
           "date": "2026-09-19",
           "type": "activity",
-          "title": "Maisy's Birthday 🎂 + Disneyland",
-          "location": "Anaheim"
+          "title": "Maisy's Birthday 🎂 + Disney California Adventure",
+          "time": "",
+          "location": "Anaheim",
+          "notes": ""
         },
         {
           "id": "e6",
@@ -188,7 +190,7 @@
           "id": "e1785560161022",
           "date": "2026-09-25",
           "type": "activity",
-          "title": "Lakes",
+          "title": "Lake Louise",
           "time": "",
           "location": "",
           "notes": ""
@@ -208,6 +210,33 @@
           "type": "activity",
           "title": "Gondola",
           "time": "12:30",
+          "location": "",
+          "notes": ""
+        },
+        {
+          "id": "e1786362121878",
+          "date": "2026-09-17",
+          "type": "note",
+          "title": "Dinner TBA",
+          "time": "19:00",
+          "location": "",
+          "notes": ""
+        },
+        {
+          "id": "e1786362664253",
+          "date": "2026-09-23",
+          "type": "activity",
+          "title": "Lake Moraine",
+          "time": "15:00",
+          "location": "Banff",
+          "notes": ""
+        },
+        {
+          "id": "e1786363727620",
+          "date": "2026-09-16",
+          "type": "activity",
+          "title": "Disneyland Park",
+          "time": "",
           "location": "",
           "notes": ""
         }
@@ -992,6 +1021,30 @@
           "title": "Vancouver Hotel BLU",
           "url": "https://drive.google.com/file/d/1niZKcEctD8ESbQD3H2wjDBnHFgvohN3h/view?usp=drive_link",
           "notes": ""
+        },
+        {
+          "id": "doc1786364232813",
+          "category": "Flights",
+          "city": "",
+          "title": "Sydney > Fiji > Los Angeles return",
+          "url": "https://drive.google.com/file/d/1S6M-sE1UBS6RTUxBOkBH06jLLlUPyHvn/view?usp=drive_link",
+          "notes": "Fiji Airways"
+        },
+        {
+          "id": "doc1786364536875",
+          "category": "Flights",
+          "city": "",
+          "title": "Vancouver > Los Angeles",
+          "url": "https://drive.google.com/file/d/1OdQ6j36wPjASnfzGmvd9uUBfAOb_gwIc/view?usp=drive_link",
+          "notes": "Air Canada"
+        },
+        {
+          "id": "doc1786364642555",
+          "category": "Flights",
+          "city": "",
+          "title": "Calgary > Vancouver",
+          "url": "https://drive.google.com/file/d/1A3TSLNclQTDm56MFujWPjmO0PwW35QAd/view?usp=drive_link",
+          "notes": "Westjet"
         }
       ],
       "documentCities": [
