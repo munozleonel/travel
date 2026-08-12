@@ -575,7 +575,7 @@
           "task": "Check passport expiry dates (all 4)",
           "dueDate": "2026-07-15",
           "assigned": "Kat",
-          "status": "Not Started",
+          "status": "Done",
           "notes": "Passports must be valid 6 months beyond return date (Apr 2027)"
         },
         {
@@ -623,7 +623,7 @@
           "task": "Isla and Maisy absent forms",
           "dueDate": "2026-07-13",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "notes": ""
         },
         {
@@ -647,7 +647,7 @@
           "task": "Canada tours",
           "dueDate": "2026-07-20",
           "assigned": "Kat",
-          "status": "Not Started",
+          "status": "In Progress",
           "notes": ""
         },
         {
@@ -775,6 +775,14 @@
           "task": "Transfer LAX to Santa Monica hotel",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
+          "status": "Not Started",
+          "notes": ""
+        },
+        {
+          "id": "t1786534464270",
+          "task": "Banff restaurants reservations",
+          "dueDate": "2026-08-15",
+          "assigned": "Kat",
           "status": "Not Started",
           "notes": ""
         }
