@@ -541,7 +541,7 @@
         {
           "id": "t3",
           "task": "Select seats – Fiji Airways (EC8HO6)",
-          "dueDate": "2026-08-15",
+          "dueDate": "2026-09-01",
           "assigned": "Kat",
           "status": "Not Started",
           "notes": "Seats cost extra. Both SYD↔LAX legs"
@@ -567,7 +567,7 @@
           "task": "Arrange travel insurance for all 4",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "notes": "NAB credit card travel insurance"
         },
         {
@@ -605,7 +605,7 @@
         {
           "id": "t11",
           "task": "Pack bags & check baggage allowances",
-          "dueDate": "2026-09-13",
+          "dueDate": "2026-09-07",
           "assigned": "Kat",
           "status": "Not Started",
           "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg"
