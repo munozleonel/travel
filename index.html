@@ -16,6 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -228,6 +230,8 @@
       margin-top: 4px;
     }
     body { background: #fff; }
+    .leaflet-control-container { display: none !important; }
+    .map-toolbar, .map-list-row-actions { display: none !important; }
   }
 
   /* === SECTION HEADER === */
@@ -427,6 +431,113 @@
     color: var(--navy); font-weight: 600; text-decoration: none; font-size: 13px;
   }
   .doc-link-row:hover { text-decoration: underline; }
+
+  /* === MAP SECTION === */
+  .map-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .map-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .map-filter-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border-mid);
+    background: var(--surface);
+    color: var(--text-mid);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.12s, border-color 0.12s, color 0.12s, opacity 0.12s;
+  }
+  .map-filter-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .map-filter-chip.off { opacity: 0.4; }
+  .map-filter-chip.cat-accommodation .dot { background: #c0392b; }
+  .map-filter-chip.cat-airport .dot { background: #1a7a6e; }
+  .map-filter-chip.cat-activity .dot { background: #6c3483; }
+  .map-filter-chip.cat-other .dot { background: #c85c3a; }
+  .map-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  #tripMapContainer {
+    width: 100%;
+    height: 480px;
+    border-radius: var(--r-lg, 14px);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--surface-2);
+    position: relative;
+  }
+  #tripMapLoading {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    background: var(--surface-2);
+    color: var(--text-light);
+    font-size: 13px;
+    z-index: 500;
+  }
+  .map-pin-icon {
+    width: 30px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .map-pin-icon svg { width: 30px; height: 40px; display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+  .map-pin-icon .emoji { position: absolute; top: 5px; left: 0; right: 0; text-align: center; font-size: 13px; }
+  .leaflet-popup-content-wrapper { border-radius: 12px; }
+  .map-popup { font-family: 'DM Sans', sans-serif; min-width: 180px; }
+  .map-popup .mp-badge {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 1px 7px; border-radius: 20px; margin-bottom: 6px;
+  }
+  .map-popup .mp-badge.cat-accommodation { background: #fdedec; color: #922b21; }
+  .map-popup .mp-badge.cat-airport { background: #e8f8f5; color: #0e6655; }
+  .map-popup .mp-badge.cat-activity { background: #f5eef8; color: #6c3483; }
+  .map-popup .mp-badge.cat-other { background: #fdf2ec; color: #c85c3a; }
+  .map-popup .mp-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .map-popup .mp-sub { font-size: 12px; color: var(--text-mid); margin-bottom: 8px; }
+  .map-popup .mp-actions { display: flex; gap: 10px; align-items: center; }
+  .map-popup .mp-actions a, .map-popup .mp-actions button {
+    font-size: 12px; font-weight: 600; color: var(--teal);
+    background: none; border: none; padding: 0; cursor: pointer;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+  }
+  .map-popup .mp-actions a:hover, .map-popup .mp-actions button:hover { text-decoration: underline; }
+  .map-popup .mp-actions .mp-del { color: var(--coral); }
+  .map-popup .mp-managed { font-size: 11px; color: var(--text-light); font-style: italic; }
+  .map-list { margin-top: 18px; }
+  .map-list-group { margin-bottom: 16px; }
+  .map-list-group:last-child { margin-bottom: 0; }
+  .map-list-group-title {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--text-light); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .map-list-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    margin-bottom: 6px;
+    cursor: pointer;
+    background: var(--surface);
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .map-list-row:hover { background: var(--surface-2); border-color: var(--border-mid); }
+  .map-list-row-body { flex: 1; min-width: 0; }
+  .map-list-row-title { font-size: 13px; font-weight: 600; color: var(--text); overflow-wrap: anywhere; }
+  .map-list-row-sub { font-size: 12px; color: var(--text-light); margin-top: 1px; overflow-wrap: anywhere; }
+  .map-list-row-actions { display: flex; gap: 4px; flex-shrink: 0; }
+  .map-list-row-actions button {
+    width: 24px; height: 24px; border-radius: 50%; border: none;
+    background: var(--surface-2); color: var(--text-light);
+    font-size: 11px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .map-list-row-actions button:hover { background: var(--coral); color: #fff; }
+  .map-geostatus { font-size: 12px; color: var(--text-light); margin-top: 8px; }
+
   .cal-add-btn {
     position: absolute;
     bottom: 6px; right: 6px;
@@ -1489,6 +1600,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20 15.3 15.3 0 010-20z"/></svg>
       Flight Path
     </div>
+    <div class="nav-tab" onclick="showSection('map',this)" id="mapNavTab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-5.5 2V6L9 4m0 16l6 2m-6-2V4m6 18l5.5-2V4L15 6m0 16V4M9 4l6 2"/></svg>
+      Map
+    </div>
     <div class="nav-tab" onclick="showSection('todos',this)" id="todoNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
       To-Do
@@ -1726,6 +1841,34 @@
         <div class="fp-current-leg-info" id="fp-leg-info"></div>
       </div>
     </div>
+  </section>
+
+  <!-- ==================== MAP SECTION ==================== -->
+  <section id="section-map" class="section">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Trip Map</h1>
+        <div class="section-sub">Accommodations, airports &amp; activities, plotted by city</div>
+      </div>
+      <button class="btn btn-primary" onclick="openMapMarkerModal()">+ Add Marker</button>
+    </div>
+
+    <div class="map-toolbar">
+      <div class="map-filters" id="mapFilterChips"></div>
+      <div class="map-actions">
+        <button class="btn btn-ghost" onclick="regeocodeAllPlaces()" title="Re-locate any pins that failed to place">↻ Refresh Pins</button>
+        <button class="btn btn-ghost" onclick="openFullRouteInGoogleMaps()" title="Open every stop as a Google Maps route">🗺 Open Full Route in Google Maps</button>
+      </div>
+    </div>
+
+    <div id="tripMapContainer">
+      <div id="tripMapLoading">
+        <div>Loading map…</div>
+      </div>
+    </div>
+    <div class="map-geostatus" id="mapGeoStatus"></div>
+
+    <div class="map-list" id="mapList"></div>
   </section>
 
 </main>
@@ -2297,6 +2440,56 @@
   </div>
 </div>
 
+<!-- ==================== MAP MARKER MODAL ==================== -->
+<div class="modal-backdrop" id="mapMarkerModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="mapMarkerModalTitle">Add Marker</div>
+      <button class="modal-close" onclick="closeModal('mapMarkerModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="mapMarkerEditId">
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="mapMarkerCategory">
+          <option value="accommodation">Accommodation</option>
+          <option value="airport">Airport</option>
+          <option value="activity">Activity</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-input" id="mapMarkerName" placeholder="e.g. Fairmont Banff Springs">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <input type="text" class="form-input" id="mapMarkerCity" placeholder="e.g. Banff">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date (optional)</label>
+          <input type="date" class="form-input" id="mapMarkerDate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Address (used to place the pin on the map)</label>
+        <input type="text" class="form-input" id="mapMarkerAddress" placeholder="e.g. 405 Spray Ave, Banff, AB">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="mapMarkerNotes" placeholder="Any extra details..."></textarea>
+      </div>
+      <div class="map-geostatus" id="mapMarkerGeoStatus"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="mapMarkerDeleteBtn" style="margin-right:auto; display:none" onclick="deleteMapMarker()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('mapMarkerModal')">Cancel</button>
+      <button class="btn btn-primary" id="mapMarkerSaveBtn" onclick="saveMapMarker()">Save Marker</button>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== MANAGE DOCUMENT CATEGORIES MODAL ==================== -->
 <div class="modal-backdrop" id="documentCategoriesModal">
   <div class="modal">
@@ -2357,7 +2550,7 @@ function newEmptyTripData(meta) {
   const cities = (meta && meta.locations)
     ? Array.from(new Set(meta.locations.split('→').map(s => s.trim()).filter(Boolean)))
     : [];
-  return { meta, calEvents: [], accommodations: [], flights: [], todos: [], otherCosts: [], documents: [], itinerary: [], documentCities: cities, documentCategories: ['Passports', 'Hotel bookings', 'Flights', 'Experiences', 'Other'], people: ['Leo', 'Kat'] };
+  return { meta, calEvents: [], accommodations: [], flights: [], todos: [], otherCosts: [], documents: [], itinerary: [], mapPlaces: [], mapGeocodeCache: {}, documentCities: cities, documentCategories: ['Passports', 'Hotel bookings', 'Flights', 'Experiences', 'Other'], people: ['Leo', 'Kat'] };
 }
 
 function ensureTripShape(t) {
@@ -2369,6 +2562,8 @@ function ensureTripShape(t) {
   if (!t.otherCosts) t.otherCosts = [];
   if (!t.documents) t.documents = [];
   if (!t.itinerary) t.itinerary = [];
+  if (!t.mapPlaces) t.mapPlaces = [];
+  if (!t.mapGeocodeCache) t.mapGeocodeCache = {};
   if (!t.documentCities || !t.documentCities.length) {
     const fromLocations = (t.meta && t.meta.locations)
       ? t.meta.locations.split('→').map(s => s.trim()).filter(Boolean)
@@ -2433,7 +2628,9 @@ function loadStore() {
         todos: legacyStore.todos || [],
         otherCosts: legacyStore.otherCosts || [],
         documents: legacyStore.documents || [],
-        itinerary: legacyStore.itinerary || []
+        itinerary: legacyStore.itinerary || [],
+        mapPlaces: legacyStore.mapPlaces || [],
+        mapGeocodeCache: legacyStore.mapGeocodeCache || {}
       });
       return;
     }
@@ -2768,7 +2965,9 @@ function applyRemoteStore(data) {
       todos: data.todos || [],
       otherCosts: data.otherCosts || [],
       documents: data.documents || [],
-      itinerary: data.itinerary || []
+      itinerary: data.itinerary || [],
+      mapPlaces: data.mapPlaces || [],
+      mapGeocodeCache: data.mapGeocodeCache || {}
     });
     if (currentTripId) { currentTripId = null; store = null; }
     return true;
@@ -2919,6 +3118,13 @@ function seedData() {
     { id: 'di3', date: '2026-09-17', category: 'attraction', title: 'Universal Studios Hollywood', time: '10:30', location: 'Hollywood', notes: 'Fast passes on the day' },
     { id: 'di4', date: '2026-09-17', category: 'meal', mealType: 'lunch', title: 'Lunch at Studio City Walk', time: '13:00', location: 'CityWalk', notes: '' },
   ];
+
+  // Sample custom map marker — everything else on the Map is plotted
+  // automatically from accommodations, flights and calendar activities above.
+  store.mapPlaces = [
+    { id: 'mp1', category: 'other', name: 'Lake Louise Lookout', city: 'Banff', date: '2026-09-23', address: 'Lake Louise, Improvement District No. 9, Alberta, Canada', notes: 'Stop for photos on the way through' },
+  ];
+  store.mapGeocodeCache = {};
 
   saveStore();
 }
@@ -3310,6 +3516,454 @@ function deleteDayItinItem() {
   showToast('Itinerary entry deleted');
   backToDayItinList();
   renderCalendar();
+}
+
+// ===========================
+// TRIP MAP
+// ===========================
+const MAP_CATEGORY_META = {
+  accommodation: { label: 'Accommodations', color: '#c0392b', emoji: '🏨' },
+  airport:       { label: 'Airports',       color: '#0e6655', emoji: '✈' },
+  activity:      { label: 'Activities',     color: '#6c3483', emoji: '🎡' },
+  other:         { label: 'Other',          color: '#c85c3a', emoji: '📍' },
+};
+
+let tripLeafletMap = null;
+let mapLayerGroups = {};
+let mapMarkersById = {};
+let mapFilterState = { accommodation: true, airport: true, activity: true, other: true };
+let mapIsRefreshing = false;
+
+function delayMs(ms) { return new Promise(res => setTimeout(res, ms)); }
+
+function slugifyForMap(str) {
+  return String(str || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function mapPinDivIcon(category) {
+  const meta = MAP_CATEGORY_META[category] || MAP_CATEGORY_META.other;
+  const svg = `<svg viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg"><path d="M15 0C7 0 0 6.7 0 15c0 10.5 15 25 15 25s15-14.5 15-25C30 6.7 23 0 15 0z" fill="${meta.color}"/><circle cx="15" cy="15" r="9" fill="white" opacity="0.92"/></svg>`;
+  return L.divIcon({
+    className: '',
+    html: `<div class="map-pin-icon">${svg}<span class="emoji">${meta.emoji}</span></div>`,
+    iconSize: [30, 40],
+    iconAnchor: [15, 40],
+    popupAnchor: [0, -36],
+  });
+}
+
+function parseAirportLabel(label) {
+  const m = String(label || '').match(/^(.*?)\s*\(([A-Za-z0-9]{2,4})\)\s*$/);
+  if (m) return { city: m[1].trim(), code: m[2].trim() };
+  return { city: String(label || '').trim(), code: '' };
+}
+
+// Build the combined list of places to plot: auto-derived (read-only, managed
+// elsewhere in the app) plus custom user-added pins (store.mapPlaces).
+function buildMapPlaces() {
+  const places = [];
+
+  (store.accommodations || []).forEach(a => {
+    places.push({
+      id: 'acc_' + a.id,
+      category: 'accommodation',
+      name: a.name,
+      city: a.city,
+      subtitle: [a.city, a.checkin ? ('Check-in ' + a.checkin) : ''].filter(Boolean).join(' · '),
+      address: a.address,
+      geocodeQuery: a.address || [a.name, a.city].filter(Boolean).join(', '),
+      managed: true,
+      manageSection: 'accommodation',
+      manageLabel: 'Accommodation',
+    });
+  });
+
+  const seenAirports = new Set();
+  (store.flights || []).forEach(f => {
+    [f.from, f.to].forEach(label => {
+      if (!label) return;
+      const { city, code } = parseAirportLabel(label);
+      const key = slugifyForMap(city || label);
+      if (seenAirports.has(key)) return;
+      seenAirports.add(key);
+      places.push({
+        id: 'air_' + key,
+        category: 'airport',
+        name: label,
+        city: city,
+        subtitle: code ? `Airport · ${code}` : 'Airport',
+        address: '',
+        geocodeQuery: `${city} Airport`,
+        managed: true,
+        manageSection: 'flights',
+        manageLabel: 'Flights',
+      });
+    });
+  });
+
+  (store.calEvents || []).filter(e => e.type === 'activity').forEach(e => {
+    places.push({
+      id: 'act_' + e.id,
+      category: 'activity',
+      name: e.title,
+      city: e.location,
+      subtitle: [e.location, e.date].filter(Boolean).join(' · '),
+      address: '',
+      geocodeQuery: [e.title, e.location].filter(Boolean).join(', '),
+      managed: true,
+      manageSection: 'calendar',
+      manageLabel: 'Trip Calendar',
+    });
+  });
+
+  (store.mapPlaces || []).forEach(mp => {
+    places.push({
+      id: mp.id,
+      category: mp.category || 'other',
+      name: mp.name,
+      city: mp.city,
+      subtitle: [mp.city, mp.date || ''].filter(Boolean).join(' · '),
+      address: mp.address,
+      notes: mp.notes,
+      geocodeQuery: mp.address || [mp.name, mp.city].filter(Boolean).join(', '),
+      managed: false,
+      lat: mp.lat,
+      lng: mp.lng,
+    });
+  });
+
+  return places;
+}
+
+async function geocodeQuery(query) {
+  const key = String(query || '').trim().toLowerCase();
+  if (!key) return null;
+  if (!store.mapGeocodeCache) store.mapGeocodeCache = {};
+  const cached = store.mapGeocodeCache[key];
+  if (cached && cached.lat != null) return cached;
+  if (cached && cached.failed) return null;
+
+  try {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`;
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    const data = await res.json();
+    if (data && data[0]) {
+      const coords = { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+      store.mapGeocodeCache[key] = coords;
+      saveStore();
+      return coords;
+    }
+    store.mapGeocodeCache[key] = { failed: true };
+    saveStore();
+    return null;
+  } catch (e) {
+    return null; // network hiccup — don't cache, so it's retried next time
+  }
+}
+
+function mapPopupHtml(place, coords) {
+  const meta = MAP_CATEGORY_META[place.category] || MAP_CATEGORY_META.other;
+  const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`;
+  let html = `<div class="map-popup">
+    <span class="mp-badge cat-${place.category}">${meta.label.replace(/s$/, '')}</span>
+    <div class="mp-title">${escHtml(place.name || 'Untitled')}</div>`;
+  if (place.subtitle) html += `<div class="mp-sub">${escHtml(place.subtitle)}</div>`;
+  if (place.notes) html += `<div class="mp-sub">${escHtml(place.notes)}</div>`;
+  html += `<div class="mp-actions"><a href="${gmapsUrl}" target="_blank" rel="noopener">Open in Google Maps</a>`;
+  if (place.managed) {
+    html += `<button onclick="goToSection('${place.manageSection}')">Edit in ${escHtml(place.manageLabel)} →</button>`;
+  } else {
+    html += `<button onclick="openMapMarkerModal('${place.id}')">Edit</button>
+      <button class="mp-del" onclick="quickDeleteMapMarker('${place.id}')">Delete</button>`;
+  }
+  html += `</div></div>`;
+  return html;
+}
+
+function initMapLayerGroups() {
+  mapLayerGroups = {};
+  Object.keys(MAP_CATEGORY_META).forEach(cat => {
+    mapLayerGroups[cat] = L.layerGroup().addTo(tripLeafletMap);
+  });
+}
+
+window.tripMapInit = function () {
+  if (!window.L) return; // Leaflet failed to load (e.g. offline on first visit)
+  if (!tripLeafletMap) {
+    tripLeafletMap = L.map('tripMapContainer', { scrollWheelZoom: true }).setView([20, 0], 2);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom: 19,
+    }).addTo(tripLeafletMap);
+    initMapLayerGroups();
+    renderMapFilterChips();
+    refreshTripMap();
+  } else {
+    setTimeout(() => tripLeafletMap.invalidateSize(), 30);
+  }
+};
+
+function renderMapFilterChips() {
+  const wrap = document.getElementById('mapFilterChips');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  Object.keys(MAP_CATEGORY_META).forEach(cat => {
+    const meta = MAP_CATEGORY_META[cat];
+    const chip = document.createElement('button');
+    chip.className = `map-filter-chip cat-${cat}${mapFilterState[cat] ? '' : ' off'}`;
+    chip.innerHTML = `<span class="dot"></span>${meta.label}`;
+    chip.onclick = () => {
+      mapFilterState[cat] = !mapFilterState[cat];
+      if (!tripLeafletMap) return;
+      if (mapFilterState[cat]) tripLeafletMap.addLayer(mapLayerGroups[cat]);
+      else tripLeafletMap.removeLayer(mapLayerGroups[cat]);
+      renderMapFilterChips();
+    };
+    wrap.appendChild(chip);
+  });
+}
+
+async function refreshTripMap(forceRegeocode) {
+  if (!tripLeafletMap || mapIsRefreshing) return;
+  mapIsRefreshing = true;
+  const loadingEl = document.getElementById('tripMapLoading');
+  const statusEl = document.getElementById('mapGeoStatus');
+  if (loadingEl) loadingEl.style.display = 'flex';
+
+  Object.values(mapLayerGroups).forEach(g => g.clearLayers());
+  mapMarkersById = {};
+
+  const places = buildMapPlaces();
+  const bounds = [];
+  let placed = 0, failed = 0;
+
+  for (let i = 0; i < places.length; i++) {
+    const place = places[i];
+    if (loadingEl) loadingEl.querySelector('div').textContent = `Locating pins… ${i + 1}/${places.length}`;
+
+    let coords = null;
+    if (place.lat != null && place.lng != null) {
+      coords = { lat: place.lat, lng: place.lng };
+    } else {
+      const key = String(place.geocodeQuery || place.name || '').trim().toLowerCase();
+      const cached = store.mapGeocodeCache && store.mapGeocodeCache[key];
+      if (cached && cached.lat != null) {
+        coords = cached;
+      } else if (cached && cached.failed && !forceRegeocode) {
+        coords = null;
+      } else {
+        coords = await geocodeQuery(place.geocodeQuery || place.name);
+        await delayMs(1100); // be polite to the free geocoding service
+      }
+    }
+
+    if (coords) {
+      placed++;
+      const marker = L.marker([coords.lat, coords.lng], { icon: mapPinDivIcon(place.category) })
+        .bindPopup(mapPopupHtml(place, coords));
+      marker.addTo(mapLayerGroups[place.category] || mapLayerGroups.other);
+      mapMarkersById[place.id] = marker;
+      bounds.push([coords.lat, coords.lng]);
+    } else {
+      failed++;
+    }
+  }
+
+  if (bounds.length) tripLeafletMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
+  if (loadingEl) loadingEl.style.display = 'none';
+  if (statusEl) {
+    statusEl.textContent = failed
+      ? `${placed} pin${placed === 1 ? '' : 's'} placed · ${failed} couldn't be located automatically — try Refresh Pins, or add/edit with a more specific address.`
+      : `${placed} pin${placed === 1 ? '' : 's'} placed.`;
+  }
+
+  renderMapList(places);
+  mapIsRefreshing = false;
+}
+
+function regeocodeAllPlaces() {
+  refreshTripMap(true);
+}
+
+function renderMapList(places) {
+  const wrap = document.getElementById('mapList');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+
+  Object.keys(MAP_CATEGORY_META).forEach(cat => {
+    const items = places.filter(p => p.category === cat);
+    if (!items.length) return;
+    const meta = MAP_CATEGORY_META[cat];
+
+    const group = document.createElement('div');
+    group.className = 'map-list-group';
+    const title = document.createElement('div');
+    title.className = 'map-list-group-title';
+    title.innerHTML = `<span class="dot" style="width:8px;height:8px;border-radius:50%;background:${meta.color};display:inline-block;"></span>${meta.label}`;
+    group.appendChild(title);
+
+    items.forEach(place => {
+      const row = document.createElement('div');
+      row.className = 'map-list-row';
+      row.onclick = () => {
+        const marker = mapMarkersById[place.id];
+        if (marker && tripLeafletMap) {
+          tripLeafletMap.setView(marker.getLatLng(), 14);
+          marker.openPopup();
+        } else {
+          showToast("This pin couldn't be located on the map yet.");
+        }
+      };
+
+      const body = document.createElement('div');
+      body.className = 'map-list-row-body';
+      const t = document.createElement('div');
+      t.className = 'map-list-row-title';
+      t.textContent = place.name || '(untitled)';
+      body.appendChild(t);
+      if (place.subtitle || place.managed) {
+        const s = document.createElement('div');
+        s.className = 'map-list-row-sub';
+        s.textContent = [place.subtitle, place.managed ? `via ${place.manageLabel}` : ''].filter(Boolean).join(' · ');
+        body.appendChild(s);
+      }
+      row.appendChild(body);
+
+      if (!place.managed) {
+        const actions = document.createElement('div');
+        actions.className = 'map-list-row-actions';
+        const editBtn = document.createElement('button');
+        editBtn.innerHTML = '✎';
+        editBtn.title = 'Edit';
+        editBtn.onclick = (e) => { e.stopPropagation(); openMapMarkerModal(place.id); };
+        const delBtn = document.createElement('button');
+        delBtn.innerHTML = '✕';
+        delBtn.title = 'Delete';
+        delBtn.onclick = (e) => { e.stopPropagation(); quickDeleteMapMarker(place.id); };
+        actions.appendChild(editBtn);
+        actions.appendChild(delBtn);
+        row.appendChild(actions);
+      }
+
+      group.appendChild(row);
+    });
+
+    wrap.appendChild(group);
+  });
+
+  if (!places.length) {
+    wrap.innerHTML = '<div class="day-itin-empty">No places yet — add accommodations, flights or activities, or add a custom marker above.</div>';
+  }
+}
+
+function goToSection(id) {
+  const tab = Array.from(document.querySelectorAll('.nav-tab')).find(t => (t.getAttribute('onclick') || '').includes(`showSection('${id}'`));
+  if (tab) showSection(id, tab);
+}
+
+function openMapMarkerModal(editId) {
+  document.getElementById('mapMarkerEditId').value = editId || '';
+  document.getElementById('mapMarkerModalTitle').textContent = editId ? 'Edit Marker' : 'Add Marker';
+  document.getElementById('mapMarkerGeoStatus').textContent = '';
+  document.getElementById('mapMarkerDeleteBtn').style.display = editId ? 'inline-flex' : 'none';
+
+  if (editId) {
+    const mp = (store.mapPlaces || []).find(x => x.id === editId);
+    document.getElementById('mapMarkerCategory').value = (mp && mp.category) || 'other';
+    document.getElementById('mapMarkerName').value = (mp && mp.name) || '';
+    document.getElementById('mapMarkerCity').value = (mp && mp.city) || '';
+    document.getElementById('mapMarkerDate').value = (mp && mp.date) || '';
+    document.getElementById('mapMarkerAddress').value = (mp && mp.address) || '';
+    document.getElementById('mapMarkerNotes').value = (mp && mp.notes) || '';
+  } else {
+    document.getElementById('mapMarkerCategory').value = 'activity';
+    document.getElementById('mapMarkerName').value = '';
+    document.getElementById('mapMarkerCity').value = '';
+    document.getElementById('mapMarkerDate').value = '';
+    document.getElementById('mapMarkerAddress').value = '';
+    document.getElementById('mapMarkerNotes').value = '';
+  }
+
+  document.getElementById('mapMarkerModal').classList.add('open');
+}
+
+async function saveMapMarker() {
+  const editId = document.getElementById('mapMarkerEditId').value;
+  const category = document.getElementById('mapMarkerCategory').value;
+  const name = document.getElementById('mapMarkerName').value.trim();
+  const city = document.getElementById('mapMarkerCity').value.trim();
+  const date = document.getElementById('mapMarkerDate').value;
+  const address = document.getElementById('mapMarkerAddress').value.trim();
+  const notes = document.getElementById('mapMarkerNotes').value.trim();
+
+  if (!name) { showToast('Please enter a name.'); return; }
+
+  const saveBtn = document.getElementById('mapMarkerSaveBtn');
+  const statusEl = document.getElementById('mapMarkerGeoStatus');
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Locating…';
+  statusEl.textContent = 'Finding this place on the map…';
+
+  const query = address || [name, city].filter(Boolean).join(', ');
+  const coords = await geocodeQuery(query);
+
+  const item = {
+    id: editId || 'mp_' + Date.now(),
+    category, name, city, date, address, notes,
+    lat: coords ? coords.lat : undefined,
+    lng: coords ? coords.lng : undefined,
+  };
+
+  if (!store.mapPlaces) store.mapPlaces = [];
+  if (editId) {
+    const idx = store.mapPlaces.findIndex(x => x.id === editId);
+    if (idx >= 0) store.mapPlaces[idx] = item; else store.mapPlaces.push(item);
+  } else {
+    store.mapPlaces.push(item);
+  }
+  saveStore();
+
+  saveBtn.disabled = false;
+  saveBtn.textContent = 'Save Marker';
+  closeModal('mapMarkerModal');
+  showToast(coords ? 'Marker saved ✓' : "Marker saved — couldn't place it on the map automatically, try Refresh Pins later.");
+  refreshTripMap();
+}
+
+function deleteMapMarker() {
+  const editId = document.getElementById('mapMarkerEditId').value;
+  if (!editId) return;
+  store.mapPlaces = (store.mapPlaces || []).filter(x => x.id !== editId);
+  saveStore();
+  closeModal('mapMarkerModal');
+  showToast('Marker deleted');
+  refreshTripMap();
+}
+
+function quickDeleteMapMarker(id) {
+  if (!confirm('Delete this marker?')) return;
+  store.mapPlaces = (store.mapPlaces || []).filter(x => x.id !== id);
+  saveStore();
+  if (tripLeafletMap) tripLeafletMap.closePopup();
+  showToast('Marker deleted');
+  refreshTripMap();
+}
+
+function openFullRouteInGoogleMaps() {
+  let stops = [];
+  if (store.meta && store.meta.locations) {
+    stops = store.meta.locations.split('→').map(s => s.trim()).filter(Boolean);
+  }
+  if (stops.length < 2) {
+    const seen = new Set();
+    (store.accommodations || [])
+      .slice()
+      .sort((a, b) => (a.checkin || '').localeCompare(b.checkin || ''))
+      .forEach(a => { if (a.city && !seen.has(a.city)) { seen.add(a.city); stops.push(a.city); } });
+  }
+  if (stops.length < 2) { showToast('Not enough locations to build a route yet.'); return; }
+  const url = 'https://www.google.com/maps/dir/' + stops.map(s => encodeURIComponent(s)).join('/');
+  window.open(url, '_blank', 'noopener');
 }
 
 // ===========================
@@ -3715,6 +4369,7 @@ function showSection(id, tab) {
   document.getElementById('section-' + id).classList.add('active');
   tab.classList.add('active');
   if (id === 'flightpath' && window.fpInit) window.fpInit();
+  if (id === 'map' && window.tripMapInit) window.tripMapInit();
 }
 
 function printHoliday() {
@@ -3739,6 +4394,7 @@ function printHoliday() {
   renderOtherCosts();
   renderDocuments();
   if (window.fpInit) window.fpInit();
+  if (window.tripMapInit) window.tripMapInit();
 
   const header = document.getElementById('printHeader');
   const tripName = (store.meta && store.meta.name) || 'My Trip';
