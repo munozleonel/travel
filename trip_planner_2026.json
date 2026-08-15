@@ -196,29 +196,11 @@
           "notes": ""
         },
         {
-          "id": "e1785560240513",
-          "date": "2026-09-24",
-          "type": "activity",
-          "title": "TBA",
-          "time": "",
-          "location": "",
-          "notes": ""
-        },
-        {
           "id": "e1786276938934",
           "date": "2026-09-22",
           "type": "activity",
           "title": "Gondola",
           "time": "12:30",
-          "location": "",
-          "notes": ""
-        },
-        {
-          "id": "e1786362121878",
-          "date": "2026-09-17",
-          "type": "note",
-          "title": "Dinner TBA",
-          "time": "19:00",
           "location": "",
           "notes": ""
         },
@@ -559,7 +541,7 @@
         {
           "id": "t3",
           "task": "Select seats – Fiji Airways (EC8HO6)",
-          "dueDate": "2026-08-15",
+          "dueDate": "2026-09-01",
           "assigned": "Kat",
           "status": "Not Started",
           "notes": "Seats cost extra. Both SYD↔LAX legs"
@@ -585,7 +567,7 @@
           "task": "Arrange travel insurance for all 4",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "notes": "NAB credit card travel insurance"
         },
         {
@@ -593,7 +575,7 @@
           "task": "Check passport expiry dates (all 4)",
           "dueDate": "2026-07-15",
           "assigned": "Kat",
-          "status": "Not Started",
+          "status": "Done",
           "notes": "Passports must be valid 6 months beyond return date (Apr 2027)"
         },
         {
@@ -623,7 +605,7 @@
         {
           "id": "t11",
           "task": "Pack bags & check baggage allowances",
-          "dueDate": "2026-09-13",
+          "dueDate": "2026-09-07",
           "assigned": "Kat",
           "status": "Not Started",
           "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg"
@@ -641,7 +623,7 @@
           "task": "Isla and Maisy absent forms",
           "dueDate": "2026-07-13",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "notes": ""
         },
         {
@@ -665,7 +647,7 @@
           "task": "Canada tours",
           "dueDate": "2026-07-20",
           "assigned": "Kat",
-          "status": "Not Started",
+          "status": "In Progress",
           "notes": ""
         },
         {
@@ -792,6 +774,22 @@
           "id": "t1786278933967",
           "task": "Transfer LAX to Santa Monica hotel",
           "dueDate": "2026-08-01",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "notes": ""
+        },
+        {
+          "id": "t1786534464270",
+          "task": "Banff restaurants reservations",
+          "dueDate": "2026-08-15",
+          "assigned": "Kat",
+          "status": "Not Started",
+          "notes": ""
+        },
+        {
+          "id": "t1786534510517",
+          "task": "Travel folder",
+          "dueDate": "2026-09-01",
           "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
