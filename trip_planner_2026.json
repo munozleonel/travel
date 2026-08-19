@@ -221,6 +221,15 @@
           "time": "",
           "location": "",
           "notes": ""
+        },
+        {
+          "id": "e1787142194856",
+          "date": "2026-09-18",
+          "type": "activity",
+          "title": "MLB LA Dodgers San Fran Giants",
+          "time": "18:30",
+          "location": "Dodgers stadium",
+          "notes": ""
         }
       ],
       "accommodations": [
@@ -1090,7 +1099,9 @@
           "location": "Hollywood",
           "notes": ""
         }
-      ]
+      ],
+      "mapPlaces": [],
+      "mapGeocodeCache": {}
     }
   }
 }
