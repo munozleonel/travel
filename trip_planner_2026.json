@@ -223,13 +223,13 @@
           "notes": ""
         },
         {
-          "id": "e1787142194856",
-          "date": "2026-09-18",
+          "id": "e1787139830178",
+          "date": "2026-09-24",
           "type": "activity",
-          "title": "MLB LA Dodgers San Fran Giants",
-          "time": "18:30",
-          "location": "Dodgers stadium",
-          "notes": ""
+          "title": "Peyto lake",
+          "time": "",
+          "location": "",
+          "notes": "Hire a car"
         }
       ],
       "accommodations": [
@@ -327,7 +327,7 @@
           "checkout": "2026-10-04",
           "checkoutTime": "11:00",
           "room": "Ocean View Two Queens",
-          "breakfast": "",
+          "breakfast": "No",
           "cost": 1565,
           "paid": 0,
           "ref": "Booked: 6985396220",
