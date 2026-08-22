@@ -672,16 +672,16 @@
           "task": "Transfer - Sydney home to airport (return)",
           "dueDate": "2026-08-08",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": ""
+          "status": "In Progress",
+          "notes": "Request for quote submitted"
         },
         {
           "id": "t1783041844454",
-          "task": "Transfer - LAX to Anaheim hotel (return)",
+          "task": "Transfer - LAX to Anaheim hotel",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "Private transfer"
+          "status": "In Progress",
+          "notes": "$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport"
         },
         {
           "id": "t1783041856046",
@@ -802,6 +802,14 @@
           "assigned": "Leo",
           "status": "Not Started",
           "notes": ""
+        },
+        {
+          "id": "t1787397042998",
+          "task": "Transfer - Anaheim hotel to LAX (20/Sep)",
+          "dueDate": "2026-08-01",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "notes": "Klook"
         }
       ],
       "people": [
