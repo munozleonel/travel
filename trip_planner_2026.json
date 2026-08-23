@@ -370,14 +370,14 @@
           "checkoutTime": "11:00",
           "room": "Guest room, 2 Queen",
           "breakfast": "Yes",
-          "cost": 3318,
+          "cost": 0,
           "paid": 0,
           "ref": "6016548121",
           "platform": "Booking.com",
           "cancelBy": "2026-09-12",
           "rating": "4.8  (1,124)",
           "contact": "+1 657-279-9786",
-          "notes": "",
+          "notes": "***TO CANCEL*** Cost $3318 ($664/night)",
           "status": "booked"
         },
         {
@@ -391,14 +391,14 @@
           "checkoutTime": "12:00",
           "room": "Queen Room with Balcony",
           "breakfast": "TBC",
-          "cost": 4124,
+          "cost": 0,
           "paid": 0,
           "ref": "5720637209",
           "platform": "Booking.com",
           "cancelBy": "2026-09-18",
           "rating": "4.4 (592)",
           "contact": "+1 403-762-2112",
-          "notes": "***TO CANCEL***",
+          "notes": "***TO CANCEL***\nCost $4124 ($824/night)",
           "status": "booked"
         }
       ],
@@ -504,7 +504,7 @@
           "ref": "EC8HO6",
           "terminal": "LAX / Nadi",
           "cost": 0.01,
-          "paid": 1e-05,
+          "paid": 0.00001,
           "status": "booked",
           "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
         },
@@ -525,7 +525,7 @@
           "ref": "EC8HO6",
           "terminal": "Nadi / Sydney Terminal 1",
           "cost": 0,
-          "paid": 1e-05,
+          "paid": 0.00001,
           "status": "booked",
           "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
         }
@@ -1144,7 +1144,101 @@
         }
       ],
       "mapPlaces": [],
-      "mapGeocodeCache": {}
+      "mapGeocodeCache": {
+        "1855 south harbor boulevard, anaheim, california 92802 usa": {
+          "lat": 33.8009935,
+          "lng": -117.9160128
+        },
+        "320 4th avenue southwest, t2p 2s6 calgary, canada": {
+          "failed": true
+        },
+        "600 banff avenue 2000, banff, ab, t1l1h8 canada": {
+          "failed": true
+        },
+        "177 robson street, v6e 1b2 vancouver, canada": {
+          "lat": 49.2781605,
+          "lng": -123.114459
+        },
+        "1819 ocean avenue, santa monica, los angeles, ca 90401": {
+          "lat": 34.0081266,
+          "lng": -118.4904673
+        },
+        "denarau island south, po box 9081 nadi, fiji": {
+          "failed": true
+        },
+        "1030 west katella avenue, anaheim, ca 92802, united states": {
+          "lat": 33.8021237,
+          "lng": -117.9224182
+        },
+        "545 banff avenue, t1l 1b5 banff, canada": {
+          "lat": 51.1852563,
+          "lng": -115.557823
+        },
+        "sydney airport": {
+          "lat": -33.9498935,
+          "lng": 151.1819682
+        },
+        "los angeles airport": {
+          "lat": 33.9421675,
+          "lng": -118.4213591
+        },
+        "calgary airport": {
+          "lat": 51.1222604,
+          "lng": -114.013541
+        },
+        "vancouver airport": {
+          "lat": 49.1928337,
+          "lng": -123.1829087
+        },
+        "fiji airport": {
+          "lat": -17.8117664,
+          "lng": 177.4327397
+        },
+        "universal studios, hollywood": {
+          "lat": 34.0983784,
+          "lng": -118.3421527
+        },
+        "maisy's birthday 🎂 + disney california adventure, anaheim": {
+          "failed": true
+        },
+        "lake louise visit, banff": {
+          "failed": true
+        },
+        "universal studios, los angeles": {
+          "lat": 34.1392322,
+          "lng": -118.3543834
+        },
+        "💕 wedding anniversary, fiji": {
+          "failed": true
+        },
+        "la viral desserts, aurora la": {
+          "failed": true
+        },
+        "whistler": {
+          "lat": 50.1171903,
+          "lng": -122.9543022
+        },
+        "lake louise": {
+          "lat": 51.4249668,
+          "lng": -116.177535
+        },
+        "gondola": {
+          "lat": -19.1889916,
+          "lng": 33.7743809
+        },
+        "lake moraine, banff": {
+          "lat": 51.3298104,
+          "lng": -116.1809806
+        },
+        "disneyland park": {
+          "lat": 48.8723158,
+          "lng": 2.7757119
+        },
+        "peyto lake": {
+          "lat": 51.7251873,
+          "lng": -116.5222962
+        }
+      }
     }
   }
 }
