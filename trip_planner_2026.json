@@ -504,7 +504,7 @@
           "ref": "EC8HO6",
           "terminal": "LAX / Nadi",
           "cost": 0.01,
-          "paid": 0.00001,
+          "paid": 1e-05,
           "status": "booked",
           "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
         },
@@ -525,7 +525,7 @@
           "ref": "EC8HO6",
           "terminal": "Nadi / Sydney Terminal 1",
           "cost": 0,
-          "paid": 0.00001,
+          "paid": 1e-05,
           "status": "booked",
           "notes": "Included in original Fiji Airways booking EC8HO6. Seats additional charge."
         }
@@ -537,7 +537,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Done",
-          "notes": "Option: depart 11:40 or 15:05. Cost ~$1,219 AUD"
+          "notes": "Option: depart 11:40 or 15:05. Cost ~$1,219 AUD",
+          "priority": "M"
         },
         {
           "id": "t2",
@@ -545,7 +546,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Done",
-          "notes": "Depart 14:20, arrive 15:00. Cost ~$1,056 AUD"
+          "notes": "Depart 14:20, arrive 15:00. Cost ~$1,056 AUD",
+          "priority": "M"
         },
         {
           "id": "t3",
@@ -553,7 +555,8 @@
           "dueDate": "2026-09-01",
           "assigned": "Kat",
           "status": "Not Started",
-          "notes": "Seats cost extra. Both SYD↔LAX legs"
+          "notes": "Seats cost extra. Both SYD↔LAX legs",
+          "priority": "M"
         },
         {
           "id": "t4",
@@ -561,7 +564,8 @@
           "dueDate": "2026-08-20",
           "assigned": "Kat",
           "status": "Not Started",
-          "notes": "Sep 17 & 19 (Maisy birthday). Book early to secure dates"
+          "notes": "Sep 17 & 19 (Maisy birthday). Book early to secure dates",
+          "priority": "M"
         },
         {
           "id": "t5",
@@ -569,7 +573,8 @@
           "dueDate": "2026-09-01",
           "assigned": "Leo",
           "status": "Done",
-          "notes": "Fast passes to be purchased on the day\n17/Sep - First visit\n2/Oct - Second visit"
+          "notes": "Fast passes to be purchased on the day\n17/Sep - First visit\n2/Oct - Second visit",
+          "priority": "M"
         },
         {
           "id": "t6",
@@ -577,7 +582,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Done",
-          "notes": "NAB credit card travel insurance"
+          "notes": "NAB credit card travel insurance",
+          "priority": "M"
         },
         {
           "id": "t7",
@@ -585,7 +591,8 @@
           "dueDate": "2026-07-15",
           "assigned": "Kat",
           "status": "Done",
-          "notes": "Passports must be valid 6 months beyond return date (Apr 2027)"
+          "notes": "Passports must be valid 6 months beyond return date (Apr 2027)",
+          "priority": "M"
         },
         {
           "id": "t8",
@@ -593,7 +600,8 @@
           "dueDate": "2026-08-15",
           "assigned": "Leo",
           "status": "Done",
-          "notes": "Required for all Australian passport holders entering USA"
+          "notes": "Required for all Australian passport holders entering USA",
+          "priority": "M"
         },
         {
           "id": "t9",
@@ -601,7 +609,8 @@
           "dueDate": "2026-08-15",
           "assigned": "Leo",
           "status": "Done",
-          "notes": "https://eta.onlineservices-servicesenligne.apps.cic.gc.ca/eta/welcome?lang=en"
+          "notes": "https://eta.onlineservices-servicesenligne.apps.cic.gc.ca/eta/welcome?lang=en",
+          "priority": "M"
         },
         {
           "id": "t10",
@@ -609,7 +618,8 @@
           "dueDate": "2026-09-01",
           "assigned": "Kat",
           "status": "Not Started",
-          "notes": "Earliest is Sheraton Fiji – cancel by 6 Sep"
+          "notes": "Earliest is Sheraton Fiji – cancel by 6 Sep",
+          "priority": "M"
         },
         {
           "id": "t11",
@@ -617,7 +627,8 @@
           "dueDate": "2026-09-07",
           "assigned": "Kat",
           "status": "Not Started",
-          "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg"
+          "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg",
+          "priority": "M"
         },
         {
           "id": "t12",
@@ -625,7 +636,8 @@
           "dueDate": "2026-09-10",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "LA, Calgary, Banff, Vancouver, Fiji"
+          "notes": "LA, Calgary, Banff, Vancouver, Fiji",
+          "priority": "M"
         },
         {
           "id": "t1783041643838",
@@ -633,7 +645,8 @@
           "dueDate": "2026-07-13",
           "assigned": "Leo",
           "status": "Done",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041657959",
@@ -641,7 +654,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "Only Sat 19/Sep"
+          "notes": "Only Sat 19/Sep",
+          "priority": "M"
         },
         {
           "id": "t1783041669519",
@@ -649,7 +663,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041681303",
@@ -657,7 +672,8 @@
           "dueDate": "2026-07-20",
           "assigned": "Kat",
           "status": "In Progress",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041699111",
@@ -665,7 +681,8 @@
           "dueDate": "2026-08-17",
           "assigned": "Kat",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041834078",
@@ -673,7 +690,8 @@
           "dueDate": "2026-08-08",
           "assigned": "Leo",
           "status": "In Progress",
-          "notes": "Request for quote submitted"
+          "notes": "Request for quote submitted",
+          "priority": "M"
         },
         {
           "id": "t1783041844454",
@@ -681,7 +699,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "In Progress",
-          "notes": "$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport"
+          "notes": "$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport",
+          "priority": "M"
         },
         {
           "id": "t1783041856046",
@@ -689,7 +708,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041873422",
@@ -697,7 +717,8 @@
           "dueDate": "2026-08-17",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041894662",
@@ -705,7 +726,8 @@
           "dueDate": "2026-08-17",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041907511",
@@ -713,7 +735,8 @@
           "dueDate": "2026-08-17",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041928941",
@@ -721,7 +744,8 @@
           "dueDate": "2026-07-17",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783041939174",
@@ -729,7 +753,8 @@
           "dueDate": "2026-07-17",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783755775807",
@@ -737,7 +762,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Maisy",
           "status": "Not Started",
-          "notes": "Aurora LA\n\n211 S La Brea Ave, Los Angeles, CA 90036, United States"
+          "notes": "Aurora LA\n\n211 S La Brea Ave, Los Angeles, CA 90036, United States",
+          "priority": "M"
         },
         {
           "id": "t1783765390975",
@@ -745,7 +771,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783765440885",
@@ -753,7 +780,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1783765597382",
@@ -761,7 +789,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1784544269057",
@@ -769,7 +798,8 @@
           "dueDate": "2026-09-01",
           "assigned": "Isla",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1784544282537",
@@ -777,7 +807,8 @@
           "dueDate": "2026-09-01",
           "assigned": "Maisy",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1786278933967",
@@ -785,7 +816,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1786534464270",
@@ -793,7 +825,8 @@
           "dueDate": "2026-08-15",
           "assigned": "Kat",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1786534510517",
@@ -801,7 +834,8 @@
           "dueDate": "2026-09-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": ""
+          "notes": "",
+          "priority": "M"
         },
         {
           "id": "t1787397042998",
@@ -809,7 +843,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "Klook"
+          "notes": "Klook",
+          "priority": "M"
         }
       ],
       "people": [

@@ -458,6 +458,12 @@
   .map-filter-chip.cat-activity .dot { background: #6c3483; }
   .map-filter-chip.cat-other .dot { background: #c85c3a; }
   .map-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .map-action-btn {
+    background: var(--surface);
+    color: var(--text-mid);
+    border: 1.5px solid var(--border-mid);
+  }
+  .map-action-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
   #tripMapContainer {
     width: 100%;
     height: 480px;
@@ -1116,6 +1122,16 @@
     -webkit-overflow-scrolling: touch;
     border-radius: var(--r-lg);
   }
+  #documentsTableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--r-lg);
+  }
+  #budgetBreakdownWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--r-lg);
+  }
   .todo-table thead tr {
     background: var(--navy);
   }
@@ -1188,6 +1204,23 @@
   .status-inprogress { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
   .status-done       { background: var(--teal-pale); color: var(--teal); border: 1px solid #b2ddd9; }
 
+  .priority-pill {
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    min-width: 30px;
+    padding: 3px 9px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; white-space: nowrap;
+  }
+  .priority-h { background: var(--coral-pale); color: var(--coral); border: 1px solid #f5c4b3; }
+  .priority-m { background: var(--gold-pale); color: #7d5c00; border: 1px solid #f0d89a; }
+  .priority-l { background: var(--teal-pale); color: var(--teal); border: 1px solid #b2ddd9; }
+
+  .todo-notes-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .todo-edit-btn {
     background: none;
     border: 1px solid var(--border-mid);
@@ -1258,14 +1291,22 @@
     .summary-value { font-size: 18px; }
 
     /* To-do table: hide less critical columns, keep table scrollable for the rest */
-    #todoTableWrap .todo-table td:nth-child(5),
-    #todoTableWrap .todo-table th:nth-child(5) { display: none; }
-    #todoTableWrap .todo-table { min-width: 560px; }
+    #todoTableWrap .todo-table td:nth-child(6),
+    #todoTableWrap .todo-table th:nth-child(6) { display: none; }
+    #todoTableWrap .todo-table { min-width: 600px; }
 
     /* Other costs table: hide Notes column on mobile, keep table scrollable for the rest */
     #otherCostsTableWrap .todo-table td:nth-child(6),
     #otherCostsTableWrap .todo-table th:nth-child(6) { display: none; }
     #otherCostsTableWrap .todo-table { min-width: 480px; }
+
+    /* Documents table: hide Notes column on mobile, keep table scrollable for the rest */
+    #documentsTableWrap .todo-table td:nth-child(5),
+    #documentsTableWrap .todo-table th:nth-child(5) { display: none; }
+    #documentsTableWrap .todo-table { min-width: 520px; }
+
+    /* Budget table: keep table scrollable on narrow screens */
+    #budgetBreakdownWrap .todo-table { min-width: 480px; }
 
     /* Modal */
     .modal-header { padding: 16px 18px 12px; }
@@ -1613,6 +1654,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
       Other costs
     </div>
+    <div class="nav-tab" onclick="showSection('budget',this)" id="budgetNavTab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+      Budget
+    </div>
     <div class="nav-tab" onclick="showSection('documents',this)" id="documentsNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
       Documents
@@ -1709,6 +1754,11 @@
       <button class="todo-filter-btn" data-filter="Not Started" onclick="setTodoFilter('Not Started',this)">Not Started</button>
       <button class="todo-filter-btn" data-filter="In Progress" onclick="setTodoFilter('In Progress',this)">In Progress</button>
       <button class="todo-filter-btn" data-filter="Done" onclick="setTodoFilter('Done',this)">Done</button>
+      <span style="font-size:12px; font-weight:600; color:var(--text-light); text-transform:uppercase; letter-spacing:.05em; margin-left:8px;">Priority:</span>
+      <button class="todo-filter-btn active" data-priority-filter="all" onclick="setTodoPriorityFilter('all',this)">All</button>
+      <button class="todo-filter-btn" data-priority-filter="H" onclick="setTodoPriorityFilter('H',this)">High</button>
+      <button class="todo-filter-btn" data-priority-filter="M" onclick="setTodoPriorityFilter('M',this)">Medium</button>
+      <button class="todo-filter-btn" data-priority-filter="L" onclick="setTodoPriorityFilter('L',this)">Low</button>
       <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
         <select class="form-select" id="todoFilterPerson" onchange="renderTodos()" style="width:auto; padding:6px 10px; font-size:13px;">
           <option value="all">All People</option>
@@ -1746,6 +1796,20 @@
     </div>
 
     <div id="otherCostsTableWrap"></div>
+  </section>
+
+  <!-- ==================== BUDGET SECTION ==================== -->
+  <section id="section-budget" class="section">
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">Budget Overview</h1>
+        <div class="section-sub">Combined costs across accommodation, flights &amp; other costs</div>
+      </div>
+    </div>
+
+    <div class="summary-bar" id="budgetSummary"></div>
+
+    <div id="budgetBreakdownWrap"></div>
   </section>
 
   <!-- ==================== DOCUMENTS SECTION ==================== -->
@@ -1848,7 +1912,7 @@
     <div class="section-header">
       <div>
         <h1 class="section-title">Trip Map</h1>
-        <div class="section-sub">Accommodations, airports &amp; activities, plotted by city</div>
+        <div class="section-sub">Accommodations, airports &amp; activities, plotted by city — drag any pin to reposition it</div>
       </div>
       <button class="btn btn-primary" onclick="openMapMarkerModal()">+ Add Marker</button>
     </div>
@@ -1856,8 +1920,8 @@
     <div class="map-toolbar">
       <div class="map-filters" id="mapFilterChips"></div>
       <div class="map-actions">
-        <button class="btn btn-ghost" onclick="regeocodeAllPlaces()" title="Re-locate any pins that failed to place">↻ Refresh Pins</button>
-        <button class="btn btn-ghost" onclick="openFullRouteInGoogleMaps()" title="Open every stop as a Google Maps route">🗺 Open Full Route in Google Maps</button>
+        <button class="btn map-action-btn" onclick="regeocodeAllPlaces()" title="Re-locate any pins that failed to place">↻ Refresh Pins</button>
+        <button class="btn map-action-btn" onclick="openFullRouteInGoogleMaps()" title="Open every stop as a Google Maps route">🗺 Open Full Route in Google Maps</button>
       </div>
     </div>
 
@@ -2322,13 +2386,23 @@
           <select class="form-select" id="todoAssigned"></select>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Status</label>
-        <select class="form-select" id="todoStatus">
-          <option value="Not Started">Not Started</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Done">Done</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="todoStatus">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Done">Done</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Priority</label>
+          <select class="form-select" id="todoPriority">
+            <option value="H">High</option>
+            <option value="M" selected>Medium</option>
+            <option value="L">Low</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label">Notes</label>
@@ -2559,6 +2633,8 @@ function ensureTripShape(t) {
   if (!t.accommodations) t.accommodations = [];
   if (!t.flights) t.flights = [];
   if (!t.todos) t.todos = [];
+  // Legacy/imported to-dos may not have a priority yet — default to Medium.
+  t.todos.forEach(todo => { if (!todo.priority) todo.priority = 'M'; });
   if (!t.otherCosts) t.otherCosts = [];
   if (!t.documents) t.documents = [];
   if (!t.itinerary) t.itinerary = [];
@@ -3759,9 +3835,10 @@ async function refreshTripMap(forceRegeocode) {
 
     if (coords) {
       placed++;
-      const marker = L.marker([coords.lat, coords.lng], { icon: mapPinDivIcon(place.category) })
+      const marker = L.marker([coords.lat, coords.lng], { icon: mapPinDivIcon(place.category), draggable: true })
         .bindPopup(mapPopupHtml(place, coords));
       marker.addTo(mapLayerGroups[place.category] || mapLayerGroups.other);
+      marker.on('dragend', () => savePinPosition(place, marker));
       mapMarkersById[place.id] = marker;
       bounds.push([coords.lat, coords.lng]);
     } else {
@@ -3783,6 +3860,34 @@ async function refreshTripMap(forceRegeocode) {
 
 function regeocodeAllPlaces() {
   refreshTripMap(true);
+}
+
+// Persist a pin's new location after the user drags it on the map. Custom
+// pins (store.mapPlaces) get their lat/lng updated directly; pins derived
+// from accommodation/flights/calendar are geocoded, so we save the override
+// into the geocode cache (keyed the same way geocodeQuery looks it up) —
+// that cache is checked before any lat/lng lookup, so the dragged position
+// sticks even through Refresh Pins.
+function savePinPosition(place, marker) {
+  const { lat, lng } = marker.getLatLng();
+
+  if (place.managed) {
+    if (!store.mapGeocodeCache) store.mapGeocodeCache = {};
+    const key = String(place.geocodeQuery || place.name || '').trim().toLowerCase();
+    store.mapGeocodeCache[key] = { lat, lng };
+  } else {
+    const mp = (store.mapPlaces || []).find(x => x.id === place.id);
+    if (mp) {
+      mp.lat = lat;
+      mp.lng = lng;
+    } else {
+      return; // custom pin not found in store — nothing to persist
+    }
+  }
+
+  marker.setPopupContent(mapPopupHtml(place, { lat, lng }));
+  saveStore();
+  showToast('Pin location updated ✓');
 }
 
 function renderMapList(places) {
@@ -4059,6 +4164,8 @@ function renderAccom() {
   addBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Accommodation`;
   addBtn.onclick = () => openAccomModal();
   grid.appendChild(addBtn);
+
+  if (typeof renderBudget === 'function') renderBudget();
 }
 
 function openAccomModal(editId) {
@@ -4231,6 +4338,8 @@ function renderFlights() {
   addBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Flight Leg`;
   addBtn.onclick = () => openFlightModal();
   container.appendChild(addBtn);
+
+  if (typeof renderBudget === 'function') renderBudget();
 }
 
 function openFlightModal(editId) {
@@ -4370,6 +4479,7 @@ function showSection(id, tab) {
   tab.classList.add('active');
   if (id === 'flightpath' && window.fpInit) window.fpInit();
   if (id === 'map' && window.tripMapInit) window.tripMapInit();
+  if (id === 'budget' && typeof renderBudget === 'function') renderBudget();
 }
 
 function printHoliday() {
@@ -4446,21 +4556,22 @@ function showToast(msg) {
 // TO-DO
 // ===========================
 let todoFilter = 'all';
+let todoPriorityFilter = 'all';
 
 function seedTodos() {
   store.todos = [
-    { id: 't1', task: 'Book LAX → Calgary (Westjet WS1023) flights', dueDate: '2026-08-01', assigned: 'Leo', status: 'Not Started', notes: 'Option: depart 11:40 or 15:05. Cost ~$1,219 AUD' },
-    { id: 't2', task: 'Book Calgary → Vancouver (Flair F8 805) flights', dueDate: '2026-08-01', assigned: 'Leo', status: 'Not Started', notes: 'Depart 14:20, arrive 15:00. Cost ~$1,056 AUD' },
-    { id: 't3', task: 'Select seats – Fiji Airways (EC8HO6)', dueDate: '2026-08-15', assigned: 'Kat', status: 'Not Started', notes: 'Seats cost extra. Both SYD↔LAX legs' },
-    { id: 't4', task: 'Buy Disneyland / Disney park tickets', dueDate: '2026-08-20', assigned: 'Kat', status: 'Not Started', notes: 'Sep 17 & 19 (Maisy birthday). Book early to secure dates' },
-    { id: 't5', task: 'Buy Universal Studios tickets', dueDate: '2026-09-01', assigned: 'Leo', status: 'Not Started', notes: 'Oct 2 – Santa Monica stay' },
-    { id: 't6', task: 'Arrange travel insurance for all 4', dueDate: '2026-08-01', assigned: 'Leo', status: 'Not Started', notes: '' },
-    { id: 't7', task: 'Check passport expiry dates (all 4)', dueDate: '2026-07-15', assigned: 'Kat', status: 'Not Started', notes: 'Passports must be valid 6 months beyond return date (Apr 2027)' },
-    { id: 't8', task: 'Apply for US ESTA (electronic travel authorisation)', dueDate: '2026-08-15', assigned: 'Leo', status: 'Not Started', notes: 'Required for all Australian passport holders entering USA' },
-    { id: 't9', task: 'Apply for Canadian eTA', dueDate: '2026-08-15', assigned: 'Leo', status: 'Not Started', notes: 'Required for visa-exempt foreign nationals flying into Canada' },
-    { id: 't10', task: 'Confirm free-cancellation deadlines for all hotels', dueDate: '2026-09-01', assigned: 'Kat', status: 'Not Started', notes: 'Earliest is Sheraton Fiji – cancel by 6 Sep' },
-    { id: 't11', task: 'Pack bags & check baggage allowances', dueDate: '2026-09-13', assigned: 'Kat', status: 'Not Started', notes: 'Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg' },
-    { id: 't12', task: 'Download offline maps (Google Maps) for all cities', dueDate: '2026-09-10', assigned: 'Isla', status: 'Not Started', notes: 'LA, Calgary, Banff, Vancouver, Fiji' },
+    { id: 't1', task: 'Book LAX → Calgary (Westjet WS1023) flights', dueDate: '2026-08-01', assigned: 'Leo', status: 'Not Started', priority: 'M', notes: 'Option: depart 11:40 or 15:05. Cost ~$1,219 AUD' },
+    { id: 't2', task: 'Book Calgary → Vancouver (Flair F8 805) flights', dueDate: '2026-08-01', assigned: 'Leo', status: 'Not Started', priority: 'M', notes: 'Depart 14:20, arrive 15:00. Cost ~$1,056 AUD' },
+    { id: 't3', task: 'Select seats – Fiji Airways (EC8HO6)', dueDate: '2026-08-15', assigned: 'Kat', status: 'Not Started', priority: 'M', notes: 'Seats cost extra. Both SYD↔LAX legs' },
+    { id: 't4', task: 'Buy Disneyland / Disney park tickets', dueDate: '2026-08-20', assigned: 'Kat', status: 'Not Started', priority: 'M', notes: 'Sep 17 & 19 (Maisy birthday). Book early to secure dates' },
+    { id: 't5', task: 'Buy Universal Studios tickets', dueDate: '2026-09-01', assigned: 'Leo', status: 'Not Started', priority: 'M', notes: 'Oct 2 – Santa Monica stay' },
+    { id: 't6', task: 'Arrange travel insurance for all 4', dueDate: '2026-08-01', assigned: 'Leo', status: 'Not Started', priority: 'M', notes: '' },
+    { id: 't7', task: 'Check passport expiry dates (all 4)', dueDate: '2026-07-15', assigned: 'Kat', status: 'Not Started', priority: 'M', notes: 'Passports must be valid 6 months beyond return date (Apr 2027)' },
+    { id: 't8', task: 'Apply for US ESTA (electronic travel authorisation)', dueDate: '2026-08-15', assigned: 'Leo', status: 'Not Started', priority: 'M', notes: 'Required for all Australian passport holders entering USA' },
+    { id: 't9', task: 'Apply for Canadian eTA', dueDate: '2026-08-15', assigned: 'Leo', status: 'Not Started', priority: 'M', notes: 'Required for visa-exempt foreign nationals flying into Canada' },
+    { id: 't10', task: 'Confirm free-cancellation deadlines for all hotels', dueDate: '2026-09-01', assigned: 'Kat', status: 'Not Started', priority: 'M', notes: 'Earliest is Sheraton Fiji – cancel by 6 Sep' },
+    { id: 't11', task: 'Pack bags & check baggage allowances', dueDate: '2026-09-13', assigned: 'Kat', status: 'Not Started', priority: 'M', notes: 'Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg' },
+    { id: 't12', task: 'Download offline maps (Google Maps) for all cities', dueDate: '2026-09-10', assigned: 'Isla', status: 'Not Started', priority: 'M', notes: 'LA, Calgary, Banff, Vancouver, Fiji' },
   ];
   if (!store.people) store.people = ['Leo', 'Kat', 'Isla', 'Maisy'];
 }
@@ -4577,9 +4688,26 @@ function statusPill(s) {
   return `<span class="status-pill ${cls}">${icon} ${s}</span>`;
 }
 
+function priorityPill(p) {
+  const map = {
+    H: ['priority-h', 'High'],
+    M: ['priority-m', 'Med'],
+    L: ['priority-l', 'Low'],
+  };
+  const [cls, label] = map[p] || map['M'];
+  return `<span class="priority-pill ${cls}">${label}</span>`;
+}
+
 function setTodoFilter(filter, btn) {
   todoFilter = filter;
-  document.querySelectorAll('.todo-filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#section-todos [data-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTodos();
+}
+
+function setTodoPriorityFilter(filter, btn) {
+  todoPriorityFilter = filter;
+  document.querySelectorAll('#section-todos [data-priority-filter]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderTodos();
 }
@@ -4592,7 +4720,8 @@ function renderTodos() {
   let todos = store.todos.filter(t => {
     const statusMatch = todoFilter === 'all' || t.status === todoFilter;
     const personMatch = personFilter === 'all' || t.assigned === personFilter;
-    return statusMatch && personMatch;
+    const priorityMatch = todoPriorityFilter === 'all' || (t.priority || 'M') === todoPriorityFilter;
+    return statusMatch && personMatch && priorityMatch;
   });
 
   // Sort: overdue first, then by days left, done at bottom
@@ -4645,11 +4774,12 @@ function renderTodos() {
   table.innerHTML = `
     <thead>
       <tr>
-        <th style="width:36%">Task</th>
+        <th style="width:30%">Task</th>
+        <th style="width:8%">Priority</th>
         <th style="width:10%">Due Date</th>
         <th style="width:11%">Days Left</th>
-        <th style="width:10%">Assigned</th>
-        <th style="width:13%">Status</th>
+        <th style="width:9%">Assigned</th>
+        <th style="width:12%">Status</th>
         <th style="width:14%">Notes</th>
         <th style="width:6%"></th>
       </tr>
@@ -4669,11 +4799,14 @@ function renderTodos() {
       <td>
         <div class="todo-task-text">${escHtml(t.task)}</div>
       </td>
+      <td>${priorityPill(t.priority || 'M')}</td>
       <td style="color:var(--text-mid); white-space:nowrap">${t.dueDate ? fmtDate(t.dueDate) : '<span style="color:var(--text-light)">—</span>'}</td>
       <td>${daysBadge(days, t.status)}</td>
       <td>${personChip(t.assigned)}</td>
       <td>${statusPill(t.status)}</td>
-      <td style="font-size:12px; color:var(--text-light); max-width:160px; word-break:break-word">${escHtml(t.notes || '')}</td>
+      <td style="font-size:12px; color:var(--text-light); max-width:160px; word-break:break-word">
+        ${t.notes ? `<span class="todo-notes-clamp" title="Click Edit to view full note">${escHtml(t.notes)}</span>` : ''}
+      </td>
       <td>
         <button class="todo-edit-btn" title="Edit task">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -4699,6 +4832,7 @@ function openTodoModal(editId) {
   renderPeopleOptions();
   document.getElementById('todoAssigned').value = (store.people && store.people[0]) || '';
   document.getElementById('todoStatus').value = 'Not Started';
+  document.getElementById('todoPriority').value = 'M';
   document.getElementById('todoNotes').value = '';
 
   if (editId) {
@@ -4708,6 +4842,7 @@ function openTodoModal(editId) {
       document.getElementById('todoDueDate').value = t.dueDate || '';
       document.getElementById('todoAssigned').value = t.assigned || ((store.people && store.people[0]) || '');
       document.getElementById('todoStatus').value = t.status || 'Not Started';
+      document.getElementById('todoPriority').value = t.priority || 'M';
       document.getElementById('todoNotes').value = t.notes || '';
     }
   }
@@ -4723,6 +4858,7 @@ function saveTodo() {
     dueDate: document.getElementById('todoDueDate').value,
     assigned: document.getElementById('todoAssigned').value,
     status: document.getElementById('todoStatus').value,
+    priority: document.getElementById('todoPriority').value || 'M',
     notes: document.getElementById('todoNotes').value.trim(),
   };
   if (!t.task) { showToast('Please enter a task description.'); return; }
@@ -4833,6 +4969,8 @@ function renderOtherCosts() {
 
   wrap.innerHTML = '';
   wrap.appendChild(table);
+
+  if (typeof renderBudget === 'function') renderBudget();
 }
 
 function openOtherCostModal(editId) {
@@ -4893,6 +5031,91 @@ function deleteOtherCost() {
   closeModal('otherCostModal');
   renderOtherCosts();
   showToast('Cost deleted');
+}
+
+// ===========================
+// BUDGET OVERVIEW
+// (combines Accommodation, Flights & Other Costs)
+// ===========================
+function renderBudget() {
+  if (!store) return;
+  const wrap = document.getElementById('budgetBreakdownWrap');
+  const summaryEl = document.getElementById('budgetSummary');
+  if (!wrap || !summaryEl) return; // section not in DOM yet
+
+  const fmt = (n) => '$' + (n || 0).toLocaleString('en-AU', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+  const cats = [
+    { label: 'Accommodation', section: 'accommodation', items: store.accommodations || [] },
+    { label: 'Flights', section: 'flights', items: store.flights || [] },
+    { label: 'Other Costs', section: 'othercosts', items: store.otherCosts || [] },
+  ].map(c => {
+    const total = c.items.reduce((s, x) => s + (parseFloat(x.cost) || 0), 0);
+    const paid = c.items.reduce((s, x) => s + (parseFloat(x.paid) || 0), 0);
+    return { ...c, total, paid, outstanding: total - paid, count: c.items.length };
+  });
+
+  const grandTotal = cats.reduce((s, c) => s + c.total, 0);
+  const grandPaid = cats.reduce((s, c) => s + c.paid, 0);
+  const grandOutstanding = grandTotal - grandPaid;
+  const pctPaid = grandTotal > 0 ? Math.round((grandPaid / grandTotal) * 100) : 0;
+
+  summaryEl.innerHTML = `
+    <div class="summary-card fin-detail"><div class="summary-label">Total Trip Cost</div><div class="summary-value">${fmt(grandTotal)}</div><div class="summary-sub">AUD across all categories</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Paid</div><div class="summary-value" style="color:var(--teal)">${fmt(grandPaid)}</div><div class="summary-sub">${grandTotal > 0 ? pctPaid + '% of total' : 'AUD paid so far'}</div></div>
+    <div class="summary-card fin-detail"><div class="summary-label">Outstanding</div><div class="summary-value" style="color:var(--coral)">${fmt(grandOutstanding)}</div><div class="summary-sub">AUD remaining</div></div>
+  `;
+
+  const totalItems = cats.reduce((s, c) => s + c.count, 0);
+  if (totalItems === 0) {
+    wrap.innerHTML = `
+      <div class="todo-empty">
+        <div class="todo-empty-icon">💰</div>
+        <div>No costs logged yet. Add accommodation, flights, or other costs to see your budget breakdown here.</div>
+      </div>`;
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.className = 'todo-table';
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th style="width:26%">Category</th>
+        <th style="width:12%">Items</th>
+        <th style="width:18%">Total</th>
+        <th style="width:18%">Paid</th>
+        <th style="width:18%">Outstanding</th>
+        <th style="width:8%"></th>
+      </tr>
+    </thead>
+    <tbody id="budgetTbody"></tbody>
+  `;
+  const tbody = table.querySelector('#budgetTbody');
+
+  cats.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><div class="todo-task-text">${escHtml(c.label)}</div></td>
+      <td style="color:var(--text-mid)">${c.count}</td>
+      <td class="fin-detail" style="color:var(--text-mid)">${fmt(c.total)}</td>
+      <td class="fin-detail" style="color:var(--teal)">${fmt(c.paid)}</td>
+      <td class="fin-detail" style="color:var(--coral)">${fmt(c.outstanding)}</td>
+      <td>
+        <button class="todo-edit-btn" title="View ${escHtml(c.label)}">View →</button>
+      </td>
+    `;
+    tr.querySelector('.todo-edit-btn').addEventListener('click', () => goToSection(c.section));
+    tbody.appendChild(tr);
+  });
+
+  wrap.innerHTML = '';
+  wrap.appendChild(table);
+
+  const totalRow = document.createElement('div');
+  totalRow.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding:14px 18px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-lg); font-weight:700; color:var(--navy);';
+  totalRow.innerHTML = `<span>Combined Total</span><span class="fin-detail">${fmt(grandTotal)} AUD</span>`;
+  wrap.appendChild(totalRow);
 }
 
 // ===========================
