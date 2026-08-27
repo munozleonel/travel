@@ -686,30 +686,30 @@
         },
         {
           "id": "t1783041834078",
-          "task": "Transfer - Sydney home to airport (return)",
+          "task": "1. Transfer - Sydney home to airport (return)",
           "dueDate": "2026-08-08",
           "assigned": "Leo",
-          "status": "In Progress",
-          "notes": "Request for quote submitted",
-          "priority": "M"
+          "status": "Done",
+          "priority": "M",
+          "notes": "Booked. Anytime shuttle $310 return"
         },
         {
           "id": "t1783041844454",
-          "task": "Transfer - LAX to Anaheim hotel",
+          "task": "2. Transfer - LAX to Anaheim hotel",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "In Progress",
-          "notes": "$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport",
-          "priority": "M"
+          "priority": "M",
+          "notes": "$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport"
         },
         {
           "id": "t1783041856046",
-          "task": "Transfer - Calgary airport to hotel (return)",
-          "dueDate": "2026-08-01",
+          "task": "4. Transfer - Calgary airport to The Westin Calgary",
+          "dueDate": "2026-08-03",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783041873422",
@@ -767,30 +767,30 @@
         },
         {
           "id": "t1783765390975",
-          "task": "Transfer - Vancouver airport to hotel (return)",
-          "dueDate": "2026-08-01",
+          "task": "7. Transfer - Vancouver airport to Hotel BLU (return)",
+          "dueDate": "2026-08-06",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783765440885",
-          "task": "Transfer - Calgary hotel to Banff hotel",
-          "dueDate": "2026-08-01",
+          "task": "5. Transfer - The Westin Calgary to Banff Hotel Canoe and Suites",
+          "dueDate": "2026-08-04",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783765597382",
-          "task": "Transfer - Banff hotel to Calgary airport",
-          "dueDate": "2026-08-01",
+          "task": "6. Transfer - Banff Hotel Canoe and Suites to Calgary airport",
+          "dueDate": "2026-08-05",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1784544269057",
@@ -839,12 +839,12 @@
         },
         {
           "id": "t1787397042998",
-          "task": "Transfer - Anaheim hotel to LAX (20/Sep)",
-          "dueDate": "2026-08-01",
+          "task": "3. Transfer - Anaheim hotel to LAX (20/Sep)",
+          "dueDate": "2026-08-02",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "Klook",
-          "priority": "M"
+          "priority": "M",
+          "notes": "Klook"
         },
         {
           "id": "t1787813481825",
