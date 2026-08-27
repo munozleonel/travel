@@ -618,8 +618,8 @@
           "dueDate": "2026-09-01",
           "assigned": "Kat",
           "status": "Not Started",
-          "notes": "Earliest is Sheraton Fiji – cancel by 6 Sep",
-          "priority": "M"
+          "priority": "H",
+          "notes": "Earliest is Sheraton Fiji – cancel by 6 Sep"
         },
         {
           "id": "t11",
@@ -654,8 +654,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "Only Sat 19/Sep",
-          "priority": "M"
+          "priority": "L",
+          "notes": "Only Sat 19/Sep"
         },
         {
           "id": "t1783041669519",
@@ -663,8 +663,8 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "L",
+          "notes": ""
         },
         {
           "id": "t1783041681303",
@@ -759,11 +759,11 @@
         {
           "id": "t1783755775807",
           "task": "Los Angeles viral desserts",
-          "dueDate": "2026-08-01",
+          "dueDate": "2026-09-05",
           "assigned": "Maisy",
           "status": "Not Started",
-          "notes": "Aurora LA\n\n211 S La Brea Ave, Los Angeles, CA 90036, United States",
-          "priority": "M"
+          "priority": "L",
+          "notes": "Aurora LA\n\n211 S La Brea Ave, Los Angeles, CA 90036, United States"
         },
         {
           "id": "t1783765390975",
@@ -812,12 +812,12 @@
         },
         {
           "id": "t1786278933967",
-          "task": "Transfer LAX to Santa Monica hotel",
-          "dueDate": "2026-08-01",
+          "task": "8. Transfer - LAX to Viceroy Santa Monica (return)",
+          "dueDate": "2026-08-07",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "M",
+          "notes": "1/Oct\n4/Oct"
         },
         {
           "id": "t1786534464270",
@@ -863,6 +863,15 @@
           "status": "Not Started",
           "priority": "M",
           "notes": ""
+        },
+        {
+          "id": "t1787814038368",
+          "task": "9. Transfer - Fiji airport to Sheraton Fiji Golf & Beach Resort (return)",
+          "dueDate": "2026-08-08",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "priority": "M",
+          "notes": "6/Oct\n10/Oct"
         }
       ],
       "people": [
