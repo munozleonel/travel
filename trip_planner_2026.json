@@ -752,9 +752,9 @@
           "task": "Travel eSim cards",
           "dueDate": "2026-07-17",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "status": "Done",
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783755775807",
@@ -845,6 +845,24 @@
           "status": "Not Started",
           "notes": "Klook",
           "priority": "M"
+        },
+        {
+          "id": "t1787813481825",
+          "task": "Activate eSim cards",
+          "dueDate": "2026-09-05",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "priority": "H",
+          "notes": "Travelkon"
+        },
+        {
+          "id": "t1787813508184",
+          "task": "Banff park tickets",
+          "dueDate": "2026-09-01",
+          "assigned": "Kat",
+          "status": "Not Started",
+          "priority": "M",
+          "notes": ""
         }
       ],
       "people": [
