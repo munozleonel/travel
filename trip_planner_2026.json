@@ -651,7 +651,7 @@
         {
           "id": "t1783041657959",
           "task": "Sports tickets - LA dodgers",
-          "dueDate": "2026-08-01",
+          "dueDate": "2026-09-05",
           "assigned": "Leo",
           "status": "Not Started",
           "priority": "L",
@@ -660,7 +660,7 @@
         {
           "id": "t1783041669519",
           "task": "Sports tickets - Ice Hockey",
-          "dueDate": "2026-08-01",
+          "dueDate": "2026-09-06",
           "assigned": "Leo",
           "status": "Not Started",
           "priority": "L",
@@ -714,11 +714,11 @@
         {
           "id": "t1783041873422",
           "task": "Wise card top up",
-          "dueDate": "2026-08-17",
+          "dueDate": "2026-09-05",
           "assigned": "Leo",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "H",
+          "notes": ""
         },
         {
           "id": "t1783041894662",
@@ -795,20 +795,20 @@
         {
           "id": "t1784544269057",
           "task": "Pack - Isla",
-          "dueDate": "2026-09-01",
+          "dueDate": "2026-09-05",
           "assigned": "Isla",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1784544282537",
           "task": "Pack - Maisy",
-          "dueDate": "2026-09-01",
+          "dueDate": "2026-09-05",
           "assigned": "Maisy",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1786278933967",
@@ -825,8 +825,8 @@
           "dueDate": "2026-08-15",
           "assigned": "Kat",
           "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "priority": "L",
+          "notes": ""
         },
         {
           "id": "t1786534510517",
