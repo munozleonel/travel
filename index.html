@@ -1264,9 +1264,12 @@
     .nav-tab svg { width: 20px; height: 20px; }
     .nav-tab-label { display: none; }
 
-    /* Freeze header + nav tabs in place while scrolling on mobile */
-    header { position: sticky; top: 0; z-index: 100; }
-    .nav-tabs-wrap { position: sticky; z-index: 99; top: 0; }
+    /* Freeze header + nav tabs in place while scrolling on mobile.
+       (position:fixed is used instead of sticky because this page sets
+       overflow-x:hidden on html/body, which breaks position:sticky on
+       many mobile browsers by changing the nearest scrolling container.) */
+    header { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 100; }
+    .nav-tabs-wrap { position: fixed; left: 0; right: 0; width: 100%; z-index: 99; }
 
     .section-header { flex-direction: column; align-items: flex-start; }
     .section-title { font-size: 22px; }
@@ -5485,29 +5488,52 @@ async function init() {
 
 init();
 
-// Keep the sticky nav-tabs bar positioned right under the header on mobile,
-// even as the header's height changes (wrapping buttons, GitHub status line, etc).
+// Keep the fixed header + nav-tabs bar sized correctly on mobile, and pad the
+// page content below them so nothing is hidden underneath (position:fixed
+// pulls both bars out of normal flow, unlike sticky).
 (function() {
   const header = document.querySelector('header');
   const navWrap = document.querySelector('.nav-tabs-wrap');
+  const landingView = document.getElementById('landingView');
+  const tripView = document.getElementById('tripView');
   if (!header || !navWrap) return;
 
   const mobileQuery = window.matchMedia('(max-width: 768px)');
 
-  function syncNavTabsOffset() {
-    if (mobileQuery.matches) {
-      navWrap.style.top = header.offsetHeight + 'px';
-    } else {
+  function syncFixedHeaderLayout() {
+    if (!mobileQuery.matches) {
       navWrap.style.top = '';
+      if (landingView) landingView.style.paddingTop = '';
+      if (tripView) tripView.style.paddingTop = '';
+      return;
+    }
+
+    const headerH = header.offsetHeight;
+    navWrap.style.top = headerH + 'px';
+
+    if (landingView) landingView.style.paddingTop = headerH + 'px';
+    if (tripView) {
+      // nav-tabs-wrap only has real height while tripView is actually shown
+      const navH = tripView.style.display === 'none' ? 0 : navWrap.offsetHeight;
+      tripView.style.paddingTop = (headerH + navH) + 'px';
     }
   }
 
   if ('ResizeObserver' in window) {
-    new ResizeObserver(syncNavTabsOffset).observe(header);
+    new ResizeObserver(syncFixedHeaderLayout).observe(header);
+    new ResizeObserver(syncFixedHeaderLayout).observe(navWrap);
   }
-  window.addEventListener('resize', syncNavTabsOffset);
-  if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', syncNavTabsOffset);
-  syncNavTabsOffset();
+  window.addEventListener('resize', syncFixedHeaderLayout);
+  if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', syncFixedHeaderLayout);
+
+  // Re-sync whenever the landing/trip views are toggled (they're shown/hidden
+  // by setting inline display styles elsewhere in the app).
+  const viewObserver = new MutationObserver(syncFixedHeaderLayout);
+  [landingView, tripView].forEach((el) => {
+    if (el) viewObserver.observe(el, { attributes: true, attributeFilter: ['style'] });
+  });
+
+  syncFixedHeaderLayout();
 })();
 
 // Register service worker for offline/installable PWA support
