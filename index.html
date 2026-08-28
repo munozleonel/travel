@@ -1255,9 +1255,18 @@
     .header-inner { padding: 10px 1rem; }
     #githubStatus { padding: 4px 1rem !important; text-align: center !important; }
     .header-actions { width: 100%; justify-content: flex-start; }
-    .header-actions .btn { padding: 6px 10px; font-size: 12px; }
+    .header-actions .btn { padding: 8px; font-size: 12px; }
+    .header-actions .btn-label { display: none; }
     .nav-tabs { padding: 0 1rem; }
-    .nav-tab { padding: 12px 14px; font-size: 12px; }
+
+    /* Icons-only nav tabs on mobile */
+    .nav-tab { padding: 12px; gap: 0; font-size: 12px; }
+    .nav-tab svg { width: 20px; height: 20px; }
+    .nav-tab-label { display: none; }
+
+    /* Freeze header + nav tabs in place while scrolling on mobile */
+    header { position: sticky; top: 0; z-index: 100; }
+    .nav-tabs-wrap { position: sticky; z-index: 99; top: 0; }
 
     .section-header { flex-direction: column; align-items: flex-start; }
     .section-title { font-size: 22px; }
@@ -1545,6 +1554,11 @@
 </div>
 <script>
 (function() {
+  // Set to true to re-enable the password gate. While false, the overlay is
+  // skipped entirely and financial details are unlocked immediately — all
+  // the original gating logic below is left intact for whenever it's needed again.
+  const PW_GATE_ENABLED = false;
+
   const FIN_PASSWORD = 'cookie';
   const overlay = document.getElementById('pwOverlay');
   const input = document.getElementById('pwInput');
@@ -1564,6 +1578,12 @@
       input.focus();
       input.select();
     }
+  }
+
+  if (!PW_GATE_ENABLED) {
+    document.body.classList.remove('fin-locked');
+    closeOverlay();
+    return;
   }
 
   unlockBtn.addEventListener('click', attemptUnlock);
@@ -1623,44 +1643,44 @@
 <!-- ==================== TRIP VIEW (CALENDAR / ACCOM / FLIGHTS / TODOS / FLIGHTPATH) ==================== -->
 <div id="tripView" style="display:none;">
 
-<div style="background:var(--surface); border-bottom: 1px solid var(--border);">
+<div class="nav-tabs-wrap" style="background:var(--surface); border-bottom: 1px solid var(--border);">
   <div class="nav-tabs" style="max-width:1400px; margin:0 auto; padding:0 2rem;">
     <div class="nav-tab active" onclick="showSection('calendar',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Trip Calendar
+      <span class="nav-tab-label">Trip Calendar</span>
     </div>
     <div class="nav-tab" onclick="showSection('accommodation',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Accommodation
+      <span class="nav-tab-label">Accommodation</span>
     </div>
     <div class="nav-tab" onclick="showSection('flights',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 21 4s-2 0-3.5 1.5L14 9 5.8 7.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 3.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
-      Flights
+      <span class="nav-tab-label">Flights</span>
     </div>
     <div class="nav-tab" onclick="showSection('flightpath',this)" id="flightPathNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20 15.3 15.3 0 010-20z"/></svg>
-      Flight Path
+      <span class="nav-tab-label">Flight Path</span>
     </div>
     <div class="nav-tab" onclick="showSection('map',this)" id="mapNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-5.5 2V6L9 4m0 16l6 2m-6-2V4m6 18l5.5-2V4L15 6m0 16V4M9 4l6 2"/></svg>
-      Map
+      <span class="nav-tab-label">Map</span>
     </div>
     <div class="nav-tab" onclick="showSection('todos',this)" id="todoNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      To-Do
+      <span class="nav-tab-label">To-Do</span>
       <span id="todoCountBadge" style="display:none; background:var(--coral); color:#fff; font-size:10px; font-weight:700; padding:1px 6px; border-radius:20px; margin-left:2px;"></span>
     </div>
     <div class="nav-tab" onclick="showSection('othercosts',this)" id="otherCostsNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-      Other costs
+      <span class="nav-tab-label">Other costs</span>
     </div>
     <div class="nav-tab" onclick="showSection('budget',this)" id="budgetNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
-      Budget
+      <span class="nav-tab-label">Budget</span>
     </div>
     <div class="nav-tab" onclick="showSection('documents',this)" id="documentsNavTab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      Documents
+      <span class="nav-tab-label">Documents</span>
     </div>
   </div>
 </div>
@@ -5464,6 +5484,31 @@ async function init() {
 }
 
 init();
+
+// Keep the sticky nav-tabs bar positioned right under the header on mobile,
+// even as the header's height changes (wrapping buttons, GitHub status line, etc).
+(function() {
+  const header = document.querySelector('header');
+  const navWrap = document.querySelector('.nav-tabs-wrap');
+  if (!header || !navWrap) return;
+
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+
+  function syncNavTabsOffset() {
+    if (mobileQuery.matches) {
+      navWrap.style.top = header.offsetHeight + 'px';
+    } else {
+      navWrap.style.top = '';
+    }
+  }
+
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(syncNavTabsOffset).observe(header);
+  }
+  window.addEventListener('resize', syncNavTabsOffset);
+  if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', syncNavTabsOffset);
+  syncNavTabsOffset();
+})();
 
 // Register service worker for offline/installable PWA support
 if ('serviceWorker' in navigator) {
