@@ -695,7 +695,7 @@
         },
         {
           "id": "t1783041844454",
-          "task": "2. Transfer - LAX to Anaheim hotel",
+          "task": "2. Transfer (Arrive Tue 15/Sep 12:55pm) - LAX to Anaheim hotel",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "In Progress",
@@ -704,7 +704,7 @@
         },
         {
           "id": "t1783041856046",
-          "task": "4. Transfer - Calgary airport to The Westin Calgary",
+          "task": "4. Transfer (Arrive Sun 20/Sep 5:20pm) - Calgary airport to The Westin Calgary",
           "dueDate": "2026-08-03",
           "assigned": "Leo",
           "status": "Not Started",
@@ -839,7 +839,7 @@
         },
         {
           "id": "t1787397042998",
-          "task": "3. Transfer - Anaheim hotel to LAX (20/Sep)",
+          "task": "3. Transfer (Depart Sun 20/Sep 11:40am) - Anaheim hotel to LAX (20/Sep)",
           "dueDate": "2026-08-02",
           "assigned": "Leo",
           "status": "Not Started",
