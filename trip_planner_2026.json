@@ -680,9 +680,9 @@
           "task": "Medications check",
           "dueDate": "2026-08-17",
           "assigned": "Kat",
-          "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "status": "In Progress",
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783041834078",
@@ -709,7 +709,7 @@
           "assigned": "Leo",
           "status": "Not Started",
           "priority": "M",
-          "notes": ""
+          "notes": "Uber XL $25–45. (20–30 min)\nPickup at designated rideshare zones (follow signs; typically Arrivals-level doors such as 3/12/15). UberXL (SUV/minivan style) better for 4 people + 3 large bags; confirm with driver in-app. Often cheaper than taxi off-peak."
         },
         {
           "id": "t1783041873422",
