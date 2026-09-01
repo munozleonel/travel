@@ -358,27 +358,6 @@
           "contact": "+1 657-279-9786",
           "notes": "Cost $3318 ($664/night)",
           "status": "booked"
-        },
-        {
-          "id": "a1783042990937",
-          "city": "Banff",
-          "name": "Canalta Lodge",
-          "address": "545 Banff Avenue, T1L 1B5 Banff, Canada",
-          "checkin": "2026-09-22",
-          "checkinTime": "16:00",
-          "checkout": "2026-09-27",
-          "checkoutTime": "12:00",
-          "room": "Queen Room with Balcony",
-          "breakfast": "TBC",
-          "cost": 0,
-          "paid": 0,
-          "ref": "5720637209",
-          "platform": "Booking.com",
-          "cancelBy": "2026-09-18",
-          "rating": "4.4 (592)",
-          "contact": "+1 403-762-2112",
-          "notes": "***TO CANCEL***\nCost $4124 ($824/night)",
-          "status": "booked"
         }
       ],
       "flights": [
