@@ -575,7 +575,7 @@
           "task": "Confirm free-cancellation deadlines for all hotels",
           "dueDate": "2026-09-01",
           "assigned": "Kat",
-          "status": "Not Started",
+          "status": "Done",
           "priority": "H",
           "notes": "Earliest is Sheraton Fiji – cancel by 6 Sep"
         },
@@ -830,6 +830,24 @@
           "status": "Not Started",
           "priority": "M",
           "notes": "6/Oct\n10/Oct"
+        },
+        {
+          "id": "t1788429127196",
+          "task": "Travel insurance",
+          "dueDate": "2026-09-03",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "priority": "H",
+          "notes": ""
+        },
+        {
+          "id": "t1788429140644",
+          "task": "Car rental insurance",
+          "dueDate": "2026-09-03",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "priority": "M",
+          "notes": ""
         }
       ],
       "people": [
