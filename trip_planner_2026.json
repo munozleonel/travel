@@ -836,7 +836,7 @@
           "task": "Travel insurance",
           "dueDate": "2026-09-03",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "Done",
           "priority": "H",
           "notes": ""
         },
@@ -845,7 +845,7 @@
           "task": "Car rental insurance",
           "dueDate": "2026-09-03",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         }
