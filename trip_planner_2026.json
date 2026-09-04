@@ -470,9 +470,9 @@
           "id": "f1783042580404",
           "from": "Fiji (NAN)",
           "to": "Sydney (SYD)",
-          "depDate": "2026-09-10",
+          "depDate": "2026-10-10",
           "depTime": "09:00",
-          "arrDate": "2026-09-10",
+          "arrDate": "2026-10-10",
           "arrTime": "12:45",
           "airline": "Fiji Airways",
           "flightNum": "FJ 911",
@@ -730,25 +730,25 @@
           "assigned": "Leo",
           "status": "Not Started",
           "priority": "M",
-          "notes": ""
+          "notes": "Uber XL (20mins)"
         },
         {
           "id": "t1783765440885",
           "task": "5. Transfer - The Westin Calgary to Banff Hotel Canoe and Suites",
           "dueDate": "2026-08-04",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "M",
-          "notes": ""
+          "notes": "Hertz Car rental - Transfer not required"
         },
         {
           "id": "t1783765597382",
           "task": "6. Transfer - Banff Hotel Canoe and Suites to Calgary airport",
           "dueDate": "2026-08-05",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "M",
-          "notes": ""
+          "notes": "Hertz Car rental - Transfer not required"
         },
         {
           "id": "t1784544269057",
