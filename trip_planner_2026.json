@@ -1000,6 +1000,24 @@
           "cost": 500,
           "paid": 0,
           "notes": ""
+        },
+        {
+          "id": "oc1788518968967",
+          "type": "Transport",
+          "description": "Car rental calgary",
+          "date": "",
+          "cost": 600,
+          "paid": 0,
+          "notes": ""
+        },
+        {
+          "id": "oc1788518983854",
+          "type": "Transport",
+          "description": "Insurance",
+          "date": "",
+          "cost": 650,
+          "paid": 650,
+          "notes": ""
         }
       ],
       "documents": [
