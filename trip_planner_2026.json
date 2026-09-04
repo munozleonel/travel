@@ -57,7 +57,7 @@
           "id": "e6",
           "date": "2026-09-20",
           "type": "flight",
-          "title": "Los Angeles → Calgary (WS1023)",
+          "title": "Los Angeles → Calgary (WS1023) Arrive 5:20pm",
           "time": "11:40",
           "location": "LAX",
           "notes": "Westjet · Seats 11A–11D"
@@ -230,6 +230,15 @@
           "time": "",
           "location": "",
           "notes": "Hire a car"
+        },
+        {
+          "id": "e1788522828476",
+          "date": "2026-09-21",
+          "type": "activity",
+          "title": "Calgary tower",
+          "time": "",
+          "location": "Calgary",
+          "notes": ""
         }
       ],
       "accommodations": [
@@ -511,10 +520,10 @@
           "id": "t3",
           "task": "Select seats – Fiji Airways (EC8HO6)",
           "dueDate": "2026-09-01",
-          "assigned": "Kat",
+          "assigned": "Leo",
           "status": "Not Started",
-          "notes": "Seats cost extra. Both SYD↔LAX legs",
-          "priority": "M"
+          "priority": "M",
+          "notes": "Seats cost extra. Both SYD↔LAX legs"
         },
         {
           "id": "t4",
@@ -857,6 +866,15 @@
           "status": "Not Started",
           "priority": "M",
           "notes": ""
+        },
+        {
+          "id": "t1788525699319",
+          "task": "Rise Rooftop Lounge reservation - Westin Anaheim hotel",
+          "dueDate": "2026-09-06",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "priority": "M",
+          "notes": ""
         }
       ],
       "people": [
@@ -1187,6 +1205,25 @@
           "time": "10:00",
           "location": "Hollywood",
           "notes": ""
+        },
+        {
+          "id": "di1788520624985",
+          "date": "2026-09-24",
+          "category": "attraction",
+          "title": "Peyto lake",
+          "time": "10:00",
+          "location": "",
+          "notes": ""
+        },
+        {
+          "id": "di1788520636215",
+          "date": "2026-09-24",
+          "category": "transport",
+          "title": "Driving",
+          "time": "",
+          "location": "",
+          "notes": "",
+          "mode": "rental"
         }
       ],
       "mapPlaces": [],
