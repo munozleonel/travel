@@ -848,6 +848,15 @@
           "status": "Done",
           "priority": "M",
           "notes": ""
+        },
+        {
+          "id": "t1788520012441",
+          "task": "Banff Gondola tickiets",
+          "dueDate": "2026-09-06",
+          "assigned": "Kat",
+          "status": "Not Started",
+          "priority": "M",
+          "notes": ""
         }
       ],
       "people": [
