@@ -667,14 +667,14 @@
           "assigned": "Leo",
           "status": "In Progress",
           "priority": "M",
-          "notes": "$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport"
+          "notes": "Uber XL\n$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport"
         },
         {
           "id": "t1783041856046",
           "task": "4. Transfer (Arrive Sun 20/Sep 5:20pm) - Calgary airport to The Westin Calgary",
           "dueDate": "2026-08-03",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "M",
           "notes": "Uber XL $25–45. (20–30 min)\nPickup at designated rideshare zones (follow signs; typically Arrivals-level doors such as 3/12/15). UberXL (SUV/minivan style) better for 4 people + 3 large bags; confirm with driver in-app. Often cheaper than taxi off-peak."
         },
@@ -764,7 +764,7 @@
           "task": "Pack - Isla",
           "dueDate": "2026-09-05",
           "assigned": "Isla",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "M",
           "notes": ""
         },
@@ -773,7 +773,7 @@
           "task": "Pack - Maisy",
           "dueDate": "2026-09-05",
           "assigned": "Maisy",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "M",
           "notes": ""
         },
@@ -809,9 +809,9 @@
           "task": "3. Transfer (Depart Sun 20/Sep 11:40am) - Anaheim hotel to LAX (20/Sep)",
           "dueDate": "2026-08-02",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "M",
-          "notes": "Klook"
+          "notes": "Uber XL"
         },
         {
           "id": "t1787813481825",
