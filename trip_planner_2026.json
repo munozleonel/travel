@@ -239,6 +239,33 @@
           "time": "",
           "location": "Calgary",
           "notes": ""
+        },
+        {
+          "id": "e1788957083698",
+          "date": "2026-09-18",
+          "type": "activity",
+          "title": "Relax and Shopping",
+          "time": "",
+          "location": "",
+          "notes": ""
+        },
+        {
+          "id": "e1788957109440",
+          "date": "2026-09-18",
+          "type": "activity",
+          "title": "Baseball game?",
+          "time": "18:00",
+          "location": "",
+          "notes": ""
+        },
+        {
+          "id": "e1788957158280",
+          "date": "2026-09-23",
+          "type": "activity",
+          "title": "Canoeing",
+          "time": "",
+          "location": "Banff",
+          "notes": ""
         }
       ],
       "accommodations": [
@@ -521,7 +548,7 @@
           "task": "Select seats – Fiji Airways (EC8HO6)",
           "dueDate": "2026-09-01",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "M",
           "notes": "Seats cost extra. Both SYD↔LAX legs"
         },
@@ -593,9 +620,9 @@
           "task": "Pack bags & check baggage allowances",
           "dueDate": "2026-09-07",
           "assigned": "Kat",
-          "status": "Not Started",
-          "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg",
-          "priority": "M"
+          "status": "In Progress",
+          "priority": "M",
+          "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg"
         },
         {
           "id": "t12",
@@ -710,9 +737,9 @@
           "task": "Buy new SD cards",
           "dueDate": "2026-07-17",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "status": "Done",
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783041939174",
@@ -800,9 +827,9 @@
           "task": "Travel folder",
           "dueDate": "2026-09-01",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "status": "In Progress",
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1787397042998",
@@ -1167,6 +1194,30 @@
           "city": "Calgary",
           "title": "Car rental booking",
           "url": "https://drive.google.com/file/d/1hdlMB9a5WnyK8ioDxtqssZb__YNCSiLz/view?usp=drive_link",
+          "notes": ""
+        },
+        {
+          "id": "doc1788953387890",
+          "category": "Activities",
+          "city": "Los Angeles",
+          "title": "Universal Studios tickets",
+          "url": "https://drive.google.com/file/d/1zfJ11VUuPYQQaCjZeVZe13T1Mwk9wt1l/view?usp=drive_link",
+          "notes": ""
+        },
+        {
+          "id": "doc1788956812492",
+          "category": "Other",
+          "city": "",
+          "title": "Travel insurance certificate",
+          "url": "https://drive.google.com/file/d/1hFWZJzyJyLr_5wVGfB-De_65QFHzDsOr/view?usp=drive_link",
+          "notes": ""
+        },
+        {
+          "id": "doc1788956837953",
+          "category": "Other",
+          "city": "",
+          "title": "Travel insurance PDS",
+          "url": "https://drive.google.com/file/d/1IP3ZcgDVJ38Fht6rfj8mv17LnL0-no8q/view?usp=drive_link",
           "notes": ""
         }
       ],
