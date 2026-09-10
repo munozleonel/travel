@@ -674,7 +674,7 @@
           "task": "Medications check",
           "dueDate": "2026-08-17",
           "assigned": "Kat",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -693,7 +693,7 @@
           "dueDate": "2026-08-01",
           "assigned": "Leo",
           "status": "In Progress",
-          "priority": "M",
+          "priority": "L",
           "notes": "Uber XL\n$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport"
         },
         {
@@ -702,7 +702,7 @@
           "dueDate": "2026-08-03",
           "assigned": "Leo",
           "status": "In Progress",
-          "priority": "M",
+          "priority": "L",
           "notes": "Uber XL $25–45. (20–30 min)\nPickup at designated rideshare zones (follow signs; typically Arrivals-level doors such as 3/12/15). UberXL (SUV/minivan style) better for 4 people + 3 large bags; confirm with driver in-app. Often cheaper than taxi off-peak."
         },
         {
@@ -728,9 +728,9 @@
           "task": "Download movies",
           "dueDate": "2026-08-17",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "status": "In Progress",
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783041928941",
@@ -773,7 +773,7 @@
           "task": "5. Transfer - The Westin Calgary to Banff Hotel Canoe and Suites",
           "dueDate": "2026-08-04",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": "Hertz Car rental - Transfer not required"
         },
@@ -782,7 +782,7 @@
           "task": "6. Transfer - Banff Hotel Canoe and Suites to Calgary airport",
           "dueDate": "2026-08-05",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": "Hertz Car rental - Transfer not required"
         },
@@ -837,7 +837,7 @@
           "dueDate": "2026-08-02",
           "assigned": "Leo",
           "status": "In Progress",
-          "priority": "M",
+          "priority": "L",
           "notes": "Uber XL"
         },
         {
@@ -854,7 +854,7 @@
           "task": "Banff park tickets",
           "dueDate": "2026-09-01",
           "assigned": "Kat",
-          "status": "Not Started",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -865,7 +865,7 @@
           "assigned": "Leo",
           "status": "Not Started",
           "priority": "M",
-          "notes": "6/Oct\n10/Oct"
+          "notes": "Taxi at airport - no Ubers\n6/Oct\n10/Oct"
         },
         {
           "id": "t1788429127196",
@@ -887,7 +887,7 @@
         },
         {
           "id": "t1788520012441",
-          "task": "Banff Gondola tickiets",
+          "task": "Banff Gondola tickets",
           "dueDate": "2026-09-06",
           "assigned": "Kat",
           "status": "Not Started",
@@ -909,6 +909,15 @@
           "dueDate": "2026-09-07",
           "assigned": "Leo",
           "status": "Not Started",
+          "priority": "M",
+          "notes": ""
+        },
+        {
+          "id": "t1789007100278",
+          "task": "Electronics",
+          "dueDate": "2026-09-10",
+          "assigned": "Leo",
+          "status": "In Progress",
           "priority": "M",
           "notes": ""
         }
@@ -1219,6 +1228,14 @@
           "title": "Travel insurance PDS",
           "url": "https://drive.google.com/file/d/1IP3ZcgDVJ38Fht6rfj8mv17LnL0-no8q/view?usp=drive_link",
           "notes": ""
+        },
+        {
+          "id": "doc1789033925773",
+          "category": "Other",
+          "city": "Banff",
+          "title": "National Park pass",
+          "url": "https://drive.google.com/file/d/1g4-DbcX_i4R4LSHV7ToJzWHWuFNRYa9S/view?usp=drive_link",
+          "notes": ""
         }
       ],
       "documentCities": [
@@ -1380,6 +1397,20 @@
         "peyto lake": {
           "lat": 51.7251873,
           "lng": -116.5222962
+        },
+        "calgary tower, calgary": {
+          "lat": 51.0442999,
+          "lng": -114.0631347
+        },
+        "relax and shopping": {
+          "failed": true
+        },
+        "baseball game?": {
+          "lat": 35.1484219,
+          "lng": -89.8002042
+        },
+        "canoeing, banff": {
+          "failed": true
         }
       }
     }
