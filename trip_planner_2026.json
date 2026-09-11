@@ -974,6 +974,15 @@
           "status": "In Progress",
           "priority": "M",
           "notes": ""
+        },
+        {
+          "id": "t1789123648831",
+          "task": "Print Maps of Universal and Disneyland",
+          "dueDate": "2026-09-12",
+          "assigned": "Leo",
+          "status": "Not Started",
+          "priority": "M",
+          "notes": ""
         }
       ],
       "people": [
