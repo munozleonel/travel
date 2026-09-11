@@ -21,7 +21,7 @@
           "id": "e2",
           "date": "2026-09-15",
           "type": "flight",
-          "title": "Fiji → Los Angeles arrive 12:55pm",
+          "title": "Fiji → Los Angeles arrive 12:55",
           "time": "21:40",
           "location": "Fiji",
           "notes": "FJ 810 · Overnight"
@@ -57,7 +57,7 @@
           "id": "e6",
           "date": "2026-09-20",
           "type": "flight",
-          "title": "Los Angeles → Calgary (WS1023) Arrive 5:20pm",
+          "title": "Los Angeles → Calgary (WS1023) Arrive 17:20",
           "time": "11:40",
           "location": "LAX",
           "notes": "Westjet · Seats 11A–11D"
@@ -89,7 +89,7 @@
           "id": "e10",
           "date": "2026-09-27",
           "type": "flight",
-          "title": "Calgary → Vancouver (F8 805)",
+          "title": "Calgary → Vancouver (F8 805) Arrive 15:00",
           "time": "14:20",
           "location": "YYC",
           "notes": "Flair Airlines"
@@ -106,7 +106,7 @@
           "id": "e12",
           "date": "2026-10-01",
           "type": "flight",
-          "title": "Vancouver → Los Angeles (AC 556)",
+          "title": "Vancouver → Los Angeles (AC 556) Arrive 16:00",
           "time": "13:00",
           "location": "YVR",
           "notes": "Air Canada · Seats 13A–14C"
@@ -154,7 +154,7 @@
           "id": "e18",
           "date": "2026-10-10",
           "type": "flight",
-          "title": "Fiji → Sydney (FJ 911)",
+          "title": "Fiji → Sydney (FJ 911) Arrive 12:45",
           "time": "09:00",
           "location": "Nadi",
           "notes": "Arrive SYD 12:45pm"
@@ -292,6 +292,24 @@
           "title": "Relax",
           "time": "",
           "location": "",
+          "notes": ""
+        },
+        {
+          "id": "e1789104673504",
+          "date": "2026-10-03",
+          "type": "activity",
+          "title": "Hollywood",
+          "time": "10:00",
+          "location": "",
+          "notes": ""
+        },
+        {
+          "id": "e1789104777720",
+          "date": "2026-10-06",
+          "type": "flight",
+          "title": "Arrive in Fiji",
+          "time": "05:45",
+          "location": "Fiji",
           "notes": ""
         }
       ],
