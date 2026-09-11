@@ -266,6 +266,33 @@
           "time": "",
           "location": "Banff",
           "notes": ""
+        },
+        {
+          "id": "e1789104566666",
+          "date": "2026-10-03",
+          "type": "activity",
+          "title": "Shopping",
+          "time": "12:00",
+          "location": "",
+          "notes": "Five Below"
+        },
+        {
+          "id": "e1789104589177",
+          "date": "2026-10-07",
+          "type": "activity",
+          "title": "Relax",
+          "time": "",
+          "location": "",
+          "notes": ""
+        },
+        {
+          "id": "e1789104596673",
+          "date": "2026-10-08",
+          "type": "activity",
+          "title": "Relax",
+          "time": "",
+          "location": "",
+          "notes": ""
         }
       ],
       "accommodations": [
@@ -757,7 +784,7 @@
           "assigned": "Maisy",
           "status": "Not Started",
           "priority": "L",
-          "notes": "Aurora LA\n\n211 S La Brea Ave, Los Angeles, CA 90036, United States"
+          "notes": "Tu Cha\n2968 W 7th St, Los Angeles, CA 90005, United States\n\nAurora LA\n211 S La Brea Ave, Los Angeles, CA 90036, United States"
         },
         {
           "id": "t1783765390975",
