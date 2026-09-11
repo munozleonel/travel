@@ -311,6 +311,15 @@
           "time": "05:45",
           "location": "Fiji",
           "notes": ""
+        },
+        {
+          "id": "e1789105079015",
+          "date": "2026-10-04",
+          "type": "activity",
+          "title": "Santa Monica wharf",
+          "time": "",
+          "location": "",
+          "notes": ""
         }
       ],
       "accommodations": [
