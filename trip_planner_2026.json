@@ -602,7 +602,7 @@
           "task": "Select seats – Fiji Airways (EC8HO6)",
           "dueDate": "2026-09-01",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": "Seats cost extra. Both SYD↔LAX legs"
         },
@@ -611,9 +611,9 @@
           "task": "Buy Disneyland / Disney park tickets",
           "dueDate": "2026-08-20",
           "assigned": "Kat",
-          "status": "Not Started",
-          "notes": "Sep 17 & 19 (Maisy birthday). Book early to secure dates",
-          "priority": "M"
+          "status": "In Progress",
+          "priority": "M",
+          "notes": "Klook\nSep 16 & 19 (Maisy birthday). Book early to secure dates"
         },
         {
           "id": "t5",
@@ -881,7 +881,7 @@
           "task": "Travel folder",
           "dueDate": "2026-09-01",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -899,7 +899,7 @@
           "task": "Activate eSim cards",
           "dueDate": "2026-09-05",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "H",
           "notes": "Travelkon"
         },
@@ -962,7 +962,7 @@
           "task": "Download airlines apps",
           "dueDate": "2026-09-07",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -980,7 +980,7 @@
           "task": "Print Maps of Universal and Disneyland",
           "dueDate": "2026-09-12",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "M",
           "notes": ""
         }
