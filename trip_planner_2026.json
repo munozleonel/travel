@@ -746,9 +746,9 @@
           "task": "Canada tours",
           "dueDate": "2026-07-20",
           "assigned": "Kat",
-          "status": "In Progress",
-          "notes": "",
-          "priority": "M"
+          "status": "Done",
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783041699111",
