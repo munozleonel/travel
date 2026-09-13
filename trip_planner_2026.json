@@ -320,6 +320,15 @@
           "time": "",
           "location": "",
           "notes": ""
+        },
+        {
+          "id": "e1789294920070",
+          "date": "2026-09-18",
+          "type": "activity",
+          "title": "The Outlets at Orange",
+          "time": "",
+          "location": "Anaheim",
+          "notes": ""
         }
       ],
       "accommodations": [
@@ -764,7 +773,7 @@
           "task": "Wise card top up",
           "dueDate": "2026-09-05",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "Done",
           "priority": "H",
           "notes": ""
         },
@@ -782,7 +791,7 @@
           "task": "Download movies",
           "dueDate": "2026-08-17",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -809,7 +818,7 @@
           "task": "Los Angeles viral desserts",
           "dueDate": "2026-09-05",
           "assigned": "Maisy",
-          "status": "Not Started",
+          "status": "In Progress",
           "priority": "L",
           "notes": "Tu Cha\n2968 W 7th St, Los Angeles, CA 90005, United States\n\nAurora LA\n211 S La Brea Ave, Los Angeles, CA 90036, United States"
         },
@@ -899,7 +908,7 @@
           "task": "Activate eSim cards",
           "dueDate": "2026-09-05",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "H",
           "notes": "Travelkon"
         },
@@ -981,6 +990,15 @@
           "dueDate": "2026-09-12",
           "assigned": "Leo",
           "status": "In Progress",
+          "priority": "M",
+          "notes": ""
+        },
+        {
+          "id": "t1789293961894",
+          "task": "Fiji sheraton - ask to use facilities while waiting",
+          "dueDate": "2026-09-13",
+          "assigned": "Kat",
+          "status": "Not Started",
           "priority": "M",
           "notes": ""
         }
