@@ -329,6 +329,15 @@
           "time": "",
           "location": "Anaheim",
           "notes": ""
+        },
+        {
+          "id": "e1789304129896",
+          "date": "2026-09-15",
+          "type": "note",
+          "title": "Dinner at RISE Rooftop Lounge Bar",
+          "time": "",
+          "location": "Westin Anaheim",
+          "notes": ""
         }
       ],
       "accommodations": [
@@ -620,7 +629,7 @@
           "task": "Buy Disneyland / Disney park tickets",
           "dueDate": "2026-08-20",
           "assigned": "Kat",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": "Klook\nSep 16 & 19 (Maisy birthday). Book early to secure dates"
         },
@@ -962,7 +971,7 @@
           "task": "Rise Rooftop Lounge reservation - Westin Anaheim hotel",
           "dueDate": "2026-09-06",
           "assigned": "Leo",
-          "status": "Not Started",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
