@@ -338,6 +338,15 @@
           "time": "",
           "location": "Westin Anaheim",
           "notes": ""
+        },
+        {
+          "id": "e1789304290045",
+          "date": "2026-09-24",
+          "type": "activity",
+          "title": "Northern lights",
+          "time": "",
+          "location": "",
+          "notes": ""
         }
       ],
       "accommodations": [
