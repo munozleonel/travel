@@ -701,7 +701,7 @@
           "task": "Pack bags & check baggage allowances",
           "dueDate": "2026-09-07",
           "assigned": "Kat",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg"
         },
@@ -800,9 +800,9 @@
           "task": "Clear out phone memory",
           "dueDate": "2026-08-17",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "",
-          "priority": "M"
+          "status": "Done",
+          "priority": "M",
+          "notes": ""
         },
         {
           "id": "t1783041907511",
@@ -872,7 +872,7 @@
           "task": "Pack - Isla",
           "dueDate": "2026-09-05",
           "assigned": "Isla",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -881,7 +881,7 @@
           "task": "Pack - Maisy",
           "dueDate": "2026-09-05",
           "assigned": "Maisy",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -998,7 +998,7 @@
           "task": "Electronics",
           "dueDate": "2026-09-10",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
