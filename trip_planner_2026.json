@@ -701,7 +701,7 @@
           "task": "Pack bags & check baggage allowances",
           "dueDate": "2026-09-07",
           "assigned": "Kat",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": "Fiji Airways: 30kg + 7kg carry-on each. Westjet/Flair: 23kg + 7kg"
         },
@@ -872,7 +872,7 @@
           "task": "Pack - Isla",
           "dueDate": "2026-09-05",
           "assigned": "Isla",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -881,7 +881,7 @@
           "task": "Pack - Maisy",
           "dueDate": "2026-09-05",
           "assigned": "Maisy",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -998,7 +998,7 @@
           "task": "Electronics",
           "dueDate": "2026-09-10",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "M",
           "notes": ""
         },
@@ -1510,6 +1510,29 @@
         },
         "canoeing, banff": {
           "failed": true
+        },
+        "shopping": {
+          "lat": -15.8324441,
+          "lng": -47.950674
+        },
+        "relax": {
+          "lat": 51.7779582,
+          "lng": 14.9798596
+        },
+        "hollywood": {
+          "lat": 34.0980031,
+          "lng": -118.329523
+        },
+        "santa monica wharf": {
+          "lat": 34.0501333,
+          "lng": -118.4365551
+        },
+        "the outlets at orange, anaheim": {
+          "failed": true
+        },
+        "northern lights": {
+          "lat": 57.7281481,
+          "lng": -117.8123499
         }
       }
     }
