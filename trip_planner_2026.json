@@ -362,14 +362,14 @@
           "room": "Standard Double Room, Two Double Beds",
           "breakfast": "Yes",
           "cost": 974,
-          "paid": 0,
+          "paid": 974,
           "ref": "Booked: 5348858799",
           "platform": "Booking.com",
           "cancelBy": "2026-09-17",
           "rating": "4.2 (1,788)",
           "contact": "+1 403-266-1611",
-          "status": "booked",
-          "notes": ""
+          "notes": "",
+          "status": "booked"
         },
         {
           "id": "a3",
@@ -467,7 +467,7 @@
           "room": "Guest room, 2 Queen",
           "breakfast": "Yes",
           "cost": 3318,
-          "paid": 0,
+          "paid": 3318,
           "ref": "6016548121",
           "platform": "Booking.com",
           "cancelBy": "2026-09-12",
@@ -710,9 +710,9 @@
           "task": "Download offline maps (Google Maps) for all cities",
           "dueDate": "2026-09-10",
           "assigned": "Leo",
-          "status": "Not Started",
-          "notes": "LA, Calgary, Banff, Vancouver, Fiji",
-          "priority": "M"
+          "status": "Done",
+          "priority": "M",
+          "notes": "LA, Calgary, Banff, Vancouver, Fiji"
         },
         {
           "id": "t1783041643838",
@@ -773,7 +773,7 @@
           "task": "2. Transfer (Arrive Tue 15/Sep 12:55pm) - LAX to Anaheim hotel",
           "dueDate": "2026-08-01",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "L",
           "notes": "Uber XL\n$100USD ($140 AUD)\nhttps://www.klook.com/en-US/airport-transfers/results/?flightDirection=1&from=Los%20Angeles%20International%20Airport%28LAX%29&to=Sheraton%20Park%20Hotel%20at%20the%20Anaheim%20Resort&address=1855%20S%20Harbor%20Blvd,%20Anaheim,%20United%20States&lat=33.942536&long=-118.408075&poiId=50190006&poi_lat=33.801537&poi_long=-117.915259&time=2026-09-15%2013%3A05&pas=4&code=LAX&place=&ac=&kcid=&flightNo=FJ810&originCode=NAN&departureName=Nadi%20International%20Airport"
         },
@@ -782,7 +782,7 @@
           "task": "4. Transfer (Arrive Sun 20/Sep 5:20pm) - Calgary airport to The Westin Calgary",
           "dueDate": "2026-08-03",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "L",
           "notes": "Uber XL $25–45. (20–30 min)\nPickup at designated rideshare zones (follow signs; typically Arrivals-level doors such as 3/12/15). UberXL (SUV/minivan style) better for 4 people + 3 large bags; confirm with driver in-app. Often cheaper than taxi off-peak."
         },
@@ -917,7 +917,7 @@
           "task": "3. Transfer (Depart Sun 20/Sep 11:40am) - Anaheim hotel to LAX (20/Sep)",
           "dueDate": "2026-08-02",
           "assigned": "Leo",
-          "status": "In Progress",
+          "status": "Done",
           "priority": "L",
           "notes": "Uber XL"
         },
